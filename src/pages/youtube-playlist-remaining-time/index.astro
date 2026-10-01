@@ -1,0 +1,113 @@
+---
+// /youtube-playlist-remaining-time/ — SEO landing for remaining time
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="YouTube Playlist Remaining Time Calculator | YT Playlist Cal"
+  description="Calculate how much of a YouTube playlist you have left to watch. Enter the video you stopped at and get your remaining watch time instantly. Free, no signup."
+>
+  <Header />
+  <main class="py-12 sm:py-16">
+    <div class="container content-width">
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex items-center gap-1.5 text-xs" style="color: var(--color-text-muted);">
+          <li><a href="/" style="color: var(--color-text-muted); text-decoration: none;">Home</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/tools/" style="color: var(--color-text-muted); text-decoration: none;">Tools</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page" style="color: var(--color-text);">Remaining Time</li>
+        </ol>
+      </nav>
+
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+        YouTube Playlist Remaining Time Calculator
+      </h1>
+      <p class="text-base leading-relaxed mb-8" style="color: var(--color-text-muted);">
+        Pick up where you left off. Enter the video number you finished and instantly see how much watch time remains in your playlist.
+      </p>
+
+      <div
+        class="rounded-xl border p-5 mb-10"
+        style="background-color: var(--color-surface); border-color: var(--color-border);"
+      >
+        <p class="text-sm font-medium mb-3" style="color: var(--color-text);">Use "Remaining" mode in the calculator:</p>
+        <a
+          href="/#remaining"
+          class="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg text-sm font-semibold transition-all duration-150"
+          style="background-color: var(--color-text); color: var(--color-bg);"
+        >
+          <span aria-hidden="true">▶</span>
+          Open Remaining Time Calculator
+        </a>
+        <p class="text-xs mt-2" style="color: var(--color-text-subtle);">Select "Remaining" mode → enter the video you watched last → calculate</p>
+      </div>
+
+      <div class="space-y-8 text-sm leading-relaxed" style="color: var(--color-text-muted);">
+        <section>
+          <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">How to Calculate Remaining Playlist Time</h2>
+          <ol class="space-y-4">
+            <li class="flex gap-3">
+              <span class="font-bold shrink-0" style="color: var(--color-text);">1.</span>
+              <span>Go to your YouTube playlist and note the number of the last video you watched.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold shrink-0" style="color: var(--color-text);">2.</span>
+              <span>Paste the playlist URL into <a href="/" style="color: var(--color-text);">YT Playlist Cal</a>.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold shrink-0" style="color: var(--color-text);">3.</span>
+              <span>Select the <strong style="color: var(--color-text);">Remaining</strong> mode from the mode selector.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold shrink-0" style="color: var(--color-text);">4.</span>
+              <span>Enter the video number you finished watching (e.g. 12) in the "I've watched through video #" field.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold shrink-0" style="color: var(--color-text);">5.</span>
+              <span>Click Calculate and get the total remaining watch time plus speed-adjusted estimates.</span>
+            </li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">Why This Is Useful</h2>
+          <p>YouTube playlists don't tell you how much time is left. Whether you're:</p>
+          <ul class="mt-2 space-y-1 ml-4 list-disc">
+            <li>Halfway through a 40-hour programming course and want to know how many weeks remain</li>
+            <li>Watching a binge-worthy series with a tight schedule</li>
+            <li>Studying before an exam and need to plan your remaining study time</li>
+            <li>Finishing a certification course before a deadline</li>
+          </ul>
+          <p class="mt-3">
+            The Remaining Time Calculator gives you a precise figure plus a Daily Watch Planner to schedule your remaining viewing.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">Related Tools</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              { href: '/', label: 'Playlist Length Calculator', desc: 'Full playlist duration' },
+              { href: '/youtube-watch-time-at-1-5x/', label: 'Watch Time at 1.5×', desc: 'Save time at 1.5x speed' },
+              { href: '/youtube-watch-time-at-2x/', label: 'Watch Time at 2×', desc: 'Maximum speed savings' },
+              { href: '/youtube-watch-time-calculator/', label: 'Watch Time Calculator', desc: 'All speeds, all modes' },
+            ].map(({ href, label, desc }) => (
+              <a
+                href={href}
+                class="block rounded-lg border p-3 transition-colors duration-150"
+                style="background-color: var(--color-surface); border-color: var(--color-border); text-decoration: none;"
+              >
+                <p class="text-xs font-semibold" style="color: var(--color-text);">{label}</p>
+                <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">{desc}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

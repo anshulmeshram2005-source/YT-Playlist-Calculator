@@ -1,0 +1,9 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# Force binary for these types
+*.png binary
+*.jpg binary
+*.ico binary
+*.svg text
+*.webmanifest text

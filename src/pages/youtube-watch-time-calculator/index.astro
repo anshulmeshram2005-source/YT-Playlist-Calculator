@@ -1,0 +1,66 @@
+---
+// /youtube-watch-time-calculator/ — SEO landing page
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="YouTube Watch Time Calculator — Calculate Total Watch Time | YT Playlist Cal"
+  description="Calculate your total YouTube watch time at any playback speed. Supports playlists, video ranges, remaining time, and daily watch planning. Free and instant."
+>
+  <Header />
+  <main class="py-12 sm:py-16">
+    <div class="container content-width">
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex items-center gap-1.5 text-xs" style="color: var(--color-text-muted);">
+          <li><a href="/" style="color: var(--color-text-muted); text-decoration: none;">Home</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/tools/" style="color: var(--color-text-muted); text-decoration: none;">Tools</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page" style="color: var(--color-text);">Watch Time Calculator</li>
+        </ol>
+      </nav>
+
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+        YouTube Watch Time Calculator
+      </h1>
+      <p class="text-base leading-relaxed mb-8" style="color: var(--color-text-muted);">
+        Calculate the total watch time for any YouTube playlist at your preferred playback speed. Get exact estimates for 1×, 1.5×, 2×, or any custom speed.
+      </p>
+
+      <div class="rounded-xl border p-5 mb-10" style="background-color: var(--color-surface); border-color: var(--color-border);">
+        <a href="/" class="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg text-sm font-semibold" style="background-color: var(--color-text); color: var(--color-bg);">
+          <span aria-hidden="true">▶</span> Open YouTube Watch Time Calculator
+        </a>
+      </div>
+
+      <div class="space-y-6 text-sm leading-relaxed" style="color: var(--color-text-muted);">
+        <section>
+          <h2 class="text-base font-semibold mb-2" style="color: var(--color-text);">What Is YouTube Watch Time?</h2>
+          <p>YouTube watch time refers to the total cumulative duration you would spend watching a playlist, video, or set of videos. Unlike YouTube's own watch time metrics (which track how long viewers have spent on your channel), this tool calculates the <em>viewer's</em> time investment — how long it will take <em>you</em> to watch the content.</p>
+        </section>
+        <section>
+          <h2 class="text-base font-semibold mb-2" style="color: var(--color-text);">Features</h2>
+          <ul class="space-y-1 ml-4 list-disc">
+            <li>Calculate total watch time for any public YouTube playlist</li>
+            <li>Adjust for playback speed (0.5× to 3×, or any custom speed)</li>
+            <li>Calculate only a range of videos (e.g. videos 10–40)</li>
+            <li>Calculate remaining watch time from where you left off</li>
+            <li>Watch planner: given daily budget, find your finish date</li>
+            <li>Finish-by calculator: given a deadline, find required daily time</li>
+          </ul>
+        </section>
+        <div class="pt-4" style="border-top: 1px solid var(--color-border);">
+          <p class="text-xs" style="color: var(--color-text-subtle);">
+            Related:
+            <a href="/youtube-watch-time-at-1-5x/" style="color: var(--color-text-muted); margin: 0 4px;">Watch time at 1.5×</a> ·
+            <a href="/youtube-watch-time-at-2x/" style="color: var(--color-text-muted); margin: 0 4px;">Watch time at 2×</a> ·
+            <a href="/youtube-playlist-remaining-time/" style="color: var(--color-text-muted); margin: 0 4px;">Remaining time</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

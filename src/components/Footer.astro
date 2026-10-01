@@ -1,0 +1,166 @@
+---
+// Footer.astro — Site-wide footer with tool links, legal, and disclaimer
+const year = new Date().getFullYear();
+
+const toolLinks = [
+  { href: '/', label: 'Playlist Length Calculator' },
+  { href: '/youtube-playlist-duration-calculator/', label: 'Duration Calculator' },
+  { href: '/youtube-watch-time-calculator/', label: 'Watch Time Calculator' },
+  { href: '/youtube-playlist-remaining-time/', label: 'Remaining Time' },
+  { href: '/youtube-watch-time-at-1-5x/', label: 'Watch Time at 1.5x' },
+  { href: '/youtube-watch-time-at-2x/', label: 'Watch Time at 2x' },
+];
+
+const resourceLinks = [
+  { href: '/how-it-works/', label: 'How It Works' },
+  { href: '/faq/', label: 'FAQ' },
+  { href: '/tools/', label: 'All Tools' },
+];
+
+const companyLinks = [
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const legalLinks = [
+  { href: '/privacy/', label: 'Privacy Policy' },
+  { href: '/terms/', label: 'Terms of Service' },
+  { href: '/disclaimer/', label: 'Disclaimer' },
+];
+---
+
+<footer
+  class="mt-20 border-t"
+  style="border-color: var(--color-border); background-color: var(--color-surface);"
+>
+  <div class="container py-12">
+
+    <!-- Footer Grid -->
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
+
+      <!-- Brand Column -->
+      <div class="col-span-2 lg:col-span-2">
+        <a
+          href="/"
+          class="flex items-center gap-2 mb-3"
+          aria-label="YT Playlist Cal — Home"
+        >
+          <div
+            class="w-6 h-6 rounded flex items-center justify-center text-white text-xs font-bold shrink-0"
+            style="background-color: var(--color-accent);"
+            aria-hidden="true"
+          >
+            ▶
+          </div>
+          <span class="text-sm font-semibold" style="color: var(--color-text);">YT Playlist Cal</span>
+        </a>
+        <p class="text-xs leading-relaxed max-w-xs" style="color: var(--color-text-subtle);">
+          Free YouTube playlist length and watch time calculator. Calculate total duration, playback-speed estimates, and watch planning schedules.
+        </p>
+        <p class="text-xs mt-3" style="color: var(--color-text-subtle);">
+          Not affiliated with YouTube or Google.
+        </p>
+      </div>
+
+      <!-- Tools Column -->
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">Tools</h3>
+        <ul class="space-y-2">
+          {toolLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class="text-xs transition-colors duration-100"
+                style="color: var(--color-text-subtle);"
+                data-footer-link
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Resources Column -->
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">Resources</h3>
+        <ul class="space-y-2">
+          {resourceLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class="text-xs transition-colors duration-100"
+                style="color: var(--color-text-subtle);"
+                data-footer-link
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3 mt-6" style="color: var(--color-text-muted);">Company</h3>
+        <ul class="space-y-2">
+          {companyLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class="text-xs transition-colors duration-100"
+                style="color: var(--color-text-subtle);"
+                data-footer-link
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Legal Column -->
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">Legal</h3>
+        <ul class="space-y-2">
+          {legalLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class="text-xs transition-colors duration-100"
+                style="color: var(--color-text-subtle);"
+                data-footer-link
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div
+      class="mt-10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+      style="border-top: 1px solid var(--color-border);"
+    >
+      <p class="text-xs" style="color: var(--color-text-subtle);">
+        &copy; {year} YT Playlist Cal. All rights reserved.
+      </p>
+      <p class="text-xs" style="color: var(--color-text-subtle);">
+        YouTube™ is a trademark of Google LLC. This tool is independent and not affiliated with YouTube or Google.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  // Hover effect for footer links
+  document.querySelectorAll('[data-footer-link]').forEach((link) => {
+    (link as HTMLElement).addEventListener('mouseenter', function () {
+      (this as HTMLElement).style.color = 'var(--color-text)';
+    });
+    (link as HTMLElement).addEventListener('mouseleave', function () {
+      (this as HTMLElement).style.color = 'var(--color-text-subtle)';
+    });
+  });
+</script>

@@ -1,0 +1,143 @@
+---
+// /faq/ — Full FAQ page
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const faqs = [
+  {
+    category: 'Calculator Basics',
+    questions: [
+      { q: 'How do I calculate YouTube playlist length?', a: 'Paste your YouTube playlist URL into the calculator on the homepage and click Calculate. The tool uses the YouTube Data API to retrieve every video in the playlist and sums their durations. You\'ll get the total length in hours, minutes, and seconds instantly.' },
+      { q: 'What URL formats are supported?', a: 'All standard YouTube formats are supported: full playlist URLs (youtube.com/playlist?list=...), video URLs with a playlist parameter, youtu.be short links, plain playlist IDs (PLxxxxxx), and individual video URLs (for single-video duration).' },
+      { q: 'Can I calculate duration for a single YouTube video?', a: 'Yes. Paste any YouTube video URL and the tool will return its exact duration along with a speed comparison table showing how long it would take at 0.5x through 3x speed.' },
+      { q: 'How accurate is the calculation?', a: 'The calculation is precise. It uses the exact duration metadata provided by the YouTube Data API for every individual video. The only exception is unavailable videos (private, deleted, region-restricted) which report 0 seconds and are excluded from the total.' },
+      { q: 'Does the tool support private playlists?', a: 'No. The YouTube Data API only provides access to public and unlisted playlists. Private playlists require account authentication and cannot be calculated using this tool.' },
+    ],
+  },
+  {
+    category: 'Playback Speed',
+    questions: [
+      { q: 'Can I calculate watch time at 1.5x or 2x speed?', a: 'Yes. After calculating your playlist, the Speed Comparison table shows watch time at 0.5×, 0.75×, 1×, 1.25×, 1.5×, 1.75×, 2×, 2.25×, 2.5×, and 3×. You can also type any custom speed in the Custom Speed field.' },
+      { q: 'How much time does 2x speed save?', a: 'At 2x speed, you save exactly 50% of the original watch time. A 10-hour playlist becomes 5 hours. A 20-hour course becomes 10 hours. The speed table after calculation shows the exact time saved for every preset speed.' },
+      { q: 'What is the fastest supported speed?', a: 'The preset buttons go up to 3×. You can enter any custom value in the Custom Speed field, up to 5×. Note that YouTube\'s player itself only goes up to 2× natively — higher speeds require browser extensions or workarounds.' },
+    ],
+  },
+  {
+    category: 'Calculation Modes',
+    questions: [
+      { q: 'Can I calculate only part of a playlist?', a: 'Yes. Select the "Range" mode and enter a start and end video number. For example, Start: 10, End: 50 will calculate only videos 10 through 50. This is useful for studying specific modules of a course.' },
+      { q: 'How does Remaining mode work?', a: 'Select "Remaining" mode and enter the number of the last video you watched. The tool will calculate the duration of all videos after that point. For example, if you enter 12, it calculates videos 13 onwards.' },
+      { q: 'Can I calculate multiple playlists at once?', a: 'Currently, the tool calculates one playlist at a time. A Playlist Comparison feature is planned for a future update.' },
+    ],
+  },
+  {
+    category: 'Missing or Unavailable Videos',
+    questions: [
+      { q: 'Why are some videos missing from my total?', a: 'Some videos may be excluded because they are private (made private by the uploader), deleted from YouTube, region-restricted (unavailable in your country), or removed due to a copyright claim. These are counted and displayed in the results as "unavailable" but their duration cannot be fetched.' },
+      { q: 'Why does my playlist show fewer videos than YouTube?', a: 'YouTube counts all videos in the playlist including private and deleted ones. The YouTube API only returns videos it can access. If there is a discrepancy, it typically means some videos in the playlist are private, deleted, or otherwise inaccessible to the API.' },
+      { q: 'What happens with live streams in a playlist?', a: 'Live streams that are currently live have no fixed duration, so they report 0 seconds and are counted as unavailable. Once a live stream ends and YouTube processes the recording, its duration will be available on the next calculation.' },
+    ],
+  },
+  {
+    category: 'Watch Planner & Scheduling',
+    questions: [
+      { q: 'How does the Watch Planner work?', a: 'After calculating your playlist, scroll down to the Daily Watch Planner section. Enter your daily watch budget (in minutes), your starting date, and your preferred speed. The planner will calculate how many days you need and your estimated finish date.' },
+      { q: 'How does the Finish-By Calculator work?', a: 'The Finish-By Calculator works in reverse. Enter a target date (e.g. your exam date) and a preferred speed. The tool calculates how many minutes per day you need to watch to finish on time.' },
+      { q: 'Can I plan around specific days of the week?', a: 'The current planner assumes daily viewing. Support for custom weekly schedules (e.g. weekdays only) is planned for a future update.' },
+    ],
+  },
+  {
+    category: 'Privacy & Security',
+    questions: [
+      { q: 'Does YT Playlist Cal store my playlist URLs?', a: 'No. Your URL is used only to make a temporary request to the YouTube API. It is not saved to a database, logged, or used for any purpose beyond the immediate calculation. See our Privacy Policy for full details.' },
+      { q: 'Do I need a YouTube or Google account?', a: 'No. The tool works entirely without any account, login, or signup.' },
+      { q: 'Do you require a YouTube API key?', a: 'No. The tool provides its own server-side YouTube API key. Power users who have exhausted the shared quota can optionally enter their own key in Advanced Options — it is only used for that request and is never stored.' },
+      { q: 'Is my YouTube API key safe if I enter it?', a: 'Your key is sent to our server only for the duration of the API request. It is not logged, stored, or used for any other purpose. It is transmitted over HTTPS. We strongly recommend using a YouTube API key with appropriate quota limits.' },
+    ],
+  },
+  {
+    category: 'About the Tool',
+    questions: [
+      { q: 'Is YT Playlist Cal free?', a: 'Yes. YT Playlist Cal is completely free. There are no paid plans, no usage limits for normal use, and no signup required.' },
+      { q: 'Is this tool affiliated with YouTube or Google?', a: 'No. YT Playlist Cal is an independent utility. YouTube™ is a trademark of Google LLC. This tool is not affiliated with, endorsed by, or associated with YouTube or Google in any way.' },
+      { q: 'How can I report a bug or suggest a feature?', a: 'Please use the Contact page to reach us. We read every message and use feedback to prioritize improvements.' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="FAQ — YouTube Playlist Calculator Help | YT Playlist Cal"
+  description="Frequently asked questions about the YouTube Playlist Length Calculator. Learn how to calculate playlist duration, watch time at speed, remaining time, and more."
+>
+  <Header />
+  <main class="py-12 sm:py-16">
+    <div class="container content-width">
+
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex items-center gap-1.5 text-xs" style="color: var(--color-text-muted);">
+          <li><a href="/" style="color: var(--color-text-muted); text-decoration: none;">Home</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page" style="color: var(--color-text);">FAQ</li>
+        </ol>
+      </nav>
+
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+        Frequently Asked Questions
+      </h1>
+      <p class="text-base mb-10" style="color: var(--color-text-muted);">
+        Everything you need to know about calculating YouTube playlist length and watch time.
+      </p>
+
+      <div class="space-y-10">
+        {faqs.map(({ category, questions }) => (
+          <section aria-labelledby={`cat-${category.replace(/\s+/g, '-').toLowerCase()}`}>
+            <h2
+              id={`cat-${category.replace(/\s+/g, '-').toLowerCase()}`}
+              class="text-base font-semibold mb-4 pb-2"
+              style="color: var(--color-text); border-bottom: 1px solid var(--color-border);"
+            >
+              {category}
+            </h2>
+            <div class="space-y-0">
+              {questions.map(({ q, a }) => (
+                <details class="group" style="border-top: 1px solid var(--color-border);">
+                  <summary
+                    class="flex items-center justify-between gap-4 py-4 cursor-pointer text-sm font-medium list-none"
+                    style="color: var(--color-text);"
+                  >
+                    <span>{q}</span>
+                    <svg
+                      class="w-4 h-4 shrink-0 transition-transform duration-150 group-open:rotate-180"
+                      style="color: var(--color-text-muted);"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </summary>
+                  <div class="pb-4 text-sm leading-relaxed" style="color: var(--color-text-muted);">{a}</div>
+                </details>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <div class="mt-12 pt-8" style="border-top: 1px solid var(--color-border);">
+        <p class="text-sm" style="color: var(--color-text-muted);">
+          Didn't find your answer?{' '}
+          <a href="/contact/" style="color: var(--color-text); text-decoration: underline;">Contact us</a>
+          {' '}or{' '}
+          <a href="/" style="color: var(--color-text); text-decoration: underline;">try the calculator</a>.
+        </p>
+      </div>
+
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
