@@ -1,5 +1,7 @@
 ---
 // Header.astro — Sticky top navigation with logo, links, and theme toggle
+import Icon from './Icon.astro';
+
 const navLinks = [
   { href: '/tools/', label: 'Tools' },
   { href: '/how-it-works/', label: 'How It Works' },
@@ -34,7 +36,7 @@ const currentPath = Astro.url.pathname;
           style="background-color: var(--color-accent);"
           aria-hidden="true"
         >
-          ▶
+          <Icon name="play" size={13} fill="currentColor" strokeWidth={0} class="ml-0.5" />
         </div>
         <span
           class="font-semibold text-sm tracking-tight hidden sm:block"

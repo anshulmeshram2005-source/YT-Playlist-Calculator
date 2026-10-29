@@ -3,6 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'https://ytplaylistcal.com';
 
@@ -118,58 +119,58 @@ const faqItems = [
   },
 ];
 
-const features = [
+const features: { icon: IconName; title: string; desc: string }[] = [
   {
-    icon: '⏱',
+    icon: 'clock',
     title: 'Total Duration',
     desc: 'Get the exact total length of any public YouTube playlist in hours, minutes, and seconds.',
   },
   {
-    icon: '⚡',
+    icon: 'zap',
     title: 'Playback Speed Table',
     desc: 'See watch time and time saved at 0.5x through 3x speed. Enter any custom speed.',
   },
   {
-    icon: '🎯',
+    icon: 'crosshair',
     title: 'Video Range',
     desc: 'Calculate duration for a specific range of videos — perfect for partial course review.',
   },
   {
-    icon: '▶',
+    icon: 'play',
     title: 'Remaining Time',
     desc: 'Tell it which video you left off at and instantly get how much time remains.',
   },
   {
-    icon: '📅',
+    icon: 'calendar-days',
     title: 'Watch Planner',
     desc: 'Enter your daily watch budget and get an exact finish date. Plan courses, binge sessions, or study schedules.',
   },
   {
-    icon: '🏁',
+    icon: 'flag',
     title: 'Finish-By Calculator',
     desc: 'Have a deadline? Enter a target date and see the required daily viewing time and speed.',
   },
   {
-    icon: '📋',
+    icon: 'clipboard-list',
     title: 'Per-Video Breakdown',
     desc: 'Expandable list showing every video, its duration at your chosen speed, and a direct link.',
   },
   {
-    icon: '📤',
+    icon: 'share',
     title: 'Export & Share',
     desc: 'Export results as CSV or TXT. Copy a shareable link to send your calculation to someone else.',
   },
 ];
 
-const personas = [
-  { icon: '🎓', label: 'Students' },
-  { icon: '💻', label: 'Online learners' },
-  { icon: '📚', label: 'Course buyers' },
-  { icon: '🧑‍💻', label: 'Developers' },
-  { icon: '🏅', label: 'Cert candidates' },
-  { icon: '👨‍🏫', label: 'Teachers' },
-  { icon: '🎬', label: 'Creators' },
-  { icon: '🎮', label: 'Binge watchers' },
+const personas: { icon: IconName; label: string }[] = [
+  { icon: 'graduation-cap', label: 'Students' },
+  { icon: 'laptop', label: 'Online learners' },
+  { icon: 'book-open', label: 'Course buyers' },
+  { icon: 'code', label: 'Developers' },
+  { icon: 'award', label: 'Cert candidates' },
+  { icon: 'user-round', label: 'Teachers' },
+  { icon: 'clapperboard', label: 'Creators' },
+  { icon: 'gamepad', label: 'Binge watchers' },
 ];
 ---
 
@@ -701,8 +702,9 @@ const personas = [
               class="rounded-xl border p-4"
               style="background-color: var(--color-surface); border-color: var(--color-border);"
             >
-              <h3 class="text-sm font-semibold mb-3" style="color: var(--color-text);">
-                📅 Daily Watch Planner
+              <h3 class="flex items-center gap-2 text-sm font-semibold mb-3" style="color: var(--color-text);">
+                <Icon name="calendar-days" size={16} class="shrink-0" style="color: var(--color-accent);" />
+                <span>Daily Watch Planner</span>
               </h3>
               <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-3">
                 <div>
@@ -780,8 +782,9 @@ const personas = [
               class="rounded-xl border p-4"
               style="background-color: var(--color-surface); border-color: var(--color-border);"
             >
-              <h3 class="text-sm font-semibold mb-3" style="color: var(--color-text);">
-                🏁 Finish-By Calculator
+              <h3 class="flex items-center gap-2 text-sm font-semibold mb-3" style="color: var(--color-text);">
+                <Icon name="flag" size={16} class="shrink-0" style="color: var(--color-accent);" />
+                <span>Finish-By Calculator</span>
               </h3>
               <p class="text-xs mb-3" style="color: var(--color-text-muted);">
                 Have a deadline? Enter a target date and we'll calculate how much you need to watch daily.
@@ -1038,7 +1041,13 @@ const personas = [
                 border-color: var(--color-border);
               "
             >
-              <div class="text-xl mb-2" aria-hidden="true">{icon}</div>
+              <div
+                class="w-9 h-9 rounded-lg flex items-center justify-center mb-3"
+                style="background-color: var(--color-surface-2); color: var(--color-accent);"
+                aria-hidden="true"
+              >
+                <Icon name={icon} size={20} strokeWidth={1.85} />
+              </div>
               <h3 class="text-sm font-semibold mb-1.5" style="color: var(--color-text);">{title}</h3>
               <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{desc}</p>
             </div>
@@ -1060,15 +1069,15 @@ const personas = [
         <div class="flex flex-wrap justify-center gap-3">
           {personas.map(({ icon, label }) => (
             <span
-              class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm"
+              class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium"
               style="
                 background-color: var(--color-surface-2);
                 color: var(--color-text-muted);
                 border: 1px solid var(--color-border);
               "
             >
-              <span aria-hidden="true">{icon}</span>
-              {label}
+              <Icon name={icon} size={15} strokeWidth={1.85} class="shrink-0" style="color: var(--color-text);" />
+              <span>{label}</span>
             </span>
           ))}
         </div>
@@ -1324,13 +1333,16 @@ const personas = [
     if (steps) steps.innerHTML = '';
   }
 
+  const stepCheckSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+  const stepLoaderSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 animate-spin" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+
   function addProgressStep(text: string, done = false) {
     const steps = $('progress-steps');
     if (!steps) return;
     const step = document.createElement('div');
     step.className = 'flex items-center gap-2 text-xs';
     step.style.color = done ? 'var(--color-success)' : 'var(--color-text-muted)';
-    step.innerHTML = `<span aria-hidden="true">${done ? '✓' : '⏳'}</span> ${text}`;
+    step.innerHTML = `<span class="shrink-0 flex items-center" aria-hidden="true">${done ? stepCheckSvg : stepLoaderSvg}</span> <span>${text}</span>`;
     steps.appendChild(step);
   }
 
@@ -1411,7 +1423,7 @@ const personas = [
           <span class="text-xs shrink-0 mt-1 w-6 text-right font-mono" style="color: var(--color-text-subtle);">${num}</span>
           ${video.thumbnail
             ? `<img src="${video.thumbnail}" alt="" loading="lazy" class="w-16 h-10 object-cover rounded shrink-0" />`
-            : `<div class="w-16 h-10 rounded shrink-0 flex items-center justify-center text-lg" style="background-color: var(--color-surface-2);">▶</div>`
+            : `<div class="w-16 h-10 rounded shrink-0 flex items-center justify-center" style="background-color: var(--color-surface-2); color: var(--color-text-subtle);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>`
           }
           <div class="min-w-0 flex-1">
             <p class="text-xs font-medium truncate" style="color: var(--color-text);">
@@ -1620,7 +1632,7 @@ const personas = [
     const result = $('finish-by-result');
     if (result) {
       if (!feasible) {
-        result.innerHTML = `<p style="color: var(--color-error);">⚠ That date requires more than 23 hours per day — it's not feasible. Try a later date or a higher speed.</p>`;
+        result.innerHTML = `<p class="flex items-center gap-1.5" style="color: var(--color-error);"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg><span>That date requires more than 23 hours per day — it's not feasible. Try a later date or a higher speed.</span></p>`;
       } else {
         result.innerHTML = `
           <p style="color: var(--color-text);">
@@ -1650,10 +1662,10 @@ const personas = [
     }
   }
 
-  function flashButton(btn: HTMLElement, success: string) {
-    const original = btn.textContent ?? '';
-    btn.textContent = success;
-    setTimeout(() => { btn.textContent = original; }, 2000);
+  function flashButton(btn: HTMLElement, successText: string) {
+    const original = btn.innerHTML;
+    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> ${successText}`;
+    setTimeout(() => { btn.innerHTML = original; }, 2000);
   }
 
   $('copy-link-btn')?.addEventListener('click', async function (this: HTMLElement) {
@@ -1662,7 +1674,7 @@ const personas = [
     if (!urlVal) return;
     const shareUrl = `${window.location.origin}?url=${encodeURIComponent(urlVal)}`;
     await copyToClipboard(shareUrl);
-    flashButton(this, '✓ Copied!');
+    flashButton(this, 'Copied!');
   });
 
   $('copy-text-btn')?.addEventListener('click', async function (this: HTMLElement) {
@@ -1679,7 +1691,7 @@ const personas = [
       `Generated by ytplaylistcal.com`,
     ].join('\n');
     await copyToClipboard(text);
-    flashButton(this, '✓ Copied!');
+    flashButton(this, 'Copied!');
   });
 
   $('export-csv-btn')?.addEventListener('click', () => {

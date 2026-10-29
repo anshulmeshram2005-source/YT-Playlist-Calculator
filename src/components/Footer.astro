@@ -1,5 +1,7 @@
 ---
 // Footer.astro — Site-wide footer with tool links, legal, and disclaimer
+import Icon from './Icon.astro';
+
 const year = new Date().getFullYear();
 
 const toolLinks = [
@@ -50,7 +52,7 @@ const legalLinks = [
             style="background-color: var(--color-accent);"
             aria-hidden="true"
           >
-            ▶
+            <Icon name="play" size={11} fill="currentColor" strokeWidth={0} class="ml-0.5" />
           </div>
           <span class="text-sm font-semibold" style="color: var(--color-text);">YT Playlist Cal</span>
         </a>

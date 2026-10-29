@@ -3,6 +3,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
 ---
 
 <BaseLayout
@@ -39,7 +40,7 @@ import Footer from '../../components/Footer.astro';
           class="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg text-sm font-semibold transition-all duration-150"
           style="background-color: var(--color-text); color: var(--color-bg);"
         >
-          <span aria-hidden="true">▶</span>
+          <Icon name="play" size={14} fill="currentColor" strokeWidth={0} />
           Open Remaining Time Calculator
         </a>
         <p class="text-xs mt-2" style="color: var(--color-text-subtle);">Select "Remaining" mode → enter the video you watched last → calculate</p>
