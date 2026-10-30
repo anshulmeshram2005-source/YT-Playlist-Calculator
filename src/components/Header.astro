@@ -1,6 +1,7 @@
 ---
 // Header.astro — Sticky top navigation with logo, links, and theme toggle
 import Icon from './Icon.astro';
+import BrandLogo from './BrandLogo.astro';
 
 const navLinks = [
   { href: '/tools/', label: 'Tools' },
@@ -31,13 +32,7 @@ const currentPath = Astro.url.pathname;
         class="flex items-center gap-2 shrink-0 group"
         aria-label="YT Playlist Cal — Home"
       >
-        <div
-          class="w-7 h-7 rounded-md flex items-center justify-center text-white text-xs font-bold transition-transform duration-150 group-hover:scale-110"
-          style="background-color: var(--color-accent);"
-          aria-hidden="true"
-        >
-          <Icon name="play" size={13} fill="currentColor" strokeWidth={0} class="ml-0.5" />
-        </div>
+        <BrandLogo size={28} class="transition-transform duration-150 group-hover:scale-110" />
         <span
           class="font-semibold text-sm tracking-tight hidden sm:block"
           style="color: var(--color-text);"
