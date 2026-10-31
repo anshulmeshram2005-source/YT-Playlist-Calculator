@@ -13,6 +13,7 @@ export interface Props {
 }
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'https://ytplaylistcal.com';
+const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-08CV9EBBPD';
 
 const {
   title,
@@ -38,6 +39,21 @@ const fullTitle = title.includes('YT Playlist Cal')
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.bunny.net" />
     <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+
+    <!-- Google tag (gtag.js) -->
+    {gaId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline set:html={`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${gaId}');
+        `} />
+      </>
+    )}
 
     <!-- Inter font via Bunny Fonts (privacy-friendly, GDPR-compliant) -->
     <link
