@@ -1,0 +1,517 @@
+{
+  "brand": {
+    "name": "YT Playlist Cal",
+    "tagline": "เครื่องคำนวณความยาวเพลย์ลิสต์และเวลาในการรับชม YouTube ฟรี",
+    "notAffiliated": "ไม่มีส่วนเกี่ยวข้องกับ YouTube หรือ Google"
+  },
+  "nav": {
+    "home": "หน้าแรก",
+    "tools": "เครื่องมือ",
+    "howItWorks": "วิธีใช้งาน",
+    "faq": "คำถามที่พบบ่อย",
+    "about": "เกี่ยวกับเรา",
+    "contact": "ติดต่อเรา",
+    "tryCalculator": "ทดลองใช้เครื่องคำนวณ",
+    "selectLanguage": "เลือกภาษา",
+    "searchLanguage": "ค้นหาภาษา…",
+    "openMenu": "เปิดเมนูนำทาง",
+    "closeMenu": "ปิดเมนูนำทาง",
+    "toggleTheme": "เปลี่ยนโหมดมืด/สว่าง"
+  },
+  "hero": {
+    "badge": "เครื่องมือคำนวณ YouTube รวดเร็วและฟรี",
+    "title": "เครื่องคำนวณความยาวเพลย์ลิสต์ YouTube",
+    "subtitle": "คำนวณความยาวรวมของเพลย์ลิสต์ เวลาในการรับชมที่ความเร็ว 1.25× ถึง 3× และวางแผนตารางเวลาการเรียนหรือดูวิดีโอของคุณได้ทันที"
+  },
+  "calculator": {
+    "modeFull": "ทั้งเพลย์ลิสต์",
+    "modeRange": "ช่วงวิดีโอ",
+    "modeRemaining": "เวลาที่เหลือ",
+    "urlLabel": "ลิงก์เพลย์ลิสต์ หรือ วิดีโอ YouTube / รหัสเพลย์ลิสต์",
+    "urlPlaceholder": "วางลิงก์เพลย์ลิสต์ YouTube ลิงก์วิดีโอ หรือรหัสเพลย์ลิสต์ที่นี่…",
+    "pasteBtn": "วางลิงก์",
+    "demoBtn": "ดูตัวอย่าง",
+    "rangeStart": "วิดีโอเริ่มต้น",
+    "rangeEnd": "วิดีโอสิ้นสุด",
+    "watchedThrough": "ดูถึงวิดีโอลำดับที่",
+    "speedLabel": "ความเร็วในการเล่น",
+    "customSpeedPlaceholder": "กำหนดเอง",
+    "advancedOptions": "ตัวเลือกขั้นสูง",
+    "userApiKey": "YouTube API Key ของคุณเอง (ไม่บังคับ)",
+    "userApiKeyHint": "ใส่ API Key ของคุณเพื่อหลีกเลี่ยงข้อจำกัดโควตาสาธารณะ",
+    "calculateBtn": "คำนวณความยาวเพลย์ลิสต์",
+    "calculatingBtn": "กำลังคำนวณ…",
+    "loadingTitle": "กำลังวิเคราะห์เพลย์ลิสต์…",
+    "loadingStep1": "กำลังเชื่อมต่อกับ YouTube API…",
+    "loadingStep2": "กำลังดึงข้อมูลเพลย์ลิสต์…",
+    "loadingStep3": "กำลังประมวลผลความยาววิดีโอ…",
+    "loadingStep4": "ใกล้เสร็จแล้ว…",
+    "statTotal": "ความยาวรวม",
+    "statCount": "จำนวนวิดีโอ",
+    "statAvg": "เฉลี่ยต่อวิดีโอ",
+    "statSpeed": "ที่ความเร็วที่เลือก",
+    "statShortest": "วิดีโอที่สั้นที่สุด",
+    "statLongest": "วิดีโอที่ยาวที่สุด",
+    "speedTitle": "เปรียบเทียบตามความเร็ว",
+    "speedColSpeed": "ความเร็ว",
+    "speedColDuration": "เวลาในการรับชม",
+    "speedColSaved": "เวลาที่ประหยัดได้",
+    "speedSelected": "ที่เลือกไว้",
+    "watchPlannerTitle": "ตัววางแผนการดูประจำวัน",
+    "watchPlannerDesc": "ระบุเวลาที่คุณสามารถดูได้ต่อวันเพื่อคำนวณวันที่คุณจะดูจบอย่างแม่นยำ",
+    "plannerMinutes": "นาทีต่อวัน",
+    "plannerStartDate": "วันที่เริ่มดู",
+    "plannerSpeed": "ความเร็ว",
+    "plannerBtn": "คำนวณตารางเวลา",
+    "plannerResultText": "ที่ความเร็ว {speed}× และดูวันละ {minutes} นาที คุณจะดูจบภายใน {days} วัน",
+    "plannerFinishDate": "วันที่คาดว่าจะดูจบ:",
+    "finishByTitle": "คำนวณตามเป้าหมายวันสิ้นสุด",
+    "finishByDesc": "มีวันกำหนดส่งหรือวันที่ต้องดูให้จบไหม? เลือกวันเพื่อดูว่าต้องใช้เวลากี่นาทีต่อวัน",
+    "finishByDate": "ต้องการดูให้จบภายในวันที่",
+    "finishBySpeed": "ความเร็ว",
+    "finishByBtn": "คำนวณเวลาต่อวัน",
+    "finishByResultText": "เพื่อให้จบก่อนวันที่ {date} ที่ความเร็ว {speed}× คุณต้องดูวันละ {daily} ในอีก {days} วันข้างหน้า",
+    "finishByUnfeasible": "เป้าหมายนี้ต้องใช้เวลาดูมากกว่า 23 ชั่วโมงต่อวัน ซึ่งเป็นไปไม่ได้ กรุณาเลือกวันที่ไกลขึ้นหรือเพิ่มความเร็ว",
+    "videoListTitle": "รายการวิดีโอในเพลย์ลิสต์",
+    "showVideos": "แสดงวิดีโอ",
+    "hideVideos": "ซ่อนวิดีโอ",
+    "searchVideosPlaceholder": "ค้นหาชื่อวิดีโอ…",
+    "pageIndicator": "หน้า {current} จาก {total}",
+    "prevPage": "ก่อนหน้า",
+    "nextPage": "ถัดไป",
+    "privateVideo": "ส่วนตัว",
+    "liveVideo": "ถ่ายทอดสด",
+    "unavailableVideo": "ไม่พร้อมใช้งาน",
+    "exportTitle": "แชร์และส่งออกข้อมูล",
+    "copyLink": "คัดลอกลิงก์",
+    "copySummary": "คัดลอกสรุป",
+    "exportCsv": "ส่งออกเป็น CSV",
+    "exportTxt": "ส่งออกเป็น TXT",
+    "copied": "คัดลอกแล้ว!",
+    "errors": {
+      "missingUrl": "กรุณากรอกลิงก์ YouTube",
+      "invalidUrl": "ไม่พบเพลย์ลิสต์หรือวิดีโอ YouTube ที่ถูกต้อง",
+      "urlTooLong": "ลิงก์ที่กรอกยาวเกินไป",
+      "invalidRange": "วิดีโอเริ่มต้นต้องน้อยกว่าหรือเท่ากับวิดีโอสิ้นสุด",
+      "quotaExceeded": "โควตา YouTube API สำหรับวันนี้เต็มแล้ว กรุณาลองใหม่พรุ่งนี้ หรือใส่ API Key ของคุณในตัวเลือกขั้นสูง",
+      "rateLimited": "มีการส่งคำขอมากเกินไป กรุณารอสักครู่แล้วลองใหม่อีกครั้ง",
+      "notFound": "ไม่พบเพลย์ลิสต์หรือวิดีโอ กรุณาตรวจสอบว่าลิงก์ถูกต้องและเพลย์ลิสต์เปิดเป็นสาธารณะ",
+      "forbidden": "การเข้าถึงถูกปฏิเสธโดย YouTube API",
+      "internalError": "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง",
+      "networkError": "ข้อผิดพลาดเครือข่าย: ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์คำนวณได้"
+    }
+  },
+  "features": {
+    "title": "ครบทุกเครื่องมือสำหรับการวางแผนเพลย์ลิสต์ YouTube ของคุณ",
+    "subtitle": "ตั้งแต่การคำนวณเวลาอย่างแม่นยำ ไปจนถึงการเปรียบเทียบความเร็วและการวางแผนการเรียน",
+    "items": [
+      {
+        "icon": "clock",
+        "title": "ความยาวรวมที่แม่นยำ",
+        "desc": "ทราบความยาวเต็มของเพลย์ลิสต์สาธารณะบน YouTube ในหน่วยชั่วโมง นาที และวินาที"
+      },
+      {
+        "icon": "zap",
+        "title": "ตารางเปรียบเทียบความเร็ว",
+        "desc": "ดูเวลาที่ประหยัดได้จริงเมื่อรับชมที่ความเร็ว 0.5× ถึง 3×"
+      },
+      {
+        "icon": "crosshair",
+        "title": "เลือกช่วงวิดีโอได้",
+        "desc": "คำนวณความยาวเฉพาะช่วงของวิดีโอที่คุณต้องการในเพลย์ลิสต์"
+      },
+      {
+        "icon": "play",
+        "title": "เวลาที่เหลืออยู่",
+        "desc": "ระบุวิดีโอล่าสุดที่คุณดูถึง เพื่อดูว่าต้องใช้เวลาอีกกี่ชั่วโมงจึงจะจบ"
+      },
+      {
+        "icon": "calendar-days",
+        "title": "ตัววางแผนรายวัน",
+        "desc": "ระบุเวลาว่างต่อวัน เพื่อทราบวันที่คุณจะเรียนจบคอร์สอย่างแม่นยำ"
+      },
+      {
+        "icon": "flag",
+        "title": "เป้าหมายตามกำหนดวัน",
+        "desc": "ตั้งวันเป้าหมายและรับคำแนะนำเวลาที่ต้องดูในแต่ละวัน"
+      }
+    ]
+  },
+  "howItWorks": {
+    "badge": "วิธีใช้งาน",
+    "title": "วิธีคำนวณความยาวเพลย์ลิสต์ YouTube ใน 3 ขั้นตอน",
+    "subtitle": "คำนวณได้ทันทีโดยไม่ต้องติดตั้งโปรแกรมหรือลงทะเบียนใดๆ",
+    "steps": [
+      {
+        "number": "1",
+        "title": "คัดลอกลิงก์เพลย์ลิสต์",
+        "desc": "บน YouTube ให้คัดลอกลิงก์เพลย์ลิสต์จากแถบที่อยู่เว็บหรือปุ่มแชร์"
+      },
+      {
+        "number": "2",
+        "title": "วางลงในเครื่องคำนวณ",
+        "desc": "วางลิงก์ลงในช่องค้นหา เลือกช่วงวิดีโอหรือความเร็วในการรับชมที่ต้องการ"
+      },
+      {
+        "number": "3",
+        "title": "ดูผลการคำนวณและตารางเวลา",
+        "desc": "ดูความยาวรวม ตารางเปรียบเทียบความเร็ว และวันที่คาดว่าจะดูจบได้ทันที"
+      }
+    ],
+    "supportedBadge": "รูปแบบที่รองรับ",
+    "supportedTitle": "รองรับลิงก์ YouTube รูปแบบใดบ้าง?",
+    "supportedDesc": "เครื่องมือของเรารองรับลิงก์เพลย์ลิสต์มาตรฐาน ลิงก์วิดีโอที่มีเพลย์ลิสต์พ่วง และรหัสเพลย์ลิสต์โดยตรง",
+    "links": [
+      {
+        "label": "ลิงก์เพลย์ลิสต์มาตรฐาน",
+        "example": "youtube.com/playlist?list=PL..."
+      },
+      {
+        "label": "ลิงก์วิดีโอที่มีเพลย์ลิสต์",
+        "example": "youtube.com/watch?v=...&list=PL..."
+      },
+      {
+        "label": "ลิงก์แบบสั้น youtu.be",
+        "example": "youtu.be/...&list=PL..."
+      },
+      {
+        "label": "รหัส ID เพลย์ลิสต์โดยตรง",
+        "example": "PLrAXtmErZgOdP_OalsLiL..."
+      }
+    ]
+  },
+  "faq": {
+    "badge": "คำถามที่พบบ่อย",
+    "title": "คำถามที่พบบ่อยเกี่ยวกับเครื่องคำนวณเพลย์ลิสต์ YouTube",
+    "subtitle": "คำตอบสำหรับทุกข้อสงสัยเกี่ยวกับเวลาในการรับชม ความเร็ว และข้อจำกัดของ YouTube",
+    "items": [
+      {
+        "q": "จะคำนวณความยาวรวมของเพลย์ลิสต์ YouTube ได้อย่างไร?",
+        "a": "เพียงคัดลอกลิงก์เพลย์ลิสต์จาก YouTube นำมาวางในช่องบนเว็บไซต์ของเรา แล้วกด \"คำนวณความยาวเพลย์ลิสต์\" ระบบจะแสดงผลในเวลาไม่ถึง 2 วินาที"
+      },
+      {
+        "q": "สามารถคำนวณเวลาที่ความเร็วเพิ่มขึ้น (1.25×, 1.5×, 2×) ได้ไหม?",
+        "a": "ได้แน่นอน! ตารางความเร็วของเราจะคำนวณให้ตั้งแต่ 0.5× ถึง 3× พร้อมแสดงเวลาที่ประหยัดได้โดยอัตโนมัติ"
+      },
+      {
+        "q": "เครื่องมือนี้ใช้กับเพลย์ลิสต์แบบไม่เป็นสาธารณะหรือส่วนตัวได้ไหม?",
+        "a": "ใช้ได้กับเพลย์ลิสต์แบบไม่เป็นสาธารณะ (Unlisted) หากคุณมีลิงก์ แต่ไม่สามารถใช้กับเพลย์ลิสต์ส่วนตัว (Private) ได้"
+      },
+      {
+        "q": "สามารถคำนวณวิดีโอได้สูงสุดกี่รายการ?",
+        "a": "เรารองรับเพลย์ลิสต์ที่มีวิดีโอหลายร้อยรายการผ่านการแบ่งหน้าอัตโนมัติด้วย YouTube Data API v3 อย่างเป็นทางการ"
+      },
+      {
+        "q": "วิดีโอที่ถูกลบหรือติดสถานะส่วนตัวจะถูกนับอย่างไร?",
+        "a": "วิดีโอที่ถูกลบหรือไม่พร้อมใช้งานจะถูกระบุและทำเครื่องหมายไว้ในรายการ เพื่อให้เวลาโดยรวมยังคงแม่นยำ"
+      },
+      {
+        "q": "สามารถเลือกคำนวณเฉพาะบางวิดีโอได้ไหม?",
+        "a": "ได้ เพียงเลือกแท็บ \"ช่วงวิดีโอ\" แล้วใส่วิดีโอเริ่มต้นและวิดีโอสิ้นสุดที่คุณต้องการ"
+      },
+      {
+        "q": "ตัววางแผนรายวันคำนวณวันที่ดูจบอย่างไร?",
+        "a": "ระบบจะนำเวลาทั้งหมด (ตามความเร็วที่เลือก) มาหารด้วยจำนวนนาทีที่คุณดูต่อวัน แล้วคำนวณหาวันที่เสร็จสิ้นบนปฏิทิน"
+      },
+      {
+        "q": "ใช้งานฟรีหรือไม่?",
+        "a": "ใช้งานได้ฟรี 100% ไม่ต้องสมัครสมาชิก และไม่เก็บข้อมูลส่วนบุคคลของผู้ใช้"
+      },
+      {
+        "q": "ทำไม YouTube ถึงไม่แสดงความยาวรวมของเพลย์ลิสต์?",
+        "a": "YouTube แสดงเฉพาะจำนวนวิดีโอเท่านั้น เครื่องมือของเราจึงใช้ API รวมความยาวของแต่ละวิดีโอเข้าด้วยกัน"
+      },
+      {
+        "q": "สามารถบันทึกหรือส่งออกข้อมูลเพลย์ลิสต์ได้ไหม?",
+        "a": "ได้ คุณสามารถคัดลอกข้อความสรุป หรือดาวน์โหลดเป็นไฟล์ CSV สำหรับเปิดใน Excel หรือ Google Sheets ได้ทันที"
+      }
+    ]
+  },
+  "footer": {
+    "desc": "Free YouTube playlist length and watch time calculator. Calculate total duration, playback-speed estimates, and watch planning schedules.",
+    "notAffiliated": "Not affiliated with YouTube or Google.",
+    "colTools": "Tools",
+    "colResources": "Resources",
+    "colCompany": "Company",
+    "colLegal": "Legal",
+    "allRightsReserved": "All rights reserved.",
+    "trademarkNotice": "YouTube™ is a trademark of Google LLC. This tool is independent and not affiliated with YouTube or Google.",
+    "links": {
+      "playlistCalculator": "Playlist Length Calculator",
+      "durationCalculator": "Duration Calculator",
+      "watchTimeCalculator": "Watch Time Calculator",
+      "remainingTime": "Remaining Time",
+      "watchTime15x": "Watch Time at 1.5x",
+      "watchTime2x": "Watch Time at 2x",
+      "howItWorks": "How It Works",
+      "faq": "FAQ",
+      "allTools": "All Tools",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "disclaimer": "Disclaimer"
+    },
+    "brandDesc": "วิธีที่เร็วและแม่นยำที่สุดในการคำนวณความยาวเพลย์ลิสต์ YouTube และวางแผนเวลาการเรียนของคุณ",
+    "toolsTitle": "เครื่องมือ",
+    "resourcesTitle": "แหล่งข้อมูล",
+    "legalTitle": "ข้อมูลทางกฎหมาย",
+    "copyright": "© {year} YT Playlist Cal (Chrono Play) สงวนลิขสิทธิ์ทั้งหมด"
+  },
+  "pages": {
+    "about": {
+      "breadcrumb": "About",
+      "title": "เกี่ยวกับ YT Playlist Cal",
+      "subtitle": "สร้างขึ้นสำหรับนักเรียน นักศึกษา และทุกคนที่เห็นคุณค่าของเวลา",
+      "whatWeDoTitle": "What We Do",
+      "whatWeDoP1": "YouTube doesn't show you the total length of a playlist. If you're a student planning to finish a programming course, someone binge-watching a series, or a teacher reviewing content — you often need to know the total time commitment upfront.",
+      "whatWeDoP2": "YT Playlist Cal solves that problem: paste any YouTube playlist URL and instantly get the total duration, along with watch-time estimates at different playback speeds (1×, 1.5×, 2×, or custom), a per-video breakdown, and a daily watch planner.",
+      "principlesTitle": "Our Principles",
+      "p1": "YT Playlist Cal สร้างขึ้นเพื่อแก้ปัญหาง่ายๆ: YouTube แสดงเพียงจำนวนวิดีโอ แต่ไม่ได้บอกว่าเพลย์ลิสต์นั้นยาวกี่ชั่วโมง หรือต้องใช้เวลากี่วันในการเรียนจบคอร์ส",
+      "p2": "ภารกิจของเราคือการให้บริการคำนวณที่รวดเร็ว ไม่มีโฆษณารบกวน และเคารพความเป็นส่วนตัวของผู้ใช้งานทุกคน",
+      "p3": "Fast and accurate. Server-side API fetching with edge acceleration.",
+      "trademarkTitle": "Independence & Trademarks",
+      "trademarkP": "YT Playlist Cal is an independent utility. YouTube™ is a trademark of Google LLC. We are not endorsed by, sponsored by, or affiliated with YouTube or Google LLC."
+    },
+    "contact": {
+      "breadcrumb": "Contact",
+      "title": "ติดต่อเรา",
+      "subtitle": "มีคำถาม ข้อเสนอแนะ หรือพบข้อผิดพลาด? ส่งข้อความถึงเราได้ตลอดเวลา",
+      "formType": "Type",
+      "formTypeBug": "Bug Report",
+      "formTypeFeature": "Feature Request",
+      "formTypeQuestion": "Question",
+      "formTypeOther": "Other",
+      "formEmail": "Email (optional)",
+      "formEmailPlaceholder": "you@example.com",
+      "formMessage": "Message",
+      "formMessagePlaceholder": "Describe your issue or suggestion in detail…",
+      "formSubmit": "Send Message",
+      "formSuccess": "Thank you! Your message has been sent.",
+      "faqNoteTitle": "Before reaching out",
+      "faqNoteP": "Many common questions about playlist limits, unavailable videos, and API keys are answered in our FAQ.",
+      "faqLink": "View FAQ →",
+      "emailLabel": "อีเมลติดต่อฝ่ายสนับสนุน",
+      "emailValue": "support@ytplaylistcal.com"
+    },
+    "tools": {
+      "breadcrumb": "Tools",
+      "title": "เครื่องมือเพลย์ลิสต์ YouTube ทั้งหมด",
+      "subtitle": "รวมเครื่องมือคำนวณฟรีสำหรับจัดการเวลาในการดู YouTube ของคุณอย่างมีประสิทธิภาพ"
+    },
+    "duration": {
+      "breadcrumb": "Duration Calculator",
+      "title": "เครื่องคำนวณความยาวเพลย์ลิสต์ YouTube",
+      "subtitle": "ทราบความยาวที่แน่นอนของเพลย์ลิสต์สาธารณะบน YouTube",
+      "whyTitle": "Why Doesn't YouTube Show Playlist Duration?",
+      "whyP": "YouTube does not display the total length of a playlist by default. You can see each video individual duration in the playlist view, but there is no native sum. YT Playlist Cal calculates this instantly via the YouTube Data API.",
+      "supportedTitle": "Supported URL Types",
+      "beyondTitle": "Beyond Just Duration",
+      "ctaBtn": "Calculate Playlist Duration Now",
+      "badge": "คำนวณความยาว"
+    },
+    "watchTime": {
+      "breadcrumb": "Watch Time Calculator",
+      "title": "เครื่องคำนวณเวลาในการรับชม YouTube",
+      "subtitle": "คำนวณเวลาจริงที่คุณต้องใช้ในการดูเพลย์ลิสต์",
+      "ctaBtn": "Calculate Watch Time Now",
+      "badge": "เวลาในการดู"
+    },
+    "remainingTime": {
+      "breadcrumb": "Remaining Time Calculator",
+      "title": "เครื่องคำนวณเวลาที่เหลือของเพลย์ลิสต์",
+      "subtitle": "คำนวณชั่วโมงที่เหลืออยู่จากวิดีโอล่าสุดที่คุณดูถึง",
+      "ctaBtn": "Calculate Remaining Time",
+      "badge": "เวลาที่เหลือ"
+    },
+    "speed15x": {
+      "breadcrumb": "1.5x Speed Calculator",
+      "title": "คำนวณเพลย์ลิสต์ที่ความเร็ว 1.5×",
+      "subtitle": "ทราบเวลาที่คุณประหยัดได้เมื่อรับชมที่ความเร็ว 1.5×",
+      "ctaBtn": "Calculate at 1.5x Speed",
+      "badge": "ความเร็ว 1.5×"
+    },
+    "speed2x": {
+      "breadcrumb": "2x Speed Calculator",
+      "title": "คำนวณเพลย์ลิสต์ที่ความเร็ว 2×",
+      "subtitle": "ลดเวลาเรียนลงครึ่งหนึ่งด้วยการคำนวณที่ความเร็ว 2×",
+      "ctaBtn": "Calculate at 2x Speed",
+      "badge": "ความเร็ว 2×"
+    },
+    "terms": {
+      "breadcrumb": "Terms of Service",
+      "title": "ข้อกำหนดในการให้บริการ",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "By using YT Playlist Cal, you agree to these terms, our Privacy Policy, and our Disclaimer. This is a free, independent utility for estimating YouTube playlist durations.",
+      "subtitle": "เงื่อนไขและข้อกำหนดในการใช้งาน YT Playlist Cal",
+      "intro": "การเข้าใช้งานหรือใช้บริการบนเว็บไซต์นี้ถือว่าคุณยอมรับข้อกำหนดดังต่อไปนี้"
+    },
+    "privacy": {
+      "breadcrumb": "Privacy Policy",
+      "title": "นโยบายความเป็นส่วนตัว",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "We value your privacy. We do not store your playlist URLs, track personal identities, or sell data. All calculations occur transiently.",
+      "subtitle": "การปกป้องข้อมูลและความเป็นส่วนตัวของคุณบน YT Playlist Cal",
+      "intro": "เราให้ความสำคัญกับความเป็นส่วนตัวของคุณ เราไม่เก็บข้อมูลส่วนบุคคลและไม่บันทึกประวัติการค้นหาเพลย์ลิสต์ของคุณ"
+    },
+    "disclaimer": {
+      "breadcrumb": "Disclaimer",
+      "title": "ข้อสงวนสิทธิ์",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "YT Playlist Cal is an independent utility tool. We are not affiliated with, authorized by, or endorsed by YouTube or Google LLC.",
+      "subtitle": "ประกาศทางกฎหมายและเครื่องหมายการค้า",
+      "intro": "YT Playlist Cal เป็นเครื่องมืออิสระและไม่มีความเกี่ยวข้องกับ YouTube หรือ Google LLC"
+    },
+    "error404": {
+      "code": "404",
+      "title": "ไม่พบหน้าที่ต้องการ",
+      "desc": "The page you're looking for doesn't exist. It may have been moved, renamed, or never existed.",
+      "btn": "Go to the Calculator",
+      "allTools": "Browse all tools →",
+      "subtitle": "หน้าที่คุณกำลังค้นหาไม่มีอยู่หรืออาจถูกย้ายไปแล้ว",
+      "backHome": "กลับสู่หน้าแรก"
+    },
+    "error500": {
+      "code": "500",
+      "title": "เกิดข้อผิดพลาดของเซิร์ฟเวอร์",
+      "desc": "Something went wrong on our servers while processing this request. Please try refreshing or check back shortly.",
+      "btn": "Go to the Calculator",
+      "reportBtn": "Report an issue",
+      "allTools": "Browse all tools →",
+      "subtitle": "เกิดข้อผิดพลาดชั่วคราวบนเซิร์ฟเวอร์ของเรา กรุณาลองใหม่อีกครั้งในภายหลัง",
+      "backHome": "กลับสู่หน้าแรก"
+    }
+  },
+  "meta": {
+    "home": {
+      "title": "เครื่องคำนวณความยาวเพลย์ลิสต์ YouTube | YT Playlist Cal",
+      "desc": "คำนวณความยาวเพลย์ลิสต์ YouTube ได้อย่างแม่นยำ รองรับความเร็ว 1.25×-3× เลือกช่วงวิดีโอ คำนวณเวลาที่เหลือ และวางแผนตารางเรียน"
+    },
+    "tools": {
+      "title": "เครื่องมือเพลย์ลิสต์ YouTube | YT Playlist Cal",
+      "desc": "รวมเครื่องมือคำนวณความยาว การประหยัดเวลาที่ความเร็วต่างๆ และการวางแผนดูเพลย์ลิสต์ YouTube ฟรี"
+    },
+    "duration": {
+      "title": "เครื่องคำนวณความยาวเพลย์ลิสต์ YouTube | YT Playlist Cal",
+      "desc": "ดูความยาวรวมของเพลย์ลิสต์ YouTube ในหน่วยชั่วโมง นาที และวินาทีได้ในไม่กี่วินาที"
+    },
+    "watchTime": {
+      "title": "เครื่องคำนวณเวลาในการรับชม YouTube | YT Playlist Cal",
+      "desc": "คำนวณเวลาในการรับชมเพลย์ลิสต์ YouTube ที่ความเร็วปกติและความเร็วสูงขึ้น"
+    },
+    "remainingTime": {
+      "title": "เครื่องคำนวณเวลาที่เหลือของเพลย์ลิสต์ | YT Playlist Cal",
+      "desc": "ดูว่าต้องใช้เวลาอีกกี่ชั่วโมงเพื่อดูเพลย์ลิสต์ YouTube ให้จบจากวิดีโอที่คุณดูค้างไว้"
+    },
+    "speed15x": {
+      "title": "คำนวณความยาวเพลย์ลิสต์ที่ความเร็ว 1.5× | YT Playlist Cal",
+      "desc": "คำนวณเวลาเพลย์ลิสต์ YouTube ที่ความเร็ว 1.5× และดูเวลาที่คุณสามารถประหยัดได้"
+    },
+    "speed2x": {
+      "title": "คำนวณความยาวเพลย์ลิสต์ที่ความเร็ว 2× | YT Playlist Cal",
+      "desc": "ประหยัดเวลาเรียนครึ่งหนึ่ง คำนวณความยาวเพลย์ลิสต์ YouTube ที่ความเร็ว 2× ได้ทันที"
+    },
+    "howItWorks": {
+      "title": "วิธีทำงานของเครื่องคำนวณเพลย์ลิสต์ | YT Playlist Cal",
+      "desc": "ขั้นตอนการคำนวณความยาวเพลย์ลิสต์อย่างแม่นยำด้วย YouTube Data API อย่างเป็นทางการ"
+    },
+    "faq": {
+      "title": "คำถามที่พบบ่อยเกี่ยวกับเพลย์ลิสต์ YouTube | YT Playlist Cal",
+      "desc": "ตอบทุกคำถามเกี่ยวกับการคำนวณเวลา ความเร็ววิดีโอ และข้อจำกัดของ YouTube API"
+    },
+    "about": {
+      "title": "เกี่ยวกับเรา — YT Playlist Cal",
+      "desc": "ทำความรู้จัก YT Playlist Cal: เครื่องมือคำนวณความยาว YouTube ที่รวดเร็ว ปลอดภัย และใช้งานฟรี"
+    },
+    "contact": {
+      "title": "ติดต่อเรา — YT Playlist Cal",
+      "desc": "ติดต่อทีมงาน YT Playlist Cal เพื่อสอบถาม แนะนำ หรือแจ้งปัญหาการใช้งาน"
+    },
+    "privacy": {
+      "title": "นโยบายความเป็นส่วนตัว | YT Playlist Cal",
+      "desc": "รายละเอียดการคุ้มครองข้อมูลส่วนบุคคลบนแพลตฟอร์ม YT Playlist Cal"
+    },
+    "terms": {
+      "title": "ข้อกำหนดในการให้บริการ | YT Playlist Cal",
+      "desc": "ข้อกำหนดและเงื่อนไขการใช้งานเครื่องคำนวณเพลย์ลิสต์ YT Playlist Cal"
+    },
+    "disclaimer": {
+      "title": "ข้อสงวนสิทธิ์ | YT Playlist Cal",
+      "desc": "ข้อมูลทางกฎหมายและเครื่องหมายการค้าของบริการ YT Playlist Cal"
+    },
+    "error404": {
+      "title": "ไม่พบหน้าเว็บ — YT Playlist Cal",
+      "desc": "หน้าที่คุณเรียกหาไม่พบในระบบของ YT Playlist Cal"
+    },
+    "error500": {
+      "title": "เซิร์ฟเวอร์เกิดข้อผิดพลาด — YT Playlist Cal",
+      "desc": "เกิดข้อผิดพลาดในการโหลดหน้าเว็บ กรุณาลองใหม่อีกครั้งในภายหลัง"
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "เครื่องคำนวณความยาวเพลย์ลิสต์ YouTube | YT Playlist Cal",
+      "desc": "คำนวณความยาวเพลย์ลิสต์ YouTube ได้อย่างแม่นยำ รองรับความเร็ว 1.25×-3× เลือกช่วงวิดีโอ คำนวณเวลาที่เหลือ และวางแผนตารางเรียน"
+    },
+    "tools": {
+      "title": "เครื่องมือเพลย์ลิสต์ YouTube | YT Playlist Cal",
+      "desc": "รวมเครื่องมือคำนวณความยาว การประหยัดเวลาที่ความเร็วต่างๆ และการวางแผนดูเพลย์ลิสต์ YouTube ฟรี"
+    },
+    "duration": {
+      "title": "เครื่องคำนวณความยาวเพลย์ลิสต์ YouTube | YT Playlist Cal",
+      "desc": "ดูความยาวรวมของเพลย์ลิสต์ YouTube ในหน่วยชั่วโมง นาที และวินาทีได้ในไม่กี่วินาที"
+    },
+    "watchTime": {
+      "title": "เครื่องคำนวณเวลาในการรับชม YouTube | YT Playlist Cal",
+      "desc": "คำนวณเวลาในการรับชมเพลย์ลิสต์ YouTube ที่ความเร็วปกติและความเร็วสูงขึ้น"
+    },
+    "remainingTime": {
+      "title": "เครื่องคำนวณเวลาที่เหลือของเพลย์ลิสต์ | YT Playlist Cal",
+      "desc": "ดูว่าต้องใช้เวลาอีกกี่ชั่วโมงเพื่อดูเพลย์ลิสต์ YouTube ให้จบจากวิดีโอที่คุณดูค้างไว้"
+    },
+    "speed15x": {
+      "title": "คำนวณความยาวเพลย์ลิสต์ที่ความเร็ว 1.5× | YT Playlist Cal",
+      "desc": "คำนวณเวลาเพลย์ลิสต์ YouTube ที่ความเร็ว 1.5× และดูเวลาที่คุณสามารถประหยัดได้"
+    },
+    "speed2x": {
+      "title": "คำนวณความยาวเพลย์ลิสต์ที่ความเร็ว 2× | YT Playlist Cal",
+      "desc": "ประหยัดเวลาเรียนครึ่งหนึ่ง คำนวณความยาวเพลย์ลิสต์ YouTube ที่ความเร็ว 2× ได้ทันที"
+    },
+    "howItWorks": {
+      "title": "วิธีทำงานของเครื่องคำนวณเพลย์ลิสต์ | YT Playlist Cal",
+      "desc": "ขั้นตอนการคำนวณความยาวเพลย์ลิสต์อย่างแม่นยำด้วย YouTube Data API อย่างเป็นทางการ"
+    },
+    "faq": {
+      "title": "คำถามที่พบบ่อยเกี่ยวกับเพลย์ลิสต์ YouTube | YT Playlist Cal",
+      "desc": "ตอบทุกคำถามเกี่ยวกับการคำนวณเวลา ความเร็ววิดีโอ และข้อจำกัดของ YouTube API"
+    },
+    "about": {
+      "title": "เกี่ยวกับเรา — YT Playlist Cal",
+      "desc": "ทำความรู้จัก YT Playlist Cal: เครื่องมือคำนวณความยาว YouTube ที่รวดเร็ว ปลอดภัย และใช้งานฟรี"
+    },
+    "contact": {
+      "title": "ติดต่อเรา — YT Playlist Cal",
+      "desc": "ติดต่อทีมงาน YT Playlist Cal เพื่อสอบถาม แนะนำ หรือแจ้งปัญหาการใช้งาน"
+    },
+    "privacy": {
+      "title": "นโยบายความเป็นส่วนตัว | YT Playlist Cal",
+      "desc": "รายละเอียดการคุ้มครองข้อมูลส่วนบุคคลบนแพลตฟอร์ม YT Playlist Cal"
+    },
+    "terms": {
+      "title": "ข้อกำหนดในการให้บริการ | YT Playlist Cal",
+      "desc": "ข้อกำหนดและเงื่อนไขการใช้งานเครื่องคำนวณเพลย์ลิสต์ YT Playlist Cal"
+    },
+    "disclaimer": {
+      "title": "ข้อสงวนสิทธิ์ | YT Playlist Cal",
+      "desc": "ข้อมูลทางกฎหมายและเครื่องหมายการค้าของบริการ YT Playlist Cal"
+    },
+    "error404": {
+      "title": "ไม่พบหน้าเว็บ — YT Playlist Cal",
+      "desc": "หน้าที่คุณเรียกหาไม่พบในระบบของ YT Playlist Cal"
+    },
+    "error500": {
+      "title": "เซิร์ฟเวอร์เกิดข้อผิดพลาด — YT Playlist Cal",
+      "desc": "เกิดข้อผิดพลาดในการโหลดหน้าเว็บ กรุณาลองใหม่อีกครั้งในภายหลัง"
+    }
+  }
+}

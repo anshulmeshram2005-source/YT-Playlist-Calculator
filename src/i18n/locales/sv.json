@@ -1,0 +1,517 @@
+{
+  "brand": {
+    "name": "YT Playlist Cal",
+    "tagline": "Gratis kalkylator för längd och visningstid för YouTube-spellistor.",
+    "notAffiliated": "Inte ansluten till YouTube eller Google."
+  },
+  "nav": {
+    "home": "Hem",
+    "tools": "Verktyg",
+    "howItWorks": "Hur det fungerar",
+    "faq": "Vanliga frågor",
+    "about": "Om oss",
+    "contact": "Kontakt",
+    "tryCalculator": "Testa kalkylatorn",
+    "selectLanguage": "Välj språk",
+    "searchLanguage": "Sök språk…",
+    "openMenu": "Öppna navigeringsmeny",
+    "closeMenu": "Stäng navigeringsmeny",
+    "toggleTheme": "Växla mörkt läge"
+  },
+  "hero": {
+    "badge": "Snabb & gratis YouTube-kalkylator",
+    "title": "Kalkylator för YouTube Spellistlängd",
+    "subtitle": "Beräkna total spellängd, visningstid vid hastigheter från 1.25× till 3× och planera ditt studieschema direkt."
+  },
+  "calculator": {
+    "modeFull": "Hela spellistan",
+    "modeRange": "Videointervall",
+    "modeRemaining": "Återstående tid",
+    "urlLabel": "URL eller ID för YouTube-spellista eller video",
+    "urlPlaceholder": "Klistra in länk till spellista, video eller spelliste-ID…",
+    "pasteBtn": "Klistra in",
+    "demoBtn": "Visa demo",
+    "rangeStart": "Startvideo",
+    "rangeEnd": "Slutvideo",
+    "watchedThrough": "Har redan sett fram till video nr",
+    "speedLabel": "Uppspelningshastighet",
+    "customSpeedPlaceholder": "Anpassad",
+    "advancedOptions": "Avancerade alternativ",
+    "userApiKey": "Egen YouTube API-nyckel (valfritt)",
+    "userApiKeyHint": "Ange din egen API-nyckel för att undvika begränsningar i den delade kvoten.",
+    "calculateBtn": "Beräkna spellistans längd",
+    "calculatingBtn": "Beräknar…",
+    "loadingTitle": "Analyserar spellista…",
+    "loadingStep1": "Ansluter till YouTube API…",
+    "loadingStep2": "Hämtar information om spellistan…",
+    "loadingStep3": "Bearbetar videornas längd…",
+    "loadingStep4": "Nästan klart…",
+    "statTotal": "Total längd",
+    "statCount": "Antal videor",
+    "statAvg": "Genomsnitt per video",
+    "statSpeed": "Vid vald hastighet",
+    "statShortest": "Kortaste video",
+    "statLongest": "Längsta video",
+    "speedTitle": "Jämförelse av hastigheter",
+    "speedColSpeed": "Hastighet",
+    "speedColDuration": "Visningstid",
+    "speedColSaved": "Sparad tid",
+    "speedSelected": "vald",
+    "watchPlannerTitle": "Daglig studieplanerare",
+    "watchPlannerDesc": "Ange hur många minuter du kan titta per dag för att få ett exakt slutdatum.",
+    "plannerMinutes": "Minuter per dag",
+    "plannerStartDate": "Startdatum",
+    "plannerSpeed": "Hastighet",
+    "plannerBtn": "Beräkna schema",
+    "plannerResultText": "Vid {speed}× hastighet och {minutes} min/dag är du klar om {days} dag{plural}.",
+    "plannerFinishDate": "Beräknat slutdatum:",
+    "finishByTitle": "Kalkylator för deadline",
+    "finishByDesc": "Har du ett fast slutdatum? Välj datum så beräknar vi hur mycket du måste se varje dag.",
+    "finishByDate": "Klart senast",
+    "finishBySpeed": "Hastighet",
+    "finishByBtn": "Beräkna daglig tid",
+    "finishByResultText": "För att bli klar före {date} i {speed}× måste du titta i {daily} per dag under de kommande {days} dag{plural}.",
+    "finishByUnfeasible": "Målet kräver mer än 23 timmars tittande per dag, vilket inte är genomförbart. Välj ett senare datum eller öka hastigheten.",
+    "videoListTitle": "Videolista",
+    "showVideos": "Visa videor",
+    "hideVideos": "Dölj videor",
+    "searchVideosPlaceholder": "Sök videotitlar…",
+    "pageIndicator": "Sida {current} av {total}",
+    "prevPage": "Föregående",
+    "nextPage": "Nästa",
+    "privateVideo": "Privat",
+    "liveVideo": "Direktsändning",
+    "unavailableVideo": "Inte tillgänglig",
+    "exportTitle": "Dela och exportera",
+    "copyLink": "Kopiera länk",
+    "copySummary": "Kopiera sammanfattning",
+    "exportCsv": "Exportera CSV",
+    "exportTxt": "Exportera TXT",
+    "copied": "Kopierat!",
+    "errors": {
+      "missingUrl": "Vänligen ange en YouTube-länk.",
+      "invalidUrl": "Kunde inte identifiera en giltig YouTube-spellista eller video.",
+      "urlTooLong": "Den angivna länken är för lång.",
+      "invalidRange": "Startvideon måste vara lägre än eller lika med slutvideon.",
+      "quotaExceeded": "Dagens kvot för YouTube API har uppnåtts. Försök igen i morgon eller ange en egen nyckel under Avancerade alternativ.",
+      "rateLimited": "För många förfrågningar samtidigt. Vänta en stund och prova igen.",
+      "notFound": "Spellistan eller videon hittades inte. Kontrollera att länken stämmer och att spellistan är offentlig.",
+      "forbidden": "Åtkomst nekades av YouTube API.",
+      "internalError": "Ett serverfel inträffade. Vänligen försök igen.",
+      "networkError": "Nätverksfel: Kunde inte ansluta till kalkylatorservern."
+    }
+  },
+  "features": {
+    "title": "Allt du behöver för att planera dina YouTube-spellistor",
+    "subtitle": "Från exakt total speltid till hastighetsjämförelser och dagliga studiescheman.",
+    "items": [
+      {
+        "icon": "clock",
+        "title": "Exakt total längd",
+        "desc": "Få den exakta längden för valfri offentlig YouTube-spellista i timmar, minuter och sekunder."
+      },
+      {
+        "icon": "zap",
+        "title": "Hastighetstabell",
+        "desc": "Se hur mycket tid du sparar genom att titta i hastigheter från 0.5× till 3×."
+      },
+      {
+        "icon": "crosshair",
+        "title": "Valt videointervall",
+        "desc": "Beräkna den exakta tiden för en viss del av spellistan."
+      },
+      {
+        "icon": "play",
+        "title": "Återstående tid",
+        "desc": "Ange vilken video du senast såg och få reda på hur många timmar som återstår."
+      },
+      {
+        "icon": "calendar-days",
+        "title": "Daglig planerare",
+        "desc": "Fyll i din dagliga tid och få ett exakt datum för när du blir klar med kursen."
+      },
+      {
+        "icon": "flag",
+        "title": "Mål med deadline",
+        "desc": "Sätt ett slutdatum och få en rekommenderad daglig visningstid."
+      }
+    ]
+  },
+  "howItWorks": {
+    "badge": "Hur det fungerar",
+    "title": "Hur du beräknar längden på en YouTube-spellista i 3 steg",
+    "subtitle": "Direkt beräkning utan registrering eller programinstallation.",
+    "steps": [
+      {
+        "number": "1",
+        "title": "Kopiera länken till spellistan",
+        "desc": "På YouTube kopierar du spellistans länk från adressfältet eller via Dela-knappen."
+      },
+      {
+        "number": "2",
+        "title": "Klistra in i kalkylatorn",
+        "desc": "Klistra in adressen i sökfältet och välj eventuellt intervall eller hastighet."
+      },
+      {
+        "number": "3",
+        "title": "Se tider och schema",
+        "desc": "Få omedelbar tillgång till total längd, hastighetstabell och beräknat slutdatum."
+      }
+    ],
+    "supportedBadge": "Stödda format",
+    "supportedTitle": "Vilka typer av YouTube-länkar stöds?",
+    "supportedDesc": "Vår kalkylator stöder vanliga spellistelänkar, videolänkar med spellisteparametrar samt rena spelliste-ID:n.",
+    "links": [
+      {
+        "label": "Standard spellistelänk",
+        "example": "youtube.com/playlist?list=PL..."
+      },
+      {
+        "label": "Videolänk med spellista",
+        "example": "youtube.com/watch?v=...&list=PL..."
+      },
+      {
+        "label": "Kortlänk youtu.be",
+        "example": "youtu.be/...&list=PL..."
+      },
+      {
+        "label": "Direkt spelliste-ID",
+        "example": "PLrAXtmErZgOdP_OalsLiL..."
+      }
+    ]
+  },
+  "faq": {
+    "badge": "FAQ",
+    "title": "Vanliga frågor om spellistekalkylatorn",
+    "subtitle": "Allt du behöver veta om beräkning av speltid, hastigheter och begränsningar.",
+    "items": [
+      {
+        "q": "Hur beräknar jag den totala längden på en YouTube-spellista?",
+        "a": "Kopiera länken till spellistan på YouTube, klistra in den i fältet på vår webbplats och klicka på \"Beräkna spellistans längd\". Resultatet visas på under två sekunder."
+      },
+      {
+        "q": "Kan jag beräkna tiden vid snabbare hastighet (1.25×, 1.5×, 2×)?",
+        "a": "Självklart! Vår hastighetstabell visar tider från 0.5× till 3× och anger exakt hur mycket tid du sparar."
+      },
+      {
+        "q": "Fungerar kalkylatorn med olistade eller privata spellistor?",
+        "a": "Den fungerar med olistade (unlisted) spellistor så länge du har länken, men privata spellistor kan inte nås via YouTube API."
+      },
+      {
+        "q": "Vad är maxgränsen för antal videor i en spellista?",
+        "a": "Vi har stöd för spellistor med hundratals videor genom automatisk sidnumrering via officiella YouTube Data API v3."
+      },
+      {
+        "q": "Vad händer med borttagna eller privata videor i listan?",
+        "a": "Borttagna och otillgängliga videor upptäcks och markeras tydligt i listan så att den sammanlagda tiden blir korrekt."
+      },
+      {
+        "q": "Kan jag beräkna bara ett urval av videorna?",
+        "a": "Ja, välj fliken \"Videointervall\" och ange start- och slutvideon du vill räkna på."
+      },
+      {
+        "q": "Hur räknar den dagliga planeraren ut slutdatumet?",
+        "a": "Genom att dividera den totala tiden (i vald hastighet) med det antal minuter du planerar att titta varje dag."
+      },
+      {
+        "q": "Är verktyget gratis?",
+        "a": "Ja, 100% gratis, kräver inget konto och respekterar användarnas integritet."
+      },
+      {
+        "q": "Varför visar inte YouTube den totala längden själv?",
+        "a": "YouTube visar endast antalet videor. Vårt verktyg summerar videornas enskilda tider via API:et."
+      },
+      {
+        "q": "Kan jag spara eller ladda ner videolistan?",
+        "a": "Ja, du kan kopiera en textsummering eller ladda ner hela listan som en CSV-fil för Excel eller Google Kalkylark."
+      }
+    ]
+  },
+  "footer": {
+    "desc": "Free YouTube playlist length and watch time calculator. Calculate total duration, playback-speed estimates, and watch planning schedules.",
+    "notAffiliated": "Not affiliated with YouTube or Google.",
+    "colTools": "Tools",
+    "colResources": "Resources",
+    "colCompany": "Company",
+    "colLegal": "Legal",
+    "allRightsReserved": "All rights reserved.",
+    "trademarkNotice": "YouTube™ is a trademark of Google LLC. This tool is independent and not affiliated with YouTube or Google.",
+    "links": {
+      "playlistCalculator": "Playlist Length Calculator",
+      "durationCalculator": "Duration Calculator",
+      "watchTimeCalculator": "Watch Time Calculator",
+      "remainingTime": "Remaining Time",
+      "watchTime15x": "Watch Time at 1.5x",
+      "watchTime2x": "Watch Time at 2x",
+      "howItWorks": "How It Works",
+      "faq": "FAQ",
+      "allTools": "All Tools",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "disclaimer": "Disclaimer"
+    },
+    "brandDesc": "Det snabbaste och mest exakta sättet att beräkna YouTube-spellistors längd och planera dina studier.",
+    "toolsTitle": "Verktyg",
+    "resourcesTitle": "Resurser",
+    "legalTitle": "Juridik",
+    "copyright": "© {year} YT Playlist Cal (Chrono Play). Alla rättigheter förbehållna."
+  },
+  "pages": {
+    "about": {
+      "breadcrumb": "About",
+      "title": "Om YT Playlist Cal",
+      "subtitle": "Skapad för studenter, yrkesverksamma och alla som värdesätter sin tid.",
+      "whatWeDoTitle": "What We Do",
+      "whatWeDoP1": "YouTube doesn't show you the total length of a playlist. If you're a student planning to finish a programming course, someone binge-watching a series, or a teacher reviewing content — you often need to know the total time commitment upfront.",
+      "whatWeDoP2": "YT Playlist Cal solves that problem: paste any YouTube playlist URL and instantly get the total duration, along with watch-time estimates at different playback speeds (1×, 1.5×, 2×, or custom), a per-video breakdown, and a daily watch planner.",
+      "principlesTitle": "Our Principles",
+      "p1": "YT Playlist Cal skapades för att lösa ett enkelt problem: YouTube visar antalet videor men inte hur många timmar det tar att avsluta en spellista.",
+      "p2": "Vårt mål är att erbjuda blixtsnabba beräkningar utan störande annonser eller krav på inloggning.",
+      "p3": "Fast and accurate. Server-side API fetching with edge acceleration.",
+      "trademarkTitle": "Independence & Trademarks",
+      "trademarkP": "YT Playlist Cal is an independent utility. YouTube™ is a trademark of Google LLC. We are not endorsed by, sponsored by, or affiliated with YouTube or Google LLC."
+    },
+    "contact": {
+      "breadcrumb": "Contact",
+      "title": "Kontakta oss",
+      "subtitle": "Har du frågor, förslag eller vill rapportera ett fel? Hör gärna av dig till oss.",
+      "formType": "Type",
+      "formTypeBug": "Bug Report",
+      "formTypeFeature": "Feature Request",
+      "formTypeQuestion": "Question",
+      "formTypeOther": "Other",
+      "formEmail": "Email (optional)",
+      "formEmailPlaceholder": "you@example.com",
+      "formMessage": "Message",
+      "formMessagePlaceholder": "Describe your issue or suggestion in detail…",
+      "formSubmit": "Send Message",
+      "formSuccess": "Thank you! Your message has been sent.",
+      "faqNoteTitle": "Before reaching out",
+      "faqNoteP": "Many common questions about playlist limits, unavailable videos, and API keys are answered in our FAQ.",
+      "faqLink": "View FAQ →",
+      "emailLabel": "Support-e-post",
+      "emailValue": "support@ytplaylistcal.com"
+    },
+    "tools": {
+      "breadcrumb": "Tools",
+      "title": "Alla verktyg för YouTube-spellistor",
+      "subtitle": "En samling kostnadsfria verktyg för att optimera din tid på YouTube."
+    },
+    "duration": {
+      "breadcrumb": "Duration Calculator",
+      "title": "Kalkylator för YouTube Spellistlängd",
+      "subtitle": "Ta reda på den exakta tiden för alla offentliga YouTube-spellistor.",
+      "whyTitle": "Why Doesn't YouTube Show Playlist Duration?",
+      "whyP": "YouTube does not display the total length of a playlist by default. You can see each video individual duration in the playlist view, but there is no native sum. YT Playlist Cal calculates this instantly via the YouTube Data API.",
+      "supportedTitle": "Supported URL Types",
+      "beyondTitle": "Beyond Just Duration",
+      "ctaBtn": "Calculate Playlist Duration Now",
+      "badge": "Längdkalkylator"
+    },
+    "watchTime": {
+      "breadcrumb": "Watch Time Calculator",
+      "title": "Kalkylator för YouTube Visningstid",
+      "subtitle": "Räkna ut hur lång tid det faktiskt tar att se igenom en spellista.",
+      "ctaBtn": "Calculate Watch Time Now",
+      "badge": "Visningstid"
+    },
+    "remainingTime": {
+      "breadcrumb": "Remaining Time Calculator",
+      "title": "Kalkylator för Återstående Tid i Spellista",
+      "subtitle": "Räkna ut hur många timmar som återstår från den video du senast såg.",
+      "ctaBtn": "Calculate Remaining Time",
+      "badge": "Återstående Tid"
+    },
+    "speed15x": {
+      "breadcrumb": "1.5x Speed Calculator",
+      "title": "Beräkna Spellista i 1.5× Hastighet",
+      "subtitle": "Se hur mycket tid du sparar när du tittar i 1.5× hastighet.",
+      "ctaBtn": "Calculate at 1.5x Speed",
+      "badge": "1.5× Hastighet"
+    },
+    "speed2x": {
+      "breadcrumb": "2x Speed Calculator",
+      "title": "Beräkna Spellista i 2× Hastighet",
+      "subtitle": "Halvera din studietid med exakt beräkning i dubbel hastighet.",
+      "ctaBtn": "Calculate at 2x Speed",
+      "badge": "2× Hastighet"
+    },
+    "terms": {
+      "breadcrumb": "Terms of Service",
+      "title": "Användarvillkor",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "By using YT Playlist Cal, you agree to these terms, our Privacy Policy, and our Disclaimer. This is a free, independent utility for estimating YouTube playlist durations.",
+      "subtitle": "Villkor för användning av YT Playlist Cal.",
+      "intro": "Genom att använda denna webbplats godkänner du följande villkor."
+    },
+    "privacy": {
+      "breadcrumb": "Privacy Policy",
+      "title": "Integritetspolicy",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "We value your privacy. We do not store your playlist URLs, track personal identities, or sell data. All calculations occur transiently.",
+      "subtitle": "Hur vi skyddar dina uppgifter och din integritet.",
+      "intro": "Vi värnar om din integritet. Vi samlar inte in personuppgifter och lagrar inte din sökhistorik."
+    },
+    "disclaimer": {
+      "breadcrumb": "Disclaimer",
+      "title": "Ansvarsfriskrivning",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "YT Playlist Cal is an independent utility tool. We are not affiliated with, authorized by, or endorsed by YouTube or Google LLC.",
+      "subtitle": "Juridisk information och varumärken.",
+      "intro": "YT Playlist Cal är ett oberoende verktyg och är inte kopplat till YouTube eller Google LLC."
+    },
+    "error404": {
+      "code": "404",
+      "title": "Sidan hittades inte",
+      "desc": "The page you're looking for doesn't exist. It may have been moved, renamed, or never existed.",
+      "btn": "Go to the Calculator",
+      "allTools": "Browse all tools →",
+      "subtitle": "Sidan du söker finns inte eller har flyttats.",
+      "backHome": "Tillbaka till startsidan"
+    },
+    "error500": {
+      "code": "500",
+      "title": "Internt serverfel",
+      "desc": "Something went wrong on our servers while processing this request. Please try refreshing or check back shortly.",
+      "btn": "Go to the Calculator",
+      "reportBtn": "Report an issue",
+      "allTools": "Browse all tools →",
+      "subtitle": "Ett tillfälligt serverfel har inträffat. Vänligen försök igen om en stund.",
+      "backHome": "Tillbaka till startsidan"
+    }
+  },
+  "meta": {
+    "home": {
+      "title": "Kalkylator för YouTube Spellistlängd | YT Playlist Cal",
+      "desc": "Beräkna längden på alla YouTube-spellistor med hög precision. Stöd för hastigheter från 1.25× till 3×, videointervall, återstående tid och studieplanering."
+    },
+    "tools": {
+      "title": "Verktyg för YouTube-spellistor | YT Playlist Cal",
+      "desc": "Gratis verktyg för att räkna ut längd, sparad tid vid hastighetsökning och studieplanering för YouTube."
+    },
+    "duration": {
+      "title": "Kalkylator för YouTube Spellistlängd | YT Playlist Cal",
+      "desc": "Få den exakta längden på vilken YouTube-spellista som helst i timmar, minuter och sekunder."
+    },
+    "watchTime": {
+      "title": "Kalkylator för YouTube Visningstid | YT Playlist Cal",
+      "desc": "Beräkna verklig visningstid för att titta på en YouTube-spellista i normal och högre hastighet."
+    },
+    "remainingTime": {
+      "title": "Kalkylator för Återstående Tid i Spellista | YT Playlist Cal",
+      "desc": "Ta reda på hur många timmar du har kvar för att se färdigt en spellista på YouTube."
+    },
+    "speed15x": {
+      "title": "Beräkna Spellista i 1.5× Hastighet | YT Playlist Cal",
+      "desc": "Räkna ut visningstiden för en YouTube-spellista i 1.5× hastighet och se hur mycket tid du sparar."
+    },
+    "speed2x": {
+      "title": "Beräkna Spellista i 2× Hastighet | YT Playlist Cal",
+      "desc": "Halvera din tittartid. Beräkna längden på YouTube-spellistor i 2× hastighet direkt online."
+    },
+    "howItWorks": {
+      "title": "Hur kalkylatorn för spellistor fungerar | YT Playlist Cal",
+      "desc": "Steg-för-steg-guide om hur vi beräknar längden på YouTube-spellistor via officiella YouTube API."
+    },
+    "faq": {
+      "title": "Vanliga frågor om YouTube-spellistor | YT Playlist Cal",
+      "desc": "Svar på vanliga frågor om speltidsberäkning, hastigheter och API-begränsningar."
+    },
+    "about": {
+      "title": "Om oss — YT Playlist Cal",
+      "desc": "Läs mer om YT Playlist Cal: en snabb, säker och gratis kalkylator för YouTube-spellistor."
+    },
+    "contact": {
+      "title": "Kontakt — YT Playlist Cal",
+      "desc": "Kontakta YT Playlist Cal-teamet för support, frågor eller feedback."
+    },
+    "privacy": {
+      "title": "Integritetspolicy | YT Playlist Cal",
+      "desc": "Läs om hur vi skyddar användardata och integritet på YT Playlist Cal."
+    },
+    "terms": {
+      "title": "Användarvillkor | YT Playlist Cal",
+      "desc": "Villkor och riktlinjer för att använda gratiskalkylatorn på YT Playlist Cal."
+    },
+    "disclaimer": {
+      "title": "Ansvarsfriskrivning | YT Playlist Cal",
+      "desc": "Juridisk information och varumärkesdeklaration för YT Playlist Cal."
+    },
+    "error404": {
+      "title": "Sidan hittades inte — YT Playlist Cal",
+      "desc": "Den efterfrågade sidan kunde inte hittas på YT Playlist Cal."
+    },
+    "error500": {
+      "title": "Serverfel — YT Playlist Cal",
+      "desc": "Ett fel uppstod på servern. Försök igen om en stund."
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Kalkylator för YouTube Spellistlängd | YT Playlist Cal",
+      "desc": "Beräkna längden på alla YouTube-spellistor med hög precision. Stöd för hastigheter från 1.25× till 3×, videointervall, återstående tid och studieplanering."
+    },
+    "tools": {
+      "title": "Verktyg för YouTube-spellistor | YT Playlist Cal",
+      "desc": "Gratis verktyg för att räkna ut längd, sparad tid vid hastighetsökning och studieplanering för YouTube."
+    },
+    "duration": {
+      "title": "Kalkylator för YouTube Spellistlängd | YT Playlist Cal",
+      "desc": "Få den exakta längden på vilken YouTube-spellista som helst i timmar, minuter och sekunder."
+    },
+    "watchTime": {
+      "title": "Kalkylator för YouTube Visningstid | YT Playlist Cal",
+      "desc": "Beräkna verklig visningstid för att titta på en YouTube-spellista i normal och högre hastighet."
+    },
+    "remainingTime": {
+      "title": "Kalkylator för Återstående Tid i Spellista | YT Playlist Cal",
+      "desc": "Ta reda på hur många timmar du har kvar för att se färdigt en spellista på YouTube."
+    },
+    "speed15x": {
+      "title": "Beräkna Spellista i 1.5× Hastighet | YT Playlist Cal",
+      "desc": "Räkna ut visningstiden för en YouTube-spellista i 1.5× hastighet och se hur mycket tid du sparar."
+    },
+    "speed2x": {
+      "title": "Beräkna Spellista i 2× Hastighet | YT Playlist Cal",
+      "desc": "Halvera din tittartid. Beräkna längden på YouTube-spellistor i 2× hastighet direkt online."
+    },
+    "howItWorks": {
+      "title": "Hur kalkylatorn för spellistor fungerar | YT Playlist Cal",
+      "desc": "Steg-för-steg-guide om hur vi beräknar längden på YouTube-spellistor via officiella YouTube API."
+    },
+    "faq": {
+      "title": "Vanliga frågor om YouTube-spellistor | YT Playlist Cal",
+      "desc": "Svar på vanliga frågor om speltidsberäkning, hastigheter och API-begränsningar."
+    },
+    "about": {
+      "title": "Om oss — YT Playlist Cal",
+      "desc": "Läs mer om YT Playlist Cal: en snabb, säker och gratis kalkylator för YouTube-spellistor."
+    },
+    "contact": {
+      "title": "Kontakt — YT Playlist Cal",
+      "desc": "Kontakta YT Playlist Cal-teamet för support, frågor eller feedback."
+    },
+    "privacy": {
+      "title": "Integritetspolicy | YT Playlist Cal",
+      "desc": "Läs om hur vi skyddar användardata och integritet på YT Playlist Cal."
+    },
+    "terms": {
+      "title": "Användarvillkor | YT Playlist Cal",
+      "desc": "Villkor och riktlinjer för att använda gratiskalkylatorn på YT Playlist Cal."
+    },
+    "disclaimer": {
+      "title": "Ansvarsfriskrivning | YT Playlist Cal",
+      "desc": "Juridisk information och varumärkesdeklaration för YT Playlist Cal."
+    },
+    "error404": {
+      "title": "Sidan hittades inte — YT Playlist Cal",
+      "desc": "Den efterfrågade sidan kunde inte hittas på YT Playlist Cal."
+    },
+    "error500": {
+      "title": "Serverfel — YT Playlist Cal",
+      "desc": "Ett fel uppstod på servern. Försök igen om en stund."
+    }
+  }
+}

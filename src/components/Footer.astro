@@ -1,42 +1,53 @@
 ---
-// Footer.astro — Site-wide footer with tool links, legal, and disclaimer
-import Icon from './Icon.astro';
+// Footer.astro — Site-wide localized footer with tool links, legal, and disclaimer
 import BrandLogo from './BrandLogo.astro';
+import { DEFAULT_LOCALE, type Locale, isValidLocale } from '../i18n/config';
+import { getLocalizedUrl } from '../i18n/routing';
+import { getTranslations } from '../i18n/utils';
 
+export interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const currentLocale: Locale = isValidLocale(locale) ? locale : DEFAULT_LOCALE;
+const t = getTranslations(currentLocale);
 const year = new Date().getFullYear();
 
 const toolLinks = [
-  { href: '/', label: 'Playlist Length Calculator' },
-  { href: '/youtube-playlist-duration-calculator/', label: 'Duration Calculator' },
-  { href: '/youtube-watch-time-calculator/', label: 'Watch Time Calculator' },
-  { href: '/youtube-playlist-remaining-time/', label: 'Remaining Time' },
-  { href: '/youtube-watch-time-at-1-5x/', label: 'Watch Time at 1.5x' },
-  { href: '/youtube-watch-time-at-2x/', label: 'Watch Time at 2x' },
+  { href: getLocalizedUrl('/', currentLocale), label: t.footer?.links?.playlistCalculator || t.pages?.duration?.badge || 'Playlist Calculator' },
+  { href: getLocalizedUrl('/youtube-playlist-duration-calculator/', currentLocale), label: t.footer?.links?.durationCalculator || t.pages?.duration?.title || 'Duration Calculator' },
+  { href: getLocalizedUrl('/youtube-watch-time-calculator/', currentLocale), label: t.footer?.links?.watchTimeCalculator || t.pages?.watchTime?.title || 'Watch Time Calculator' },
+  { href: getLocalizedUrl('/youtube-playlist-remaining-time/', currentLocale), label: t.footer?.links?.remainingTime || t.pages?.remainingTime?.title || 'Remaining Time' },
+  { href: getLocalizedUrl('/youtube-watch-time-at-1-5x/', currentLocale), label: t.footer?.links?.watchTime15x || t.pages?.speed15x?.title || 'Watch Time at 1.5x' },
+  { href: getLocalizedUrl('/youtube-watch-time-at-2x/', currentLocale), label: t.footer?.links?.watchTime2x || t.pages?.speed2x?.title || 'Watch Time at 2x' },
 ];
 
 const resourceLinks = [
-  { href: '/how-it-works/', label: 'How It Works' },
-  { href: '/faq/', label: 'FAQ' },
-  { href: '/tools/', label: 'All Tools' },
+  { href: getLocalizedUrl('/how-it-works/', currentLocale), label: t.footer?.links?.howItWorks || t.nav?.howItWorks || 'How It Works' },
+  { href: getLocalizedUrl('/faq/', currentLocale), label: t.footer?.links?.faq || t.nav?.faq || 'FAQ' },
+  { href: getLocalizedUrl('/tools/', currentLocale), label: t.footer?.links?.allTools || t.pages?.tools?.title || 'All Tools' },
 ];
 
 const companyLinks = [
-  { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
+  { href: getLocalizedUrl('/about/', currentLocale), label: t.footer?.links?.about || t.nav?.about || 'About' },
+  { href: getLocalizedUrl('/contact/', currentLocale), label: t.footer?.links?.contact || t.nav?.contact || 'Contact' },
 ];
 
 const legalLinks = [
-  { href: '/privacy/', label: 'Privacy Policy' },
-  { href: '/terms/', label: 'Terms of Service' },
-  { href: '/disclaimer/', label: 'Disclaimer' },
+  { href: getLocalizedUrl('/privacy/', currentLocale), label: t.footer?.links?.privacy || t.pages?.privacy?.title || 'Privacy Policy' },
+  { href: getLocalizedUrl('/terms/', currentLocale), label: t.footer?.links?.terms || t.pages?.terms?.title || 'Terms of Service' },
+  { href: getLocalizedUrl('/disclaimer/', currentLocale), label: t.footer?.links?.disclaimer || t.pages?.disclaimer?.title || 'Disclaimer' },
 ];
+
+const homeUrl = getLocalizedUrl('/', currentLocale);
 ---
 
 <footer
   class="mt-20 border-t"
   style="border-color: var(--color-border); background-color: var(--color-surface);"
 >
-  <div class="container py-12">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl py-12">
 
     <!-- Footer Grid -->
     <div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
@@ -44,7 +55,7 @@ const legalLinks = [
       <!-- Brand Column -->
       <div class="col-span-2 lg:col-span-2">
         <a
-          href="/"
+          href={homeUrl}
           class="flex items-center gap-2 mb-3"
           aria-label="YT Playlist Cal — Home"
         >
@@ -52,22 +63,24 @@ const legalLinks = [
           <span class="text-sm font-semibold" style="color: var(--color-text);">YT Playlist Cal</span>
         </a>
         <p class="text-xs leading-relaxed max-w-xs" style="color: var(--color-text-subtle);">
-          Free YouTube playlist length and watch time calculator. Calculate total duration, playback-speed estimates, and watch planning schedules.
+          {t.footer?.desc || 'Free YouTube playlist length and watch time calculator.'}
         </p>
         <p class="text-xs mt-3" style="color: var(--color-text-subtle);">
-          Not affiliated with YouTube or Google.
+          {t.footer?.notAffiliated || t.brand?.notAffiliated || 'Not affiliated with YouTube or Google.'}
         </p>
       </div>
 
       <!-- Tools Column -->
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">Tools</h3>
+        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">
+          {t.footer?.colTools || 'Tools'}
+        </h3>
         <ul class="space-y-2">
           {toolLinks.map(({ href, label }) => (
             <li>
               <a
                 href={href}
-                class="text-xs transition-colors duration-100"
+                class="text-xs transition-colors duration-100 hover:underline"
                 style="color: var(--color-text-subtle);"
                 data-footer-link
               >
@@ -80,13 +93,15 @@ const legalLinks = [
 
       <!-- Resources Column -->
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">Resources</h3>
+        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">
+          {t.footer?.colResources || 'Resources'}
+        </h3>
         <ul class="space-y-2">
           {resourceLinks.map(({ href, label }) => (
             <li>
               <a
                 href={href}
-                class="text-xs transition-colors duration-100"
+                class="text-xs transition-colors duration-100 hover:underline"
                 style="color: var(--color-text-subtle);"
                 data-footer-link
               >
@@ -96,13 +111,15 @@ const legalLinks = [
           ))}
         </ul>
 
-        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3 mt-6" style="color: var(--color-text-muted);">Company</h3>
+        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3 mt-6" style="color: var(--color-text-muted);">
+          {t.footer?.colCompany || t.nav?.about || 'Company'}
+        </h3>
         <ul class="space-y-2">
           {companyLinks.map(({ href, label }) => (
             <li>
               <a
                 href={href}
-                class="text-xs transition-colors duration-100"
+                class="text-xs transition-colors duration-100 hover:underline"
                 style="color: var(--color-text-subtle);"
                 data-footer-link
               >
@@ -115,13 +132,15 @@ const legalLinks = [
 
       <!-- Legal Column -->
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">Legal</h3>
+        <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">
+          {t.footer?.colLegal || 'Legal'}
+        </h3>
         <ul class="space-y-2">
           {legalLinks.map(({ href, label }) => (
             <li>
               <a
                 href={href}
-                class="text-xs transition-colors duration-100"
+                class="text-xs transition-colors duration-100 hover:underline"
                 style="color: var(--color-text-subtle);"
                 data-footer-link
               >
@@ -134,30 +153,16 @@ const legalLinks = [
 
     </div>
 
-    <!-- Bottom bar -->
+    <!-- Bottom Bar -->
     <div
-      class="mt-10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
-      style="border-top: 1px solid var(--color-border);"
+      class="mt-12 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 text-xs"
+      style="border-color: var(--color-border); color: var(--color-text-subtle);"
     >
-      <p class="text-xs" style="color: var(--color-text-subtle);">
-        &copy; {year} YT Playlist Cal. All rights reserved.
-      </p>
-      <p class="text-xs" style="color: var(--color-text-subtle);">
-        YouTube™ is a trademark of Google LLC. This tool is independent and not affiliated with YouTube or Google.
+      <p>&copy; {year} YT Playlist Cal. {t.footer?.allRightsReserved || 'All rights reserved.'}</p>
+      <p class="text-[11px] opacity-75">
+        Chrono Play &bull; Fast, private, responsive.
       </p>
     </div>
 
   </div>
 </footer>
-
-<script>
-  // Hover effect for footer links
-  document.querySelectorAll('[data-footer-link]').forEach((link) => {
-    (link as HTMLElement).addEventListener('mouseenter', function () {
-      (this as HTMLElement).style.color = 'var(--color-text)';
-    });
-    (link as HTMLElement).addEventListener('mouseleave', function () {
-      (this as HTMLElement).style.color = 'var(--color-text-subtle)';
-    });
-  });
-</script>

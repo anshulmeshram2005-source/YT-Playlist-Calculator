@@ -231,3 +231,18 @@ input, textarea, select, button {
   .no-print { display: none !important; }
   body { background: white; color: black; }
 }
+
+/* ============================================================
+   RTL Support (Arabic, Hebrew)
+   ============================================================ */
+[dir="rtl"] {
+  text-align: start;
+}
+
+/* URLs, code, numbers, and stats remain LTR for clarity */
+[dir="rtl"] input[type="url"],
+[dir="rtl"] .ltr-force,
+[dir="rtl"] .font-mono {
+  direction: ltr;
+  text-align: left;
+}

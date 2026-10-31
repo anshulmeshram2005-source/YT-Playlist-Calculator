@@ -1,0 +1,1258 @@
+---
+// [locale]/index.astro — Localized Homepage & YouTube Playlist Length Calculator
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { LOCALES, DEFAULT_LOCALE, type Locale, isValidLocale } from '../../i18n/config';
+import { getTranslations, tFormat } from '../../i18n/utils';
+import { getAbsoluteLocalizedUrl, SITE_URL } from '../../i18n/routing';
+
+const { locale: rawLocale } = Astro.params;
+
+if (!rawLocale || !isValidLocale(rawLocale)) {
+  return Astro.redirect('/404', 302);
+}
+
+const locale = rawLocale as Locale;
+const t = getTranslations(locale);
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? SITE_URL;
+
+const canonicalUrl = getAbsoluteLocalizedUrl('/', locale, siteUrl);
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": t.hero.title,
+    "url": canonicalUrl,
+    "description": t.seo?.home?.desc || t.meta?.home?.desc,
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "inLanguage": locale,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": (t.faq.items || []).map((item) => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.a,
+      },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={t.seo?.home?.title || t.meta?.home?.title}
+  description={t.seo?.home?.desc || t.meta?.home?.desc}
+  locale={locale}
+  jsonLd={jsonLd}
+>
+  <Header locale={locale} />
+
+  <main id="main-content">
+    <!-- Hero & Calculator Section -->
+    <section class="pt-8 pb-12 sm:pt-12 sm:pb-16" aria-label="Calculator">
+      <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+
+        <!-- Hero text -->
+        <div class="max-w-2xl mx-auto text-center mb-8 sm:mb-10">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mb-4 border select-none" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">
+            <span class="w-2 h-2 rounded-full" style="background-color: var(--color-accent);" aria-hidden="true"></span>
+            <span>{t.hero.badge}</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 sm:mb-4" style="color: var(--color-text); letter-spacing: -0.03em;">
+            {t.hero.title}
+          </h1>
+          <p class="text-sm sm:text-base leading-relaxed" style="color: var(--color-text-muted);">
+            {t.hero.subtitle}
+          </p>
+        </div>
+
+        <!-- Calculator Card -->
+        <div class="max-w-2xl mx-auto">
+          <div
+            class="rounded-2xl border p-4 sm:p-6 shadow-sm transition-all duration-200"
+            style="background-color: var(--color-surface); border-color: var(--color-border);"
+          >
+            <!-- Mode Tabs -->
+            <div
+              class="flex rounded-lg p-1 mb-5"
+              style="background-color: var(--color-surface-2);"
+              role="tablist"
+              aria-label="Calculator modes"
+            >
+              <button
+                type="button"
+                role="tab"
+                data-mode="full"
+                class="mode-btn flex-1 py-1.5 px-3 rounded-md text-xs font-semibold transition-all duration-150"
+                style="background-color: var(--color-surface); color: var(--color-text); box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);"
+                aria-selected="true"
+              >
+                {t.calculator.modeFull}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                data-mode="range"
+                class="mode-btn flex-1 py-1.5 px-3 rounded-md text-xs font-semibold transition-all duration-150"
+                style="color: var(--color-text-muted);"
+                aria-selected="false"
+              >
+                {t.calculator.modeRange}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                data-mode="remaining"
+                class="mode-btn flex-1 py-1.5 px-3 rounded-md text-xs font-semibold transition-all duration-150"
+                style="color: var(--color-text-muted);"
+                aria-selected="false"
+              >
+                {t.calculator.modeRemaining}
+              </button>
+            </div>
+
+            <!-- URL Input -->
+            <div class="mb-4">
+              <label for="playlist-url" class="block text-xs font-semibold mb-1.5" style="color: var(--color-text);">
+                {t.calculator.urlLabel}
+              </label>
+              <div class="relative">
+                <textarea
+                  id="playlist-url"
+                  rows="2"
+                  placeholder={t.calculator.urlPlaceholder}
+                  dir="ltr"
+                  class="w-full px-3 py-2.5 text-sm rounded-xl transition-all duration-150 font-mono resize-none focus:outline-none"
+                  style="
+                    background-color: var(--color-surface-2);
+                    border: 1.5px solid var(--color-border);
+                    color: var(--color-text);
+                  "
+                  aria-required="true"
+                ></textarea>
+                <div class="absolute bottom-2.5 right-2.5 ltr:right-2.5 rtl:left-2.5 rtl:right-auto flex items-center gap-1.5">
+                  <button
+                    id="paste-btn"
+                    type="button"
+                    class="text-xs px-2 py-1 rounded-md transition-colors duration-150 font-medium cursor-pointer"
+                    style="background-color: var(--color-surface); color: var(--color-text-muted); border: 1px solid var(--color-border);"
+                  >
+                    {t.calculator.pasteBtn}
+                  </button>
+                  <button
+                    id="demo-btn"
+                    type="button"
+                    class="text-xs px-2 py-1 rounded-md transition-colors duration-150 font-medium cursor-pointer"
+                    style="background-color: var(--color-surface); color: var(--color-text-muted); border: 1px solid var(--color-border);"
+                  >
+                    {t.calculator.demoBtn}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Range Inputs (Hidden by default) -->
+            <div id="range-inputs" class="hidden mb-4 grid grid-cols-2 gap-3">
+              <div>
+                <label for="range-start" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">
+                  {t.calculator.rangeStart}
+                </label>
+                <input
+                  type="number"
+                  id="range-start"
+                  min="1"
+                  placeholder="1"
+                  class="w-full px-3 py-2 text-sm rounded-lg border focus:outline-none"
+                  style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+                />
+              </div>
+              <div>
+                <label for="range-end" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">
+                  {t.calculator.rangeEnd}
+                </label>
+                <input
+                  type="number"
+                  id="range-end"
+                  min="1"
+                  placeholder="50"
+                  class="w-full px-3 py-2 text-sm rounded-lg border focus:outline-none"
+                  style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+                />
+              </div>
+            </div>
+
+            <!-- Remaining Input (Hidden by default) -->
+            <div id="remaining-input" class="hidden mb-4">
+              <label for="watched-through" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">
+                {t.calculator.watchedThrough}
+              </label>
+              <input
+                type="number"
+                id="watched-through"
+                min="0"
+                placeholder="10"
+                class="w-full px-3 py-2 text-sm rounded-lg border focus:outline-none"
+                style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+              />
+            </div>
+
+            <!-- Speed Selector -->
+            <div class="mb-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold" style="color: var(--color-text);">{t.calculator.speedLabel}</span>
+                <input
+                  type="number"
+                  id="custom-speed"
+                  min="0.25"
+                  max="5"
+                  step="0.25"
+                  placeholder={t.calculator.customSpeedPlaceholder}
+                  class="w-24 px-2 py-1 text-xs rounded-md text-center border focus:outline-none"
+                  style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+                />
+              </div>
+              <div class="flex flex-wrap gap-1.5" role="radiogroup">
+                {[1, 1.25, 1.5, 1.75, 2].map((speed) => (
+                  <button
+                    type="button"
+                    data-speed={speed}
+                    class="speed-btn text-xs font-medium px-3 py-1.5 rounded-md transition-all duration-150 border cursor-pointer"
+                    style={speed === 1
+                      ? 'background-color: var(--color-text); color: var(--color-bg); border-color: var(--color-text);'
+                      : 'background-color: var(--color-surface-2); color: var(--color-text-muted); border-color: var(--color-border);'
+                    }
+                    aria-pressed={speed === 1 ? 'true' : 'false'}
+                  >
+                    {speed}×
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- Advanced Options Dropdown -->
+            <details class="mb-5 group">
+              <summary class="flex items-center gap-1.5 text-xs cursor-pointer select-none transition-colors duration-150" style="color: var(--color-text-subtle);">
+                <svg class="w-3 h-3 transition-transform duration-150 group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+                <span>{t.calculator.advancedOptions}</span>
+              </summary>
+              <div class="mt-3 space-y-3 pt-2 border-t" style="border-color: var(--color-border);">
+                <div>
+                  <label for="user-api-key" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">
+                    {t.calculator.userApiKey}
+                  </label>
+                  <input
+                    type="password"
+                    id="user-api-key"
+                    autocomplete="off"
+                    placeholder="AIza..."
+                    dir="ltr"
+                    class="w-full px-3 py-2 text-xs rounded-lg font-mono border focus:outline-none"
+                    style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+                  />
+                  <p class="mt-1 text-[11px]" style="color: var(--color-text-subtle);">
+                    {t.calculator.userApiKeyHint}
+                  </p>
+                </div>
+              </div>
+            </details>
+
+            <!-- Calculate Button -->
+            <button
+              id="calculate-btn"
+              type="button"
+              class="w-full py-3 px-6 rounded-xl text-sm font-semibold transition-all duration-150 flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+              style="background-color: var(--color-accent); color: #ffffff;"
+            >
+              <svg id="calc-spinner" class="hidden animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+              </svg>
+              <span id="calculate-btn-text">{t.calculator.calculateBtn}</span>
+            </button>
+
+          </div>
+
+          <!-- Loading State -->
+          <div id="loading-state" class="hidden mt-6 rounded-2xl border p-6 text-center" style="background-color: var(--color-surface); border-color: var(--color-border);">
+            <div class="inline-block animate-spin w-6 h-6 border-2 border-current border-t-transparent rounded-full mb-3" style="color: var(--color-accent);" aria-hidden="true"></div>
+            <h3 id="loading-title" class="text-sm font-semibold mb-2" style="color: var(--color-text);">{t.calculator.loadingTitle}</h3>
+            <div id="progress-steps" class="space-y-1.5 max-w-xs mx-auto text-left"></div>
+          </div>
+
+          <!-- Error State -->
+          <div id="error-state" class="hidden mt-6 rounded-2xl border p-4 sm:p-5" style="background-color: var(--color-error-soft); border-color: var(--color-error); color: var(--color-error);">
+            <div class="flex items-start gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <div>
+                <p id="error-message" class="text-sm font-semibold"></p>
+                <p id="error-details" class="text-xs mt-1 opacity-90"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Results Section -->
+          <div id="result-section" class="hidden mt-6 space-y-5">
+
+            <!-- Playlist Meta Info -->
+            <div class="rounded-xl border p-4 flex items-center gap-3.5" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <img id="playlist-thumbnail" src="" alt="" class="w-16 h-12 object-cover rounded-md shrink-0 hidden" loading="lazy" />
+              <div class="min-w-0 flex-1">
+                <h2 id="playlist-title" class="text-sm font-semibold truncate" style="color: var(--color-text);"></h2>
+                <p id="playlist-channel" class="text-xs mt-0.5" style="color: var(--color-text-muted);"></p>
+                <p id="unavailable-notice" class="hidden text-xs mt-1 px-2 py-0.5 rounded inline-block" style="background-color: var(--color-warning-soft); color: var(--color-warning);"></p>
+              </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="rounded-xl border p-3.5" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <p class="text-[11px] uppercase tracking-wider font-semibold mb-1" style="color: var(--color-text-subtle);">{t.calculator.statTotal}</p>
+                <p id="stat-total" class="text-lg sm:text-xl font-bold tracking-tight font-mono" style="color: var(--color-text);">--</p>
+              </div>
+              <div class="rounded-xl border p-3.5" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <p class="text-[11px] uppercase tracking-wider font-semibold mb-1" style="color: var(--color-text-subtle);">{t.calculator.statCount}</p>
+                <p id="stat-count" class="text-lg sm:text-xl font-bold tracking-tight font-mono" style="color: var(--color-text);">--</p>
+              </div>
+              <div class="rounded-xl border p-3.5" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <p class="text-[11px] uppercase tracking-wider font-semibold mb-1" style="color: var(--color-text-subtle);">{t.calculator.statAvg}</p>
+                <p id="stat-average" class="text-lg sm:text-xl font-bold tracking-tight font-mono" style="color: var(--color-text);">--</p>
+              </div>
+              <div class="rounded-xl border p-3.5" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <p class="text-[11px] uppercase tracking-wider font-semibold mb-1" style="color: var(--color-text-subtle);">{t.calculator.statSpeed}</p>
+                <p id="stat-speed" class="text-lg sm:text-xl font-bold tracking-tight font-mono" style="color: var(--color-accent);">--</p>
+              </div>
+            </div>
+
+            <!-- Speed Table -->
+            <div class="rounded-xl border overflow-hidden" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <div class="px-4 py-3 border-b" style="border-color: var(--color-border);">
+                <h3 class="text-sm font-semibold" style="color: var(--color-text);">{t.calculator.speedTitle}</h3>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs" id="speed-table">
+                  <thead>
+                    <tr style="background-color: var(--color-surface-2);">
+                      <th class="text-left rtl:text-right px-4 py-2.5 font-semibold uppercase tracking-wider" style="color: var(--color-text-muted);">{t.calculator.speedColSpeed}</th>
+                      <th class="text-left rtl:text-right px-4 py-2.5 font-semibold uppercase tracking-wider" style="color: var(--color-text-muted);">{t.calculator.speedColDuration}</th>
+                      <th class="text-left rtl:text-right px-4 py-2.5 font-semibold uppercase tracking-wider hidden sm:table-cell" style="color: var(--color-text-muted);">{t.calculator.speedColSaved}</th>
+                    </tr>
+                  </thead>
+                  <tbody id="speed-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Watch Planner -->
+            <div id="watch-planner" class="rounded-xl border p-4" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <h3 class="text-sm font-semibold mb-1" style="color: var(--color-text);">{t.calculator.watchPlannerTitle}</h3>
+              <p class="text-xs mb-3" style="color: var(--color-text-muted);">{t.calculator.watchPlannerDesc}</p>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-3">
+                <div>
+                  <label for="daily-minutes" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">{t.calculator.plannerMinutes}</label>
+                  <input type="number" id="daily-minutes" min="1" max="1440" value="60" class="w-full px-3 py-2 text-xs rounded-lg border focus:outline-none" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);" />
+                </div>
+                <div>
+                  <label for="planner-start-date" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">{t.calculator.plannerStartDate}</label>
+                  <input type="date" id="planner-start-date" class="w-full px-3 py-2 text-xs rounded-lg border focus:outline-none" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);" />
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label for="planner-speed" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">{t.calculator.plannerSpeed}</label>
+                  <select id="planner-speed" class="w-full px-3 py-2 text-xs rounded-lg border focus:outline-none" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">
+                    <option value="1">1×</option>
+                    <option value="1.25">1.25×</option>
+                    <option value="1.5">1.5×</option>
+                    <option value="1.75">1.75×</option>
+                    <option value="2">2×</option>
+                  </select>
+                </div>
+              </div>
+              <button id="calc-planner-btn" type="button" class="px-4 py-2 text-xs font-semibold rounded-lg border transition-colors duration-150 cursor-pointer" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);">
+                {t.calculator.plannerBtn}
+              </button>
+              <div id="planner-result" class="hidden mt-3 p-3 rounded-lg border text-xs" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"></div>
+            </div>
+
+            <!-- Finish By Calculator -->
+            <div id="finish-by-section" class="rounded-xl border p-4" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <h3 class="text-sm font-semibold mb-1" style="color: var(--color-text);">{t.calculator.finishByTitle}</h3>
+              <p class="text-xs mb-3" style="color: var(--color-text-muted);">{t.calculator.finishByDesc}</p>
+              <div class="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                  <label for="finish-by-date" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">{t.calculator.finishByDate}</label>
+                  <input type="date" id="finish-by-date" class="w-full px-3 py-2 text-xs rounded-lg border focus:outline-none" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);" />
+                </div>
+                <div>
+                  <label for="finish-by-speed" class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">{t.calculator.finishBySpeed}</label>
+                  <select id="finish-by-speed" class="w-full px-3 py-2 text-xs rounded-lg border focus:outline-none" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">
+                    <option value="1">1×</option>
+                    <option value="1.25">1.25×</option>
+                    <option value="1.5">1.5×</option>
+                    <option value="1.75">1.75×</option>
+                    <option value="2">2×</option>
+                  </select>
+                </div>
+              </div>
+              <button id="calc-finish-by-btn" type="button" class="px-4 py-2 text-xs font-semibold rounded-lg border transition-colors duration-150 cursor-pointer" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);">
+                {t.calculator.finishByBtn}
+              </button>
+              <div id="finish-by-result" class="hidden mt-3 p-3 rounded-lg border text-xs" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"></div>
+            </div>
+
+            <!-- Video Breakdown -->
+            <div class="rounded-xl border overflow-hidden" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <div class="px-4 py-3 flex items-center justify-between border-b" style="border-color: var(--color-border);">
+                <div>
+                  <h3 class="text-sm font-semibold" style="color: var(--color-text);">{t.calculator.videoListTitle}</h3>
+                  <p id="video-list-subtitle" class="text-xs mt-0.5" style="color: var(--color-text-muted);"></p>
+                </div>
+                <button id="toggle-video-list" type="button" class="text-xs font-medium px-3 py-1.5 rounded-lg border transition-colors duration-150 cursor-pointer" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);">
+                  {t.calculator.showVideos}
+                </button>
+              </div>
+              <div id="video-search-bar" class="hidden px-4 py-2 border-b" style="border-color: var(--color-border);">
+                <input type="search" id="video-search" placeholder={t.calculator.searchVideosPlaceholder} class="w-full px-3 py-1.5 text-xs rounded-lg border focus:outline-none" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);" />
+              </div>
+              <div id="video-list-container" class="hidden max-h-96 overflow-y-auto divide-y" style="border-color: var(--color-border);"></div>
+              <div id="video-list-pagination" class="hidden px-4 py-3 flex items-center justify-between border-t" style="border-color: var(--color-border);">
+                <button id="prev-page" type="button" class="text-xs font-medium px-3 py-1.5 rounded-lg border disabled:opacity-40" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);" disabled>{t.calculator.prevPage}</button>
+                <span id="page-indicator" class="text-xs font-mono" style="color: var(--color-text-muted);"></span>
+                <button id="next-page" type="button" class="text-xs font-medium px-3 py-1.5 rounded-lg border disabled:opacity-40" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);">{t.calculator.nextPage}</button>
+              </div>
+            </div>
+
+            <!-- Share & Export -->
+            <div class="rounded-xl border p-4" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted);">{t.calculator.exportTitle}</h3>
+              <div class="flex flex-wrap gap-2">
+                <button id="copy-link-btn" type="button" class="px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors duration-150 cursor-pointer" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);">{t.calculator.copyLink}</button>
+                <button id="copy-summary-btn" type="button" class="px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors duration-150 cursor-pointer" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);">{t.calculator.copySummary}</button>
+                <button id="export-csv-btn" type="button" class="px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors duration-150 cursor-pointer" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);">{t.calculator.exportCsv}</button>
+                <button id="export-txt-btn" type="button" class="px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors duration-150 cursor-pointer" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);">{t.calculator.exportTxt}</button>
+              </div>
+            </div>
+
+          </div><!-- /result-section -->
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 sm:py-20 border-t" style="border-color: var(--color-border);" aria-label="Features">
+      <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2 text-center" style="color: var(--color-text); letter-spacing: -0.03em;">
+          {t.features.title}
+        </h2>
+        <p class="text-sm text-center mb-10 max-w-xl mx-auto" style="color: var(--color-text-muted);">
+          {t.features.subtitle}
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {(t.features.items || []).map((item) => (
+            <div class="rounded-xl border p-5 transition-colors duration-150" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <h3 class="text-sm font-semibold mb-1.5" style="color: var(--color-text);">{item.title}</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-16 sm:py-20 border-t" style="border-color: var(--color-border);" aria-label="How it works">
+      <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+        <div class="text-center mb-10">
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold mb-2" style="background-color: var(--color-surface-2); color: var(--color-accent);">{t.howItWorks.badge}</span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2" style="color: var(--color-text); letter-spacing: -0.03em;">
+            {t.howItWorks.title}
+          </h2>
+          <p class="text-sm max-w-xl mx-auto" style="color: var(--color-text-muted);">
+            {t.howItWorks.subtitle}
+          </p>
+        </div>
+        <div class="grid gap-6 md:grid-cols-3 mb-12">
+          {(t.howItWorks.steps || []).map((st, idx) => (
+            <div class="flex gap-4">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 mt-0.5 border" style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);" aria-hidden="true">
+                {st.num || st.number || (idx + 1)}
+              </div>
+              <div>
+                <h3 class="text-sm font-semibold mb-1" style="color: var(--color-text);">{st.title}</h3>
+                <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{st.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+          <h3 class="text-sm font-semibold mb-2" style="color: var(--color-text);">{t.howItWorks.supportedTitle || 'Supported Formats'}</h3>
+          <p class="text-xs mb-4" style="color: var(--color-text-muted);">{t.howItWorks.supportedDesc || ''}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {(t.howItWorks.links || []).map((link) => (
+              <div class="p-2.5 rounded-lg border font-mono" style="background-color: var(--color-surface-2); border-color: var(--color-border);">
+                <span class="font-sans font-medium block mb-0.5" style="color: var(--color-text);">{link.label}</span>
+                <span style="color: var(--color-text-subtle);">{link.example}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 sm:py-20 border-t" style="border-color: var(--color-border);" aria-label="FAQ">
+      <div class="container mx-auto px-4 sm:px-6 max-w-4xl">
+        <div class="text-center mb-10">
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold mb-2" style="background-color: var(--color-surface-2); color: var(--color-accent);">{t.faq.badge}</span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2" style="color: var(--color-text); letter-spacing: -0.03em;">
+            {t.faq.title}
+          </h2>
+          <p class="text-sm" style="color: var(--color-text-muted);">{t.faq.subtitle}</p>
+        </div>
+        <div class="space-y-3">
+          {(t.faq.items || []).map((item) => (
+            <details class="rounded-xl border p-4 group transition-colors duration-150" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <summary class="flex items-center justify-between gap-4 font-semibold text-sm cursor-pointer select-none list-none" style="color: var(--color-text);">
+                <span>{item.q}</span>
+                <svg class="w-4 h-4 shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/>
+                </svg>
+              </summary>
+              <p class="mt-3 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                {item.a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer locale={locale} />
+
+  <div
+    id="i18n-data"
+    data-locale={locale}
+    data-i18n={JSON.stringify(t.calculator)}
+    class="hidden"
+    aria-hidden="true"
+  ></div>
+
+  <script>
+    // State
+    let currentMode = 'full';
+    let currentSpeed = 1;
+    let playlistData: any = null;
+    let allVideos: any[] = [];
+    let currentPage = 0;
+    const PAGE_SIZE = 25;
+    let filteredVideos: any[] = [];
+
+    // Localized Strings
+    const i18nEl = document.getElementById('i18n-data');
+    const currentLocale = i18nEl?.getAttribute('data-locale') || 'en';
+    let i18n: Record<string, any> = {};
+    try {
+      i18n = JSON.parse(i18nEl?.getAttribute('data-i18n') || '{}');
+    } catch {
+      i18n = {};
+    }
+
+    // DOM Helpers
+    const $ = (id: string) => document.getElementById(id);
+    const setText = (id: string, text: string) => { const el = $(id); if (el) el.textContent = text; };
+
+    function escapeHtml(str: string): string {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatDuration(sec: number): string {
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = Math.floor(sec % 60);
+      if (h > 0) return `${h}h ${m}m ${s}s`;
+      if (m > 0) return `${m}m ${s}s`;
+      return `${s}s`;
+    }
+
+    function adjustedSec(sec: number, speed: number): number {
+      return speed > 0 ? Math.round(sec / speed) : sec;
+    }
+
+    // Mode Selector
+    document.querySelectorAll('.mode-btn').forEach((btn) => {
+      btn.addEventListener('click', function (this: HTMLElement) {
+        currentMode = this.dataset.mode ?? 'full';
+
+        document.querySelectorAll('.mode-btn').forEach((b) => {
+          const el = b as HTMLElement;
+          el.style.backgroundColor = '';
+          el.style.color = 'var(--color-text-muted)';
+          el.style.boxShadow = '';
+          el.setAttribute('aria-selected', 'false');
+        });
+
+        this.style.backgroundColor = 'var(--color-surface)';
+        this.style.color = 'var(--color-text)';
+        this.style.boxShadow = '0 1px 2px rgb(0 0 0 / 0.08)';
+        this.setAttribute('aria-selected', 'true');
+
+        $('range-inputs')?.classList.toggle('hidden', currentMode !== 'range');
+        $('remaining-input')?.classList.toggle('hidden', currentMode !== 'remaining');
+      });
+    });
+
+    // Speed Selector
+    document.querySelectorAll('.speed-btn').forEach((btn) => {
+      btn.addEventListener('click', function (this: HTMLElement) {
+        currentSpeed = parseFloat(this.dataset.speed ?? '1');
+
+        document.querySelectorAll('.speed-btn').forEach((b) => {
+          const el = b as HTMLElement;
+          el.style.backgroundColor = 'var(--color-surface-2)';
+          el.style.color = 'var(--color-text-muted)';
+          el.style.borderColor = 'var(--color-border)';
+          el.setAttribute('aria-pressed', 'false');
+        });
+
+        this.style.backgroundColor = 'var(--color-text)';
+        this.style.color = 'var(--color-bg)';
+        this.style.borderColor = 'var(--color-text)';
+        this.setAttribute('aria-pressed', 'true');
+
+        const customInput = $('custom-speed') as HTMLInputElement | null;
+        if (customInput) customInput.value = '';
+
+        if (playlistData) {
+          const totalSec = playlistData.totalDurationSeconds ?? playlistData.duration ?? 0;
+          setText('stat-speed', formatDuration(adjustedSec(totalSec, currentSpeed)));
+        }
+      });
+    });
+
+    // Custom speed input
+    const customSpeedInput = $('custom-speed') as HTMLInputElement | null;
+    customSpeedInput?.addEventListener('input', function (this: HTMLInputElement) {
+      const val = parseFloat(this.value);
+      if (!isNaN(val) && val > 0) {
+        currentSpeed = val;
+        document.querySelectorAll('.speed-btn').forEach((b) => {
+          const el = b as HTMLElement;
+          el.style.backgroundColor = 'var(--color-surface-2)';
+          el.style.color = 'var(--color-text-muted)';
+          el.style.borderColor = 'var(--color-border)';
+          el.setAttribute('aria-pressed', 'false');
+        });
+        if (playlistData) {
+          const totalSec = playlistData.totalDurationSeconds ?? playlistData.duration ?? 0;
+          setText('stat-speed', formatDuration(adjustedSec(totalSec, currentSpeed)));
+        }
+      }
+    });
+
+    // Paste Button
+    $('paste-btn')?.addEventListener('click', async () => {
+      try {
+        const text = await navigator.clipboard.readText();
+        const textarea = $('playlist-url') as HTMLTextAreaElement | null;
+        if (textarea) textarea.value = text;
+      } catch {
+        // Clipboard not accessible
+      }
+    });
+
+    // Demo button
+    const DEMO_URL = 'https://www.youtube.com/playlist?list=PLsyeobzWxl7poL9JTVyndKe62ieoN-MZ3';
+    $('demo-btn')?.addEventListener('click', () => {
+      const textarea = $('playlist-url') as HTMLTextAreaElement | null;
+      if (textarea) {
+        textarea.value = DEMO_URL;
+        $('calculate-btn')?.click();
+      }
+    });
+
+    // Keyboard Shortcuts
+    const urlTextarea = $('playlist-url') as HTMLTextAreaElement | null;
+    urlTextarea?.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        const calcBtn = $('calculate-btn') as HTMLButtonElement | null;
+        if (!calcBtn?.disabled) calcBtn.click();
+      } else if (e.key === 'Escape') {
+        if (urlTextarea.value) {
+          urlTextarea.value = '';
+          hideAll();
+        }
+      }
+    });
+
+    ['range-start', 'range-end', 'watched-through', 'custom-speed', 'user-api-key'].forEach((id) => {
+      const el = $(id) as HTMLInputElement | null;
+      el?.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const calcBtn = $('calculate-btn') as HTMLButtonElement | null;
+          if (!calcBtn?.disabled) calcBtn.click();
+        } else if (e.key === 'Escape') {
+          if (el.value) el.value = '';
+        }
+      });
+    });
+
+    ['daily-minutes', 'planner-start-date', 'planner-speed'].forEach((id) => {
+      const el = $(id) as HTMLElement | null;
+      el?.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          $('calc-planner-btn')?.click();
+        }
+      });
+    });
+
+    ['finish-by-date', 'finish-by-speed'].forEach((id) => {
+      const el = $(id) as HTMLElement | null;
+      el?.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          $('calc-finish-by-btn')?.click();
+        }
+      });
+    });
+
+    // UI State Helpers
+    function showLoading(msg?: string) {
+      $('loading-state')?.classList.remove('hidden');
+      $('error-state')?.classList.add('hidden');
+      $('result-section')?.classList.add('hidden');
+      setText('loading-title', msg || i18n.loadingTitle || 'Analyzing playlist…');
+      const steps = $('progress-steps');
+      if (steps) steps.innerHTML = '';
+    }
+
+    const stepCheckSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+    const stepLoaderSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 animate-spin" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+
+    function addProgressStep(text: string, done = false) {
+      const steps = $('progress-steps');
+      if (!steps) return;
+      const step = document.createElement('div');
+      step.className = 'flex items-center gap-2 text-xs';
+      step.style.color = done ? 'var(--color-success, #10b981)' : 'var(--color-text-muted)';
+      step.innerHTML = `<span class="shrink-0 flex items-center" aria-hidden="true">${done ? stepCheckSvg : stepLoaderSvg}</span> <span>${escapeHtml(text)}</span>`;
+      steps.appendChild(step);
+    }
+
+    function showError(message: string, details?: string) {
+      $('loading-state')?.classList.add('hidden');
+      $('error-state')?.classList.remove('hidden');
+      $('result-section')?.classList.add('hidden');
+      setText('error-message', message);
+      setText('error-details', details || '');
+    }
+
+    function hideAll() {
+      $('loading-state')?.classList.add('hidden');
+      $('error-state')?.classList.add('hidden');
+      $('result-section')?.classList.add('hidden');
+    }
+
+    // Build Speed Table
+    function buildSpeedTable(totalSec: number) {
+      const speeds = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 3];
+      const tbody = $('speed-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = speeds.map((speed) => {
+        const adj = adjustedSec(totalSec, speed);
+        const saved = totalSec - adj;
+        const isSelected = speed === currentSpeed;
+
+        return `
+          <tr style="border-top: 1px solid var(--color-border); ${isSelected ? 'background-color: var(--color-surface-2);' : ''}">
+            <td class="px-4 py-2.5 font-mono text-xs font-semibold" style="color: ${isSelected ? 'var(--color-text)' : 'var(--color-text-muted)'};">
+              ${speed}×${isSelected ? ` <span style="color:var(--color-accent);font-size:10px;font-family:var(--font-sans);">${escapeHtml(i18n.speedSelected || 'selected')}</span>` : ''}
+            </td>
+            <td class="px-4 py-2.5 text-xs font-semibold" style="color: var(--color-text);">${formatDuration(adj)}</td>
+            <td class="px-4 py-2.5 text-xs hidden sm:table-cell" style="color: ${saved > 0 ? 'var(--color-success, #10b981)' : 'var(--color-text-muted)'};">
+              ${saved > 0 ? `−${formatDuration(saved)}` : saved < 0 ? `+${formatDuration(Math.abs(saved))}` : '—'}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Video List
+    function renderVideoPage() {
+      const container = $('video-list-container');
+      if (!container) return;
+
+      const start = currentPage * PAGE_SIZE;
+      const pageVideos = filteredVideos.slice(start, start + PAGE_SIZE);
+      const totalPages = Math.ceil(filteredVideos.length / PAGE_SIZE);
+
+      container.innerHTML = pageVideos.map((video: any, i: number) => {
+        const num = start + i + 1;
+        const isUnavail = video.status !== 'available';
+        const dur = video.duration ? formatDuration(video.duration) : '—';
+        const adjDur = video.duration ? formatDuration(adjustedSec(video.duration, currentSpeed)) : '—';
+        const statusLabel = video.status === 'private'
+          ? (i18n.privateVideo || 'Private')
+          : video.status === 'live'
+          ? (i18n.liveVideo || 'Live')
+          : (i18n.unavailableVideo || 'Unavailable');
+
+        return `
+          <div class="flex items-start gap-3 px-4 py-3 transition-colors duration-100" style="border-top: 1px solid var(--color-border); ${isUnavail ? 'opacity: 0.5;' : ''}">
+            <span class="text-xs shrink-0 mt-1 w-6 text-right font-mono" style="color: var(--color-text-subtle);">${num}</span>
+            ${video.thumbnail
+              ? `<img src="${escapeHtml(video.thumbnail)}" alt="" loading="lazy" class="w-16 h-10 object-cover rounded shrink-0" />`
+              : `<div class="w-16 h-10 rounded shrink-0 flex items-center justify-center" style="background-color: var(--color-surface-2); color: var(--color-text-subtle);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>`
+            }
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-medium truncate" style="color: var(--color-text);">
+                ${isUnavail
+                  ? `<span style="color:var(--color-text-subtle);">[${escapeHtml(statusLabel)}]</span>`
+                  : `<a href="https://youtube.com/watch?v=${encodeURIComponent(video.id)}" target="_blank" rel="noopener noreferrer" style="color:var(--color-text); text-decoration:none;">${escapeHtml(video.title)}</a>`
+                }
+              </p>
+              <div class="flex items-center gap-3 mt-1">
+                <span class="text-xs font-mono" style="color: var(--color-text-muted);">${dur}</span>
+                ${!isUnavail && currentSpeed !== 1 ? `<span class="text-xs font-mono" style="color: var(--color-text-subtle);">@ ${currentSpeed}×: ${adjDur}</span>` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Pagination
+      const pag = $('video-list-pagination');
+      const prevBtn = $('prev-page') as HTMLButtonElement | null;
+      const nextBtn = $('next-page') as HTMLButtonElement | null;
+      const indicator = $('page-indicator');
+
+      if (pag && totalPages > 1) {
+        pag.style.display = 'flex';
+        pag.classList.remove('hidden');
+      } else {
+        pag?.classList.add('hidden');
+      }
+
+      if (prevBtn) prevBtn.disabled = currentPage === 0;
+      if (nextBtn) nextBtn.disabled = currentPage >= totalPages - 1;
+      if (indicator) {
+        const pattern = i18n.pageIndicator || 'Page {current} of {total}';
+        indicator.textContent = pattern.replace('{current}', String(currentPage + 1)).replace('{total}', String(totalPages));
+      }
+    }
+
+    $('prev-page')?.addEventListener('click', () => { if (currentPage > 0) { currentPage--; renderVideoPage(); } });
+    $('next-page')?.addEventListener('click', () => {
+      if (currentPage < Math.ceil(filteredVideos.length / PAGE_SIZE) - 1) {
+        currentPage++;
+        renderVideoPage();
+      }
+    });
+
+    let searchTimeout: ReturnType<typeof setTimeout>;
+    $('video-search')?.addEventListener('input', function (this: HTMLInputElement) {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        const q = this.value.toLowerCase().trim();
+        filteredVideos = q
+          ? allVideos.filter((v: any) => v.title?.toLowerCase().includes(q))
+          : allVideos;
+        currentPage = 0;
+        renderVideoPage();
+      }, 200);
+    });
+
+    $('toggle-video-list')?.addEventListener('click', function (this: HTMLElement) {
+      const container = $('video-list-container');
+      const searchBar = $('video-search-bar');
+      const isOpen = !container?.classList.contains('hidden');
+
+      container?.classList.toggle('hidden', isOpen);
+      searchBar?.classList.toggle('hidden', isOpen);
+      this.textContent = isOpen ? (i18n.showVideos || 'Show videos') : (i18n.hideVideos || 'Hide videos');
+      this.setAttribute('aria-expanded', String(!isOpen));
+
+      if (!isOpen) renderVideoPage();
+    });
+
+    // Show Results
+    function showResults(data: any) {
+      playlistData = data;
+      $('loading-state')?.classList.add('hidden');
+      $('error-state')?.classList.add('hidden');
+      $('result-section')?.classList.remove('hidden');
+
+      const { playlist, videos, totalDurationSeconds, availableCount, unavailableCount, liveCount, privateCount } = data;
+      allVideos = videos ?? [];
+      filteredVideos = allVideos;
+      currentPage = 0;
+
+      // Playlist meta
+      if (playlist) {
+        const titleEl = $('playlist-title');
+        if (titleEl) titleEl.textContent = playlist.title || 'YouTube Playlist';
+        const chanEl = $('playlist-channel');
+        if (chanEl) chanEl.textContent = playlist.channelTitle ? `by ${playlist.channelTitle}` : '';
+
+        const thumb = $('playlist-thumbnail') as HTMLImageElement | null;
+        if (thumb && playlist.thumbnail) {
+          thumb.src = playlist.thumbnail;
+          thumb.alt = playlist.title || '';
+          thumb.classList.remove('hidden');
+        }
+
+        const noticeEl = $('unavailable-notice');
+        if (noticeEl) {
+          const count = (unavailableCount ?? 0) + (liveCount ?? 0) + (privateCount ?? 0);
+          if (count > 0) {
+            noticeEl.textContent = `${count} ${i18n.unavailableVideo || 'unavailable videos'}`;
+            noticeEl.classList.remove('hidden');
+          } else {
+            noticeEl.classList.add('hidden');
+          }
+        }
+      } else {
+        const vid = data;
+        const titleEl = $('playlist-title');
+        if (titleEl) titleEl.textContent = vid.title || 'YouTube Video';
+        const chanEl = $('playlist-channel');
+        if (chanEl) chanEl.textContent = vid.channelTitle || '';
+      }
+
+      // Metric cards
+      const totalSec = totalDurationSeconds ?? data.duration ?? 0;
+      setText('stat-total', formatDuration(totalSec));
+      setText('stat-count', String(availableCount ?? (allVideos.length || 1)));
+
+      const count = availableCount > 0 ? availableCount : (allVideos.length || 1);
+      const avgSec = Math.round(totalSec / count);
+      setText('stat-average', formatDuration(avgSec));
+      setText('stat-speed', formatDuration(adjustedSec(totalSec, currentSpeed)));
+
+      // Video subtitle
+      const subtitleEl = $('video-list-subtitle');
+      if (subtitleEl && allVideos.length > 0) {
+        subtitleEl.textContent = `${allVideos.length} items`;
+      }
+
+      // Speed table
+      buildSpeedTable(totalSec);
+
+      // Pre-fill planner date
+      const plannerStartDate = $('planner-start-date') as HTMLInputElement | null;
+      if (plannerStartDate && !plannerStartDate.value) {
+        plannerStartDate.value = new Date().toISOString().split('T')[0];
+      }
+    }
+
+    // Watch Planner
+    $('calc-planner-btn')?.addEventListener('click', () => {
+      if (!playlistData) return;
+      const minutes = parseInt(($('daily-minutes') as HTMLInputElement)?.value ?? '60', 10);
+      const speed = parseFloat(($('planner-speed') as HTMLSelectElement)?.value ?? '1');
+      const startDateStr = ($('planner-start-date') as HTMLInputElement)?.value;
+      const startDate = startDateStr ? new Date(startDateStr) : new Date();
+      const totalSec = playlistData.totalDurationSeconds ?? playlistData.duration ?? 0;
+
+      const adjTotal = Math.round(totalSec / speed);
+      const dailySec = minutes * 60;
+      const daysNeeded = dailySec > 0 ? Math.ceil(adjTotal / dailySec) : 0;
+      const finishDate = new Date(startDate);
+      finishDate.setDate(finishDate.getDate() + daysNeeded);
+
+      let formattedDate = finishDate.toDateString();
+      try {
+        formattedDate = new Intl.DateTimeFormat(currentLocale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(finishDate);
+      } catch {
+        // fallback
+      }
+
+      const result = $('planner-result');
+      if (result) {
+        result.innerHTML = `
+          <p style="color: var(--color-text);">
+            At <strong>${speed}×</strong> speed and <strong>${minutes} min/day</strong>, you'll finish in
+            <strong>${daysNeeded} days</strong>.
+          </p>
+          <p class="mt-1 text-xs" style="color: var(--color-text-muted);">
+            Estimated finish date: <strong style="color:var(--color-text);">${escapeHtml(formattedDate)}</strong>
+          </p>
+        `;
+        result.classList.remove('hidden');
+      }
+    });
+
+    // Finish-By Calculator
+    $('calc-finish-by-btn')?.addEventListener('click', () => {
+      if (!playlistData) return;
+      const dateStr = ($('finish-by-date') as HTMLInputElement)?.value;
+      const speed = parseFloat(($('finish-by-speed') as HTMLSelectElement)?.value ?? '1');
+      if (!dateStr) return;
+
+      const targetDate = new Date(dateStr);
+      const now = new Date();
+      const msPerDay = 86400000;
+      const daysAvail = Math.max(1, Math.ceil((targetDate.getTime() - now.getTime()) / msPerDay));
+      const totalSec = playlistData.totalDurationSeconds ?? playlistData.duration ?? 0;
+      const adjTotal = Math.round(totalSec / speed);
+      const secPerDay = adjTotal / daysAvail;
+      const minsPerDay = Math.ceil(secPerDay / 60);
+      const h = Math.floor(minsPerDay / 60);
+      const m = minsPerDay % 60;
+      const formatted = h > 0 ? `${h}h ${m}m` : `${m}m`;
+      const feasible = minsPerDay <= 23 * 60;
+
+      let formattedTarget = targetDate.toDateString();
+      try {
+        formattedTarget = new Intl.DateTimeFormat(currentLocale, { month: 'long', day: 'numeric', year: 'numeric' }).format(targetDate);
+      } catch {
+        // fallback
+      }
+
+      const result = $('finish-by-result');
+      if (result) {
+        if (!feasible) {
+          result.innerHTML = `<p style="color: var(--color-error);">${escapeHtml(i18n.finishByUnfeasible || 'That date requires more than 23 hours per day. Try a later date or a higher speed.')}</p>`;
+        } else {
+          result.innerHTML = `
+            <p style="color: var(--color-text);">
+              To finish by <strong>${escapeHtml(formattedTarget)}</strong> at <strong>${speed}×</strong> speed, you need to watch
+              <strong>${formatted} per day</strong> for the next <strong>${daysAvail} days</strong>.
+            </p>
+          `;
+        }
+        result.classList.remove('hidden');
+      }
+    });
+
+    // Share & Export
+    async function copyToClipboard(text: string) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+      }
+    }
+
+    function flashButton(btn: HTMLElement, successText: string) {
+      const original = btn.innerHTML;
+      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> ${escapeHtml(successText)}`;
+      setTimeout(() => { btn.innerHTML = original; }, 2000);
+    }
+
+    $('copy-link-btn')?.addEventListener('click', async function (this: HTMLElement) {
+      const url = $('playlist-url') as HTMLTextAreaElement | null;
+      const urlVal = url?.value?.trim();
+      if (!urlVal) return;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?url=${encodeURIComponent(urlVal)}`;
+      await copyToClipboard(shareUrl);
+      flashButton(this, i18n.copied || 'Copied!');
+    });
+
+    $('copy-summary-btn')?.addEventListener('click', async function (this: HTMLElement) {
+      if (!playlistData) return;
+      const { playlist, totalDurationSeconds, availableCount } = playlistData;
+      const text = [
+        `YT Playlist Cal — Results`,
+        `Playlist: ${playlist?.title ?? 'N/A'}`,
+        `Channel: ${playlist?.channelTitle ?? 'N/A'}`,
+        `Total Duration: ${formatDuration(totalDurationSeconds)}`,
+        `Videos: ${availableCount ?? allVideos.length}`,
+        `At ${currentSpeed}×: ${formatDuration(adjustedSec(totalDurationSeconds, currentSpeed))}`,
+        '',
+        `Generated by ytplaylistcal.com`,
+      ].join('\n');
+      await copyToClipboard(text);
+      flashButton(this, i18n.copied || 'Copied!');
+    });
+
+    $('export-csv-btn')?.addEventListener('click', () => {
+      if (!allVideos.length && !playlistData) return;
+      const { playlist, totalDurationSeconds, availableCount } = playlistData ?? {};
+      const header = 'Number,Title,Status,Duration (s),Duration,At Speed (s),At Speed\n';
+      const rows = allVideos.map((v: any, i: number) => {
+        const adj = adjustedSec(v.duration, currentSpeed);
+        return `${i + 1},"${(v.title ?? '').replace(/"/g, '""')}",${v.status},${v.duration},${formatDuration(v.duration)},${adj},${formatDuration(adj)}`;
+      }).join('\n');
+      const summary = [
+        '',
+        `"Playlist","${playlist?.title ?? ''}"`,
+        `"Channel","${playlist?.channelTitle ?? ''}"`,
+        `"Total Duration","${formatDuration(totalDurationSeconds)}"`,
+        `"Videos","${availableCount ?? allVideos.length}"`,
+        `"Speed","${currentSpeed}x"`,
+        `"At Speed","${formatDuration(adjustedSec(totalDurationSeconds, currentSpeed))}"`,
+      ].join('\n');
+      const blob = new Blob([header + rows + summary], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `ytplaylistcal-${Date.now()}.csv`;
+      a.click();
+    });
+
+    $('export-txt-btn')?.addEventListener('click', () => {
+      if (!playlistData) return;
+      const { playlist, totalDurationSeconds, availableCount } = playlistData;
+      const lines = [
+        'YT Playlist Cal — Results',
+        '='.repeat(40),
+        `Playlist: ${playlist?.title ?? 'N/A'}`,
+        `Channel: ${playlist?.channelTitle ?? 'N/A'}`,
+        `Total Duration: ${formatDuration(totalDurationSeconds)}`,
+        `Videos: ${availableCount ?? allVideos.length}`,
+        `At ${currentSpeed}×: ${formatDuration(adjustedSec(totalDurationSeconds, currentSpeed))}`,
+        '',
+        'Video Breakdown:',
+        '-'.repeat(40),
+        ...allVideos.map((v: any, i: number) =>
+          `${String(i + 1).padStart(4, ' ')}. [${v.status === 'available' ? formatDuration(v.duration) : v.status.toUpperCase()}] ${v.title ?? 'Unavailable'}`
+        ),
+        '',
+        `Generated by ytplaylistcal.com`,
+      ];
+      const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `ytplaylistcal-${Date.now()}.txt`;
+      a.click();
+    });
+
+    // Calculate Button Handler
+    $('calculate-btn')?.addEventListener('click', async () => {
+      const btn = $('calculate-btn') as HTMLButtonElement | null;
+      if (btn && btn.disabled) return;
+
+      const textarea = $('playlist-url') as HTMLTextAreaElement | null;
+      const url = textarea?.value?.trim();
+
+      if (!url) {
+        showError(i18n.errors?.emptyUrl || 'Please paste a YouTube URL.', i18n.urlPlaceholder || 'Enter a playlist URL or video link.');
+        return;
+      }
+
+      const originalBtnHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        const spinner = $('calc-spinner');
+        if (spinner) spinner.classList.remove('hidden');
+        setText('calculate-btn-text', i18n.calculatingBtn || 'Calculating…');
+      }
+
+      showLoading(i18n.loadingTitle || 'Connecting to YouTube API…');
+
+      let start = 1;
+      let end = 9999;
+
+      if (currentMode === 'range') {
+        start = parseInt(($('range-start') as HTMLInputElement)?.value ?? '1', 10) || 1;
+        end = parseInt(($('range-end') as HTMLInputElement)?.value ?? '50', 10) || 50;
+        if (start > end) {
+          showError(i18n.errors?.invalidRange || 'Invalid range', `Start (${start}) > End (${end})`);
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = originalBtnHtml;
+          }
+          return;
+        }
+      } else if (currentMode === 'remaining') {
+        const watchedThrough = parseInt(($('watched-through') as HTMLInputElement)?.value ?? '0', 10) || 0;
+        start = watchedThrough + 1;
+        end = 9999;
+      }
+
+      const userKey = ($('user-api-key') as HTMLInputElement)?.value?.trim();
+
+      try {
+        addProgressStep(i18n.loadingStep1 || 'Connecting to YouTube API…', true);
+        addProgressStep(i18n.loadingStep2 || 'Fetching playlist information…');
+
+        const params = new URLSearchParams({ url, start: String(start), end: String(end) });
+        if (userKey) params.set('userKey', userKey);
+
+        const res = await fetch(`/api/playlist?${params.toString()}`);
+        const json = await res.json();
+
+        if (!res.ok || json.error) {
+          const err = json.error;
+          let message = err?.message || i18n.errors?.network || 'An error occurred.';
+          if (err?.code === 'QUOTA_EXCEEDED') {
+            message = i18n.errors?.quotaExceeded || message;
+          } else if (err?.code === 'RATE_LIMITED') {
+            message = i18n.errors?.rateLimited || message;
+          }
+          showError(message, err?.details);
+          return;
+        }
+
+        addProgressStep(i18n.loadingStep3 || 'Playlist found!', true);
+        addProgressStep(i18n.loadingStep4 || 'Processing video data…', true);
+
+        showResults(json.data);
+
+      } catch (err) {
+        console.error(err);
+        showError(
+          i18n.errors?.network || 'Network error — could not reach the calculator.',
+          'Please check your internet connection and try again.'
+        );
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          const spinner = $('calc-spinner');
+          if (spinner) spinner.classList.add('hidden');
+          setText('calculate-btn-text', i18n.calculateBtn || 'Calculate Playlist Length');
+        }
+      }
+    });
+
+    // URL param — pre-fill from shareable link
+    const urlParam = new URLSearchParams(window.location.search).get('url');
+    if (urlParam) {
+      const textarea = $('playlist-url') as HTMLTextAreaElement | null;
+      if (textarea) {
+        textarea.value = urlParam;
+        setTimeout(() => $('calculate-btn')?.click(), 100);
+      }
+    }
+
+    // Input focus styling
+    ['playlist-url', 'range-start', 'range-end', 'watched-through', 'custom-speed', 'user-api-key', 'daily-minutes', 'planner-start-date', 'planner-speed', 'finish-by-date', 'finish-by-speed', 'video-search'].forEach((id) => {
+      const el = $(id);
+      if (!el) return;
+      el.addEventListener('focus', function (this: HTMLElement) {
+        this.style.borderColor = 'var(--color-text)';
+        this.style.boxShadow = '0 0 0 3px color-mix(in srgb, var(--color-text) 12%, transparent)';
+      });
+      el.addEventListener('blur', function (this: HTMLElement) {
+        this.style.borderColor = 'var(--color-border)';
+        this.style.boxShadow = '';
+      });
+    });
+  </script>
+</BaseLayout>

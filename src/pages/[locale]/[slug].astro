@@ -1,0 +1,698 @@
+---
+// [locale]/[slug].astro — Localized subpages (Tools, How It Works, FAQ, About, Contact, Legal, and Tool Landing Pages)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { LOCALES, DEFAULT_LOCALE, type Locale, isValidLocale } from '../../i18n/config';
+import { getTranslations, tFormat } from '../../i18n/utils';
+import { getAbsoluteLocalizedUrl, getLocalizedUrl, SITE_URL } from '../../i18n/routing';
+
+const { locale: rawLocale, slug } = Astro.params;
+
+if (!rawLocale || !isValidLocale(rawLocale)) {
+  return Astro.redirect('/404', 302);
+}
+
+const VALID_SLUGS = [
+  'tools',
+  'how-it-works',
+  'faq',
+  'about',
+  'contact',
+  'privacy',
+  'terms',
+  'disclaimer',
+  'youtube-playlist-duration-calculator',
+  'youtube-playlist-remaining-time',
+  'youtube-watch-time-calculator',
+  'youtube-watch-time-at-1-5x',
+  'youtube-watch-time-at-2x',
+] as const;
+
+type ValidSlug = typeof VALID_SLUGS[number];
+
+if (!slug || !VALID_SLUGS.includes(slug as ValidSlug)) {
+  return Astro.redirect('/404', 302);
+}
+
+const locale = rawLocale as Locale;
+const t = getTranslations(locale);
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? SITE_URL;
+
+const SLUG_TO_KEY: Record<ValidSlug, string> = {
+  'tools': 'tools',
+  'how-it-works': 'howItWorks',
+  'faq': 'faq',
+  'about': 'about',
+  'contact': 'contact',
+  'privacy': 'privacy',
+  'terms': 'terms',
+  'disclaimer': 'disclaimer',
+  'youtube-playlist-duration-calculator': 'duration',
+  'youtube-playlist-remaining-time': 'remainingTime',
+  'youtube-watch-time-calculator': 'watchTime',
+  'youtube-watch-time-at-1-5x': 'speed15x',
+  'youtube-watch-time-at-2x': 'speed2x',
+};
+
+const pageKey = SLUG_TO_KEY[slug as ValidSlug];
+const meta = (t.seo?.[pageKey] || t.meta?.[pageKey]) ?? {};
+const title = meta.title || 'YT Playlist Cal';
+const description = meta.desc || '';
+const canonicalUrl = getAbsoluteLocalizedUrl(`/${slug}/`, locale, siteUrl);
+
+const jsonLd: any[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": t.nav?.home || "Home",
+        "item": getAbsoluteLocalizedUrl('/', locale, siteUrl),
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": title,
+        "item": canonicalUrl,
+      },
+    ],
+  },
+];
+
+if (slug === 'faq') {
+  jsonLd.push({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": (t.faq?.items || []).map((item: any) => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.a,
+      },
+    })),
+  });
+}
+
+// Subpage Breadcrumb
+const homeUrl = getLocalizedUrl('/', locale);
+const homeName = t.nav?.home || 'Home';
+const calcUrl = getLocalizedUrl('/', locale);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  jsonLd={jsonLd}
+>
+  <Header locale={locale} />
+
+  <main id="main-content" class="py-12 sm:py-16">
+    <div class="container mx-auto px-4 sm:px-6 max-w-4xl">
+
+      <!-- Breadcrumbs -->
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex items-center gap-1.5 text-xs" style="color: var(--color-text-muted);">
+          <li>
+            <a href={homeUrl} class="hover:underline" style="color: var(--color-text-muted);">
+              {homeName}
+            </a>
+          </li>
+          <li aria-hidden="true" class="select-none opacity-60">/</li>
+          <li aria-current="page" class="font-medium" style="color: var(--color-text);">
+            {t.pages?.[pageKey]?.breadcrumb || title}
+          </li>
+        </ol>
+      </nav>
+
+      {/* ============================================================== */}
+      {/* 1. TOOLS DIRECTORY PAGE                                         */}
+      {/* ============================================================== */}
+      {slug === 'tools' && (
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+            {t.pages?.tools?.title || 'YouTube Tools'}
+          </h1>
+          <p class="text-base mb-10" style="color: var(--color-text-muted);">
+            {t.pages?.tools?.subtitle || 'Free, fast YouTube utility tools. No signup required.'}
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                href: getLocalizedUrl('/', locale),
+                title: t.hero?.title || 'YouTube Playlist Length Calculator',
+                desc: t.hero?.subtitle || 'Calculate the total duration of any YouTube playlist.',
+                badge: t.hero?.badge || 'Most Popular',
+              },
+              {
+                href: getLocalizedUrl('/youtube-playlist-duration-calculator/', locale),
+                title: t.pages?.duration?.title || 'Playlist Duration Calculator',
+                desc: t.pages?.duration?.subtitle || 'Calculate complete YouTube playlist duration.',
+                badge: t.pages?.duration?.badge || 'Full Playlist',
+              },
+              {
+                href: getLocalizedUrl('/youtube-watch-time-calculator/', locale),
+                title: t.pages?.watchTime?.title || 'Watch Time Calculator',
+                desc: t.pages?.watchTime?.subtitle || 'Calculate YouTube watch time at any playback speed.',
+                badge: 'Watch Time',
+              },
+              {
+                href: getLocalizedUrl('/youtube-playlist-remaining-time/', locale),
+                title: t.pages?.remainingTime?.title || 'Remaining Playlist Time',
+                desc: t.pages?.remainingTime?.subtitle || 'Calculate how much watch time remains in a playlist.',
+                badge: 'Remaining',
+              },
+              {
+                href: getLocalizedUrl('/youtube-watch-time-at-1-5x/', locale),
+                title: t.pages?.speed15x?.title || 'Watch Time at 1.5×',
+                desc: t.pages?.speed15x?.subtitle || 'Save 33.3% of your time watching at 1.5x.',
+                badge: '1.5× Speed',
+              },
+              {
+                href: getLocalizedUrl('/youtube-watch-time-at-2x/', locale),
+                title: t.pages?.speed2x?.title || 'Watch Time at 2×',
+                desc: t.pages?.speed2x?.subtitle || 'Cut your watch time in half at 2x playback speed.',
+                badge: '2.0× Speed',
+              },
+            ].map(({ href, title: toolTitle, desc, badge }) => (
+              <a
+                href={href}
+                class="block rounded-xl border p-5 transition-all duration-150 hover:shadow-sm"
+                style="background-color: var(--color-surface); border-color: var(--color-border); text-decoration: none;"
+              >
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <h2 class="text-sm font-semibold" style="color: var(--color-text);">{toolTitle}</h2>
+                  {badge && (
+                    <span
+                      class="text-[11px] font-semibold px-2 py-0.5 rounded-full shrink-0"
+                      style="background-color: var(--color-surface-2); color: var(--color-accent); border: 1px solid var(--color-border);"
+                    >
+                      {badge}
+                    </span>
+                  )}
+                </div>
+                <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================== */}
+      {/* 2. HOW IT WORKS PAGE                                           */}
+      {/* ============================================================== */}
+      {slug === 'how-it-works' && (
+        <div class="space-y-10">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+              {t.howItWorks?.title || 'How It Works'}
+            </h1>
+            <p class="text-base" style="color: var(--color-text-muted);">
+              {t.howItWorks?.subtitle || 'Learn how YT Playlist Cal calculates playlist duration and handles edge cases.'}
+            </p>
+          </div>
+
+          <!-- Steps -->
+          <div class="space-y-6">
+            <h2 class="text-base font-semibold" style="color: var(--color-text);">Step-by-Step Process</h2>
+            <ol class="space-y-4">
+              {(t.howItWorks?.steps || []).map((step: any, idx: number) => (
+                <li class="flex gap-4 p-4 rounded-xl border" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                  <div
+                    class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5"
+                    style="background-color: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border);"
+                    aria-hidden="true"
+                  >
+                    {step.num || step.number || (idx + 1)}
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-semibold mb-1" style="color: var(--color-text);">{step.title}</h3>
+                    <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{step.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <!-- Speed Formula -->
+          <div class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+            <h2 class="text-base font-semibold mb-2" style="color: var(--color-text);">Playback Speed Formula</h2>
+            <p class="text-xs mb-3" style="color: var(--color-text-muted);">
+              Playback speed scaling is calculated mathematically using reciprocal duration division:
+            </p>
+            <div class="p-3 rounded-lg font-mono text-xs" style="background-color: var(--color-surface-2); border: 1px solid var(--color-border); color: var(--color-text);" dir="ltr">
+              adjusted_duration = total_duration_seconds ÷ playback_speed
+            </div>
+          </div>
+
+          <!-- Supported Links -->
+          <div class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+            <h2 class="text-base font-semibold mb-2" style="color: var(--color-text);">{t.howItWorks?.supportedTitle || 'Supported URL Formats'}</h2>
+            <p class="text-xs mb-4" style="color: var(--color-text-muted);">{t.howItWorks?.supportedDesc || 'You can paste full playlist URLs, watch URLs with list parameter, short links, or playlist IDs.'}</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              {(t.howItWorks?.links || []).map((link: any) => (
+                <div class="p-3 rounded-lg border font-mono" style="background-color: var(--color-surface-2); border-color: var(--color-border);" dir="ltr">
+                  <span class="font-sans font-medium block mb-1 text-xs" style="color: var(--color-text);">{link.label}</span>
+                  <span class="text-[11px]" style="color: var(--color-text-subtle); word-break: break-all;">{link.example}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="text-center pt-4">
+            <a
+              href={calcUrl}
+              class="inline-flex items-center justify-center px-6 py-3 rounded-xl text-sm font-semibold shadow-sm transition-all duration-150"
+              style="background-color: var(--color-accent); color: #ffffff;"
+            >
+              {t.calculator?.calculateBtn || 'Open Playlist Calculator'} &rarr;
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================== */}
+      {/* 3. FAQ PAGE                                                    */}
+      {/* ============================================================== */}
+      {slug === 'faq' && (
+        <div class="space-y-8">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+              {t.faq?.title || 'Frequently Asked Questions'}
+            </h1>
+            <p class="text-base" style="color: var(--color-text-muted);">
+              {t.faq?.subtitle || 'Everything you need to know about calculating YouTube playlist lengths.'}
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            {(t.faq?.items || []).map((item: any) => (
+              <details class="rounded-xl border p-4 group transition-colors duration-150" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <summary class="flex items-center justify-between gap-4 font-semibold text-sm cursor-pointer select-none list-none" style="color: var(--color-text);">
+                  <span>{item.q}</span>
+                  <svg class="w-4 h-4 shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="mt-3 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                  {item.a}
+                </p>
+              </details>
+            ))}
+          </div>
+
+          <div class="rounded-xl border p-6 text-center mt-8" style="background-color: var(--color-surface); border-color: var(--color-border);">
+            <h2 class="text-sm font-semibold mb-1" style="color: var(--color-text);">{t.pages?.contact?.title || 'Still have questions?'}</h2>
+            <p class="text-xs mb-4" style="color: var(--color-text-muted);">{t.pages?.contact?.subtitle || 'Get in touch with our team for assistance or bug reports.'}</p>
+            <a
+              href={getLocalizedUrl('/contact/', locale)}
+              class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold border transition-all"
+              style="background-color: var(--color-surface-2); color: var(--color-text); border-color: var(--color-border);"
+            >
+              {t.nav?.contact || 'Contact Us'} &rarr;
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================== */}
+      {/* 4. ABOUT PAGE                                                  */}
+      {/* ============================================================== */}
+      {slug === 'about' && (
+        <div class="space-y-8">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+              {t.pages?.about?.title || 'About YT Playlist Cal'}
+            </h1>
+            <p class="text-base" style="color: var(--color-text-muted);">
+              {t.pages?.about?.subtitle || 'Free, fast, and privacy-conscious YouTube playlist length and watch time calculator.'}
+            </p>
+          </div>
+
+          <div class="space-y-6 text-sm leading-relaxed" style="color: var(--color-text-muted);">
+            <section class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">
+                {t.pages?.about?.whatWeDoTitle || 'What We Do'}
+              </h2>
+              <p class="mb-3">
+                {t.pages?.about?.whatWeDoP1 || "YouTube does not natively show you the total duration of a playlist. When you want to watch an entire tutorial series, course, or playlist, knowing the total time commitment upfront is essential."}
+              </p>
+              <p>
+                {t.pages?.about?.whatWeDoP2 || "YT Playlist Cal solves this by parsing public YouTube playlists via the YouTube Data API v3 and calculating total duration, watch time across different playback speeds (1×, 1.25×, 1.5×, 1.75×, 2×), per-video breakdowns, and daily study schedules."}
+              </p>
+            </section>
+
+            <section class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">
+                {t.pages?.about?.principlesTitle || 'Our Core Principles'}
+              </h2>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-2">
+                  <span style="color: var(--color-accent);" aria-hidden="true">&bull;</span>
+                  <span><strong style="color: var(--color-text);">Free & Open:</strong> {t.pages?.about?.p1 || 'Free to use forever without sign-up or paywalls.'}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span style="color: var(--color-accent);" aria-hidden="true">&bull;</span>
+                  <span><strong style="color: var(--color-text);">Privacy First:</strong> {t.pages?.about?.p2 || 'We never store your playlist searches or personal credentials.'}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span style="color: var(--color-accent);" aria-hidden="true">&bull;</span>
+                  <span><strong style="color: var(--color-text);">Accurate & Fast:</strong> {t.pages?.about?.p3 || 'Real-time calculations powered by Cloudflare edge computing and YouTube Data API v3.'}</span>
+                </li>
+              </ul>
+            </section>
+
+            <section class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+              <h2 class="text-base font-semibold mb-2" style="color: var(--color-text);">
+                {t.pages?.about?.trademarkTitle || 'Trademark Notice & Disclaimer'}
+              </h2>
+              <p class="text-xs">
+                {t.pages?.about?.trademarkP || 'YouTube™ is a trademark of Google LLC. YT Playlist Cal is an independent utility and is not affiliated with, endorsed by, or sponsored by YouTube or Google LLC.'}
+              </p>
+            </section>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================== */}
+      {/* 5. CONTACT PAGE                                                */}
+      {/* ============================================================== */}
+      {slug === 'contact' && (
+        <div class="space-y-8">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+              {t.pages?.contact?.title || 'Contact Us'}
+            </h1>
+            <p class="text-base" style="color: var(--color-text-muted);">
+              {t.pages?.contact?.subtitle || 'Have a suggestion, bug report, or feature request? We would love to hear from you.'}
+            </p>
+          </div>
+
+          <div class="rounded-xl border p-6 sm:p-8" style="background-color: var(--color-surface); border-color: var(--color-border);">
+            <form id="contact-form" class="space-y-4">
+              <div>
+                <label for="contact-type" class="block text-xs font-semibold mb-1.5" style="color: var(--color-text);">
+                  {t.pages?.contact?.formType || 'Inquiry Type'}
+                </label>
+                <select
+                  id="contact-type"
+                  class="w-full px-3 py-2 text-xs rounded-lg border focus:outline-none"
+                  style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+                >
+                  <option value="bug">{t.pages?.contact?.formTypeBug || 'Bug Report'}</option>
+                  <option value="feature">{t.pages?.contact?.formTypeFeature || 'Feature Request'}</option>
+                  <option value="question">{t.pages?.contact?.formTypeQuestion || 'Question'}</option>
+                  <option value="other">{t.pages?.contact?.formTypeOther || 'Other'}</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="contact-email" class="block text-xs font-semibold mb-1.5" style="color: var(--color-text);">
+                  {t.pages?.contact?.formEmail || 'Email (Optional)'}
+                </label>
+                <input
+                  type="email"
+                  id="contact-email"
+                  placeholder={t.pages?.contact?.formEmailPlaceholder || 'your@email.com'}
+                  class="w-full px-3 py-2 text-xs rounded-lg border focus:outline-none"
+                  style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+                />
+              </div>
+
+              <div>
+                <label for="contact-message" class="block text-xs font-semibold mb-1.5" style="color: var(--color-text);">
+                  {t.pages?.contact?.formMessage || 'Message'}
+                </label>
+                <textarea
+                  id="contact-message"
+                  rows="4"
+                  required
+                  placeholder={t.pages?.contact?.formMessagePlaceholder || 'How can we help?'}
+                  class="w-full px-3 py-2 text-xs rounded-lg border focus:outline-none resize-none"
+                  style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                id="contact-submit"
+                class="w-full py-2.5 px-4 rounded-xl text-xs font-semibold cursor-pointer transition-all duration-150"
+                style="background-color: var(--color-accent); color: #ffffff;"
+              >
+                {t.pages?.contact?.formSubmit || 'Send Message'}
+              </button>
+
+              <div id="contact-status" class="hidden text-xs text-center py-2 rounded-lg" style="background-color: var(--color-surface-2); color: var(--color-text);">
+                {t.pages?.contact?.formSuccess || 'Thank you! Your message has been received.'}
+              </div>
+            </form>
+          </div>
+
+          <div class="rounded-xl border p-5 text-xs" style="background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-muted);">
+            <strong class="block mb-1 font-semibold" style="color: var(--color-text);">{t.pages?.contact?.faqNoteTitle || 'Before Contacting Us'}</strong>
+            <p>{t.pages?.contact?.faqNoteP || 'Please check our FAQ for quick answers to common questions about unavailable videos, playlist limits, and playback speeds.'} <a href={getLocalizedUrl('/faq/', locale)} class="underline" style="color: var(--color-text);">{t.pages?.contact?.faqLink || 'View FAQ'}</a>.</p>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================== */}
+      {/* 6. LEGAL PAGES (PRIVACY, TERMS, DISCLAIMER)                     */}
+      {/* ============================================================== */}
+      {(slug === 'privacy' || slug === 'terms' || slug === 'disclaimer') && (
+        <div class="space-y-6">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2" style="color: var(--color-text); letter-spacing: -0.03em;">
+              {t.pages?.[pageKey]?.title || title}
+            </h1>
+            <p class="text-xs" style="color: var(--color-text-muted);">
+              {t.pages?.[pageKey]?.lastUpdated || 'Last updated: 2026-10-31'}
+            </p>
+          </div>
+
+          {t.pages?.[pageKey]?.summary && (
+            <div class="p-4 rounded-xl border text-xs" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">
+              <strong>Summary:</strong> {t.pages[pageKey].summary}
+            </div>
+          )}
+
+          {/* Privacy Policy Content */}
+          {slug === 'privacy' && (
+            <div class="space-y-6 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">1. Information We Process</h2>
+                <p>When you use YT Playlist Cal, we process the YouTube playlist or video URL you submit solely to retrieve duration and metadata through the official YouTube Data API v3. We do not store, log, or sell your submitted URLs or watch history.</p>
+              </section>
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">2. Optional User API Keys</h2>
+                <p>If you enter your own YouTube Data API key in the Advanced Options, it is sent securely via HTTPS for the immediate request and is discarded immediately after execution. We never store or log personal API keys.</p>
+              </section>
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">3. Cookies & Local Storage</h2>
+                <p>We do not use tracking cookies. Local storage is strictly used on your device to remember your visual theme preference (light or dark mode) and your selected language.</p>
+              </section>
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">4. Third-Party Services</h2>
+                <p>Our website is hosted on Cloudflare's secure global network. YouTube API interactions are governed by Google's Privacy Policy at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="underline" style="color: var(--color-text);">https://policies.google.com/privacy</a>.</p>
+              </section>
+            </div>
+          )}
+
+          {/* Terms of Service Content */}
+          {slug === 'terms' && (
+            <div class="space-y-6 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">1. Acceptance of Terms</h2>
+                <p>By accessing YT Playlist Cal, you agree to be bound by these Terms of Service and all applicable laws. If you do not agree with any part of these terms, please do not use the service.</p>
+              </section>
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">2. YouTube Terms of Service</h2>
+                <p>By using this service to calculate playlist lengths, you also agree to be bound by the <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer" class="underline" style="color: var(--color-text);">YouTube Terms of Service</a>.</p>
+              </section>
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">3. Acceptable Use</h2>
+                <p>You agree not to abuse, automate excessive queries, scrape, or attempt to circumvent rate limits or security controls of YT Playlist Cal or the YouTube Data API.</p>
+              </section>
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">4. Disclaimer of Warranties & Limitation of Liability</h2>
+                <p>The Service is provided "as is" without warranty of any kind. Duration calculations depend on third-party metadata provided by YouTube and may exclude private, deleted, or region-restricted videos.</p>
+              </section>
+            </div>
+          )}
+
+          {/* Disclaimer Content */}
+          {slug === 'disclaimer' && (
+            <div class="space-y-6 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">1. Independent Utility</h2>
+                <p>YT Playlist Cal (Chrono Play) is an independent web utility. YouTube™ is a trademark of Google LLC. This website is not endorsed by, sponsored by, or affiliated with YouTube or Google LLC.</p>
+              </section>
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">2. Metadata Accuracy & Excluded Items</h2>
+                <p>Total playlist durations are calculated based on metadata returned by the YouTube Data API v3. Private, deleted, unlisted (where restricted), or region-blocked videos cannot have their durations retrieved and are excluded from the calculated total.</p>
+              </section>
+              <section>
+                <h2 class="text-sm font-semibold mb-2" style="color: var(--color-text);">3. Informational Planning Purposes</h2>
+                <p>Calculations, speed adjustments, and daily finish-by estimates are intended for personal planning and informational estimation purposes only.</p>
+              </section>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ============================================================== */}
+      {/* 7. DEDICATED TOOL LANDING PAGES                                */}
+      {/* ============================================================== */}
+      {(slug === 'youtube-playlist-duration-calculator' ||
+        slug === 'youtube-playlist-remaining-time' ||
+        slug === 'youtube-watch-time-calculator' ||
+        slug === 'youtube-watch-time-at-1-5x' ||
+        slug === 'youtube-watch-time-at-2x') && (
+        <div class="space-y-10">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style="color: var(--color-text); letter-spacing: -0.03em;">
+              {t.pages?.[pageKey]?.title || title}
+            </h1>
+            <p class="text-base" style="color: var(--color-text-muted);">
+              {t.pages?.[pageKey]?.subtitle || description}
+            </p>
+          </div>
+
+          <!-- Hero Action Card -->
+          <div class="rounded-2xl border p-6 sm:p-8 text-center" style="background-color: var(--color-surface); border-color: var(--color-border);">
+            <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">
+              {t.hero?.badge || 'Calculate Any Playlist Length Instantly'}
+            </h2>
+            <p class="text-xs sm:text-sm mb-6 max-w-lg mx-auto" style="color: var(--color-text-muted);">
+              {t.hero?.subtitle || 'Get total duration, speed comparisons, and daily study planning in seconds.'}
+            </p>
+            <a
+              href={calcUrl}
+              class="inline-flex items-center justify-center px-6 py-3 rounded-xl text-sm font-semibold shadow-sm transition-all duration-150 cursor-pointer"
+              style="background-color: var(--color-accent); color: #ffffff;"
+            >
+              {t.pages?.[pageKey]?.ctaBtn || t.calculator?.calculateBtn || 'Calculate Playlist Duration'} &rarr;
+            </a>
+          </div>
+
+          <!-- Content Details -->
+          <div class="space-y-6 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
+            {slug === 'youtube-playlist-duration-calculator' && (
+              <section class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">
+                  {t.pages?.duration?.whyTitle || 'Why calculate playlist duration?'}
+                </h2>
+                <p class="mb-3">
+                  {t.pages?.duration?.whyP || 'Whether you are studying for certification, watching an educational series, or enjoying a video podcast, knowing the exact duration of a YouTube playlist lets you schedule your time efficiently.'}
+                </p>
+                <h3 class="text-sm font-semibold mb-2 mt-4" style="color: var(--color-text);">
+                  {t.pages?.duration?.supportedTitle || 'Full Support for Playlists & Ranges'}
+                </h3>
+                <p>
+                  {t.pages?.duration?.beyondTitle || 'YT Playlist Cal supports up to thousands of videos in a playlist, customizable start and end indexes, and custom playback speeds.'}
+                </p>
+              </section>
+            )}
+
+            {slug === 'youtube-watch-time-calculator' && (
+              <section class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">
+                  Speed Multipliers and Time Conservation
+                </h2>
+                <p class="mb-3">
+                  Watching videos at higher speeds substantially reduces the required watch time while preserving speech comprehension.
+                </p>
+                <div class="overflow-x-auto mt-4">
+                  <table class="w-full text-xs border rounded-lg overflow-hidden" style="border-color: var(--color-border);">
+                    <thead>
+                      <tr style="background-color: var(--color-surface-2);">
+                        <th class="px-4 py-2 text-left font-semibold" style="color: var(--color-text);">Speed</th>
+                        <th class="px-4 py-2 text-left font-semibold" style="color: var(--color-text);">Time Required for 10-Hour Course</th>
+                        <th class="px-4 py-2 text-left font-semibold" style="color: var(--color-text);">Time Saved</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y" style="border-color: var(--color-border);">
+                      <tr><td class="px-4 py-2 font-mono">1.0×</td><td class="px-4 py-2">10h 00m</td><td class="px-4 py-2">0m (Baseline)</td></tr>
+                      <tr><td class="px-4 py-2 font-mono">1.25×</td><td class="px-4 py-2">8h 00m</td><td class="px-4 py-2 font-semibold" style="color: var(--color-success, #10b981);">2h 00m (20%)</td></tr>
+                      <tr><td class="px-4 py-2 font-mono">1.5×</td><td class="px-4 py-2">6h 40m</td><td class="px-4 py-2 font-semibold" style="color: var(--color-success, #10b981);">3h 20m (33.3%)</td></tr>
+                      <tr><td class="px-4 py-2 font-mono">1.75×</td><td class="px-4 py-2">5h 43m</td><td class="px-4 py-2 font-semibold" style="color: var(--color-success, #10b981);">4h 17m (42.8%)</td></tr>
+                      <tr><td class="px-4 py-2 font-mono">2.0×</td><td class="px-4 py-2">5h 00m</td><td class="px-4 py-2 font-semibold" style="color: var(--color-success, #10b981);">5h 00m (50.0%)</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            )}
+
+            {slug === 'youtube-playlist-remaining-time' && (
+              <section class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">
+                  Pick Up Where You Left Off
+                </h2>
+                <p>
+                  If you have already watched the first 15 episodes of a 50-video playlist, our "Remaining Time" mode calculates only the videos from 16 to 50 so you know exactly how many hours are left to finish the course or series.
+                </p>
+              </section>
+            )}
+
+            {slug === 'youtube-watch-time-at-1-5x' && (
+              <section class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">
+                  Save 33.3% of Watch Time at 1.5× Speed
+                </h2>
+                <p>
+                  1.5× playback speed is widely considered the sweet spot for educational and technical video content. It speeds up speech without causing distortion or loss of clarity, saving exactly one-third of your total viewing time.
+                </p>
+              </section>
+            )}
+
+            {slug === 'youtube-watch-time-at-2x' && (
+              <section class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <h2 class="text-base font-semibold mb-3" style="color: var(--color-text);">
+                  Cut Your Watch Time Exactly in Half at 2.0× Speed
+                </h2>
+                <p>
+                  At 2× playback speed, a 20-hour playlist takes only 10 hours. With our custom speed feature, you can also fine-tune playback up to 3× or any custom decimal value.
+                </p>
+              </section>
+            )}
+          </div>
+
+          <!-- Other Tools Navigation -->
+          <div class="rounded-xl border p-6" style="background-color: var(--color-surface); border-color: var(--color-border);">
+            <h3 class="text-sm font-semibold mb-3" style="color: var(--color-text);">{t.footer?.colTools || 'Explore Other Tools'}</h3>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href={getLocalizedUrl('/youtube-playlist-duration-calculator/', locale)} class="px-3 py-1.5 rounded-lg border hover:underline" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">Duration Calculator</a>
+              <a href={getLocalizedUrl('/youtube-watch-time-calculator/', locale)} class="px-3 py-1.5 rounded-lg border hover:underline" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">Watch Time Calculator</a>
+              <a href={getLocalizedUrl('/youtube-playlist-remaining-time/', locale)} class="px-3 py-1.5 rounded-lg border hover:underline" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">Remaining Time</a>
+              <a href={getLocalizedUrl('/youtube-watch-time-at-1-5x/', locale)} class="px-3 py-1.5 rounded-lg border hover:underline" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">Watch Time at 1.5×</a>
+              <a href={getLocalizedUrl('/youtube-watch-time-at-2x/', locale)} class="px-3 py-1.5 rounded-lg border hover:underline" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);">Watch Time at 2×</a>
+            </div>
+          </div>
+        </div>
+      )}
+
+    </div>
+  </main>
+
+  <Footer locale={locale} />
+</BaseLayout>
+
+<script>
+  // Simple client interactivity for contact form
+  const contactForm = document.getElementById('contact-form') as HTMLFormElement | null;
+  const contactStatus = document.getElementById('contact-status');
+  contactForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+    if (btn) btn.disabled = true;
+    if (contactStatus) {
+      contactStatus.classList.remove('hidden');
+    }
+    contactForm.reset();
+  });
+</script>

@@ -1,0 +1,517 @@
+{
+  "brand": {
+    "name": "YT Playlist Cal",
+    "tagline": "Ücretsiz YouTube oynatma listesi süresi ve izleme süresi hesaplayıcı.",
+    "notAffiliated": "YouTube veya Google ile bağlantılı değildir."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "tools": "Araçlar",
+    "howItWorks": "Nasıl Çalışır",
+    "faq": "SSS",
+    "about": "Hakkımızda",
+    "contact": "İletişim",
+    "tryCalculator": "Hesaplayıcıyı Dene",
+    "selectLanguage": "Dil Seçin",
+    "searchLanguage": "Dil ara…",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "toggleTheme": "Karanlık temayı değiştir"
+  },
+  "hero": {
+    "badge": "Hızlı ve Ücretsiz YouTube Hesaplayıcı",
+    "title": "YouTube Oynatma Listesi Süre Hesaplayıcı",
+    "subtitle": "Toplam süreyi, 1.25× ile 3× arasındaki oynatma hızlarında izleme süresini hesaplayın ve çalışma programınızı anında planlayın."
+  },
+  "calculator": {
+    "modeFull": "Tüm Oynatma Listesi",
+    "modeRange": "Video Aralığı",
+    "modeRemaining": "Kalan Süre",
+    "urlLabel": "YouTube Oynatma Listesi veya Video Bağlantısı / Kimliği",
+    "urlPlaceholder": "YouTube oynatma listesi URL’sini, video bağlantısını veya kimliğini yapıştırın…",
+    "pasteBtn": "Yapıştır",
+    "demoBtn": "Örnek Dene",
+    "rangeStart": "Başlangıç Videosu",
+    "rangeEnd": "Bitiş Videosu",
+    "watchedThrough": "Şu videoya kadar izledim:",
+    "speedLabel": "Oynatma Hızı",
+    "customSpeedPlaceholder": "Özel",
+    "advancedOptions": "Gelişmiş Seçenekler",
+    "userApiKey": "Özel YouTube API Anahtarı (İsteğe Bağlı)",
+    "userApiKeyHint": "Paylaşılan kota sınırlarından kaçınmak için kendi YouTube API anahtarınızı girin.",
+    "calculateBtn": "Oynatma Listesi Süresini Hesapla",
+    "calculatingBtn": "Hesaplanıyor…",
+    "loadingTitle": "Oynatma listesi inceleniyor…",
+    "loadingStep1": "YouTube API’ye bağlanılıyor…",
+    "loadingStep2": "Oynatma listesi bilgileri alınıyor…",
+    "loadingStep3": "Video süreleri işleniyor…",
+    "loadingStep4": "Neredeyse hazır…",
+    "statTotal": "Toplam Süre",
+    "statCount": "Video Sayısı",
+    "statAvg": "Video Başına Ortalama",
+    "statSpeed": "Seçilen Hızda",
+    "statShortest": "En Kısa Video",
+    "statLongest": "En Uzun Video",
+    "speedTitle": "Hız Karşılaştırması",
+    "speedColSpeed": "Hız",
+    "speedColDuration": "İzleme Süresi",
+    "speedColSaved": "Kazanılan Zaman",
+    "speedSelected": "seçili",
+    "watchPlannerTitle": "Günlük İzleme Planlayıcı",
+    "watchPlannerDesc": "Tam bitiş tarihini öğrenmek için günde kaç dakika ayırabileceğinizi girin.",
+    "plannerMinutes": "Günlük Dakika",
+    "plannerStartDate": "Başlangıç Tarihi",
+    "plannerSpeed": "Hız",
+    "plannerBtn": "Programı Hesapla",
+    "plannerResultText": "{speed}× hızında ve günde {minutes} dakika ile {days} günde bitirirsiniz.",
+    "plannerFinishDate": "Tahmini Bitiş Tarihi:",
+    "finishByTitle": "Hedef Tarih Hesaplayıcı",
+    "finishByDesc": "Belirli bir tarihe kadar bitirmeniz mi gerekiyor? Günde ne kadar izlemeniz gerektiğini hesaplayın.",
+    "finishByDate": "Hedef Bitiş Tarihi",
+    "finishBySpeed": "Hız",
+    "finishByBtn": "Günlük Süreyi Hesapla",
+    "finishByResultText": "{date} tarihine kadar {speed}× hızında bitirmek için önümüzdeki {days} gün boyunca günde {daily} izlemelisiniz.",
+    "finishByUnfeasible": "Bu tarih günde 23 saatten fazla izleme gerektirir ve gerçekçi değildir. Lütfen daha ileri bir tarih seçin veya hızı artırın.",
+    "videoListTitle": "Oynatma Listesi Videoları",
+    "showVideos": "Videoları Göster",
+    "hideVideos": "Videoları Gizle",
+    "searchVideosPlaceholder": "Video başlıklarında ara…",
+    "pageIndicator": "Sayfa {current} / {total}",
+    "prevPage": "Önceki",
+    "nextPage": "Sonraki",
+    "privateVideo": "Gizli",
+    "liveVideo": "Canlı",
+    "unavailableVideo": "Kullanılamıyor",
+    "exportTitle": "Paylaş ve Dışa Aktar",
+    "copyLink": "Bağlantıyı Kopyala",
+    "copySummary": "Özeti Kopyala",
+    "exportCsv": "CSV İndir",
+    "exportTxt": "TXT İndir",
+    "copied": "Kopyalandı!",
+    "errors": {
+      "missingUrl": "Lütfen bir YouTube URL’si girin.",
+      "invalidUrl": "Geçerli bir YouTube oynatma listesi veya video bağlantısı bulunamadı.",
+      "urlTooLong": "Girilen bağlantı çok uzun.",
+      "invalidRange": "Başlangıç videosu bitiş videosundan küçük veya eşit olmalıdır.",
+      "quotaExceeded": "YouTube API günlük istek sınırı doldu. Lütfen yarın tekrar deneyin veya Gelişmiş Seçenekler’den kendi anahtarınızı girin.",
+      "rateLimited": "Çok fazla istek yapıldı. Lütfen biraz bekleyip tekrar deneyin.",
+      "notFound": "Oynatma listesi veya video bulunamadı. Bağlantının doğruluğunu ve listenin herkese açık olduğunu kontrol edin.",
+      "forbidden": "YouTube API tarafından erişim engellendi.",
+      "internalError": "Sunucu tarafında bir hata oluştu. Lütfen tekrar deneyin.",
+      "networkError": "Ağ hatası: Hesaplayıcı sunucusuna bağlanılamadı."
+    }
+  },
+  "features": {
+    "title": "YouTube oynatma listelerinizi planlamak için ihtiyacınız olan her şey",
+    "subtitle": "Hassas toplam süreden hız karşılaştırmasına ve günlük çalışma programına kadar.",
+    "items": [
+      {
+        "icon": "clock",
+        "title": "Tam Toplam Süre",
+        "desc": "Herkese açık herhangi bir YouTube oynatma listesinin saat, dakika ve saniye bazında kesin süresini alın."
+      },
+      {
+        "icon": "zap",
+        "title": "Hız Tablosu",
+        "desc": "0.5× ile 3× arasındaki oynatma hızlarında zaman tasarrufunu anında karşılaştırın."
+      },
+      {
+        "icon": "crosshair",
+        "title": "Video Aralığı",
+        "desc": "Oynatma listesindeki belirli bir video aralığının süresini hesaplayın."
+      },
+      {
+        "icon": "play",
+        "title": "Kalan Süre",
+        "desc": "Kaldığınız videoyu girin ve listeyi bitirmek için ne kadar saat kaldığını görün."
+      },
+      {
+        "icon": "calendar-days",
+        "title": "Günlük Planlayıcı",
+        "desc": "Günlük izleme sürenizi girerek kursun veya serinin biteceği günü hesaplayın."
+      },
+      {
+        "icon": "flag",
+        "title": "Hedef Tarih",
+        "desc": "Bir bitiş tarihi belirleyin ve günde kaç dakika ayırmanız gerektiğini öğrenin."
+      }
+    ]
+  },
+  "howItWorks": {
+    "badge": "Nasıl Çalışır",
+    "title": "YouTube oynatma listesi süresi 3 adımda nasıl hesaplanır?",
+    "subtitle": "Herhangi bir program yüklemeden saniyeler içinde süreleri hesaplayın.",
+    "steps": [
+      {
+        "number": "1",
+        "title": "Oynatma listesi bağlantısını kopyalayın",
+        "desc": "YouTube’da adres çubuğundan veya paylaş düğmesinden oynatma listesi bağlantısını kopyalayın."
+      },
+      {
+        "number": "2",
+        "title": "Hesaplayıcıya yapıştırın",
+        "desc": "Bağlantıyı giriş alanına yapıştırın, gerekirse video aralığını veya hızı seçin."
+      },
+      {
+        "number": "3",
+        "title": "Süreleri ve planı görüntüleyin",
+        "desc": "Toplam süre, hız karşılaştırma tablosu ve bitiş tarihlerine anında ulaşın."
+      }
+    ],
+    "supportedBadge": "Desteklenen Formatlar",
+    "supportedTitle": "Hangi YouTube bağlantı türleri desteklenir?",
+    "supportedDesc": "Aracımız standart oynatma listesi URL’lerini, oynatma listesi içeren video linklerini ve doğrudan liste kimliklerini destekler.",
+    "links": [
+      {
+        "label": "Standart liste URL’si",
+        "example": "youtube.com/playlist?list=PL..."
+      },
+      {
+        "label": "Listeli video bağlantısı",
+        "example": "youtube.com/watch?v=...&list=PL..."
+      },
+      {
+        "label": "Kısa link (youtu.be)",
+        "example": "youtu.be/...&list=PL..."
+      },
+      {
+        "label": "Doğrudan liste kimliği",
+        "example": "PLrAXtmErZgOdP_OalsLiL..."
+      }
+    ]
+  },
+  "faq": {
+    "badge": "SSS",
+    "title": "Oynatma listesi hesaplayıcı hakkında sıkça sorulan sorular",
+    "subtitle": "Süre hesaplama, video hızları ve YouTube sınırlamaları hakkında merak edilenler.",
+    "items": [
+      {
+        "q": "Bir YouTube oynatma listesinin toplam süresi nasıl hesaplanır?",
+        "a": "YouTube’daki oynatma listesi bağlantısını kopyalayın, sitemizdeki alana yapıştırın ve \"Oynatma Listesi Süresini Hesapla\" düğmesine tıklayın. Sonuç saniyeler içinde gösterilir."
+      },
+      {
+        "q": "Hızlandırılmış (1.25×, 1.5×, 2×) izleme süresini hesaplayabilir miyim?",
+        "a": "Evet! Hız karşılaştırma tablomuz 0.5× ile 3× arasındaki tüm hızları hesaplar ve ne kadar süre tasarruf edeceğinizi gösterir."
+      },
+      {
+        "q": "Gizli veya liste dışı oynatma listelerinde çalışır mı?",
+        "a": "Bağlantıya sahip olduğunuz sürece liste dışı (unlisted) listelerde çalışır; ancak gizli (private) listelere YouTube API üzerinden ulaşılamaz."
+      },
+      {
+        "q": "En fazla kaç video hesaplanabilir?",
+        "a": "Resmi YouTube Data API v3 aracılığıyla sayfalandırma yaparak yüzlerce videodan oluşan listeleri eksiksiz hesaplayabiliriz."
+      },
+      {
+        "q": "Silinen veya gizlenen videolar ne olur?",
+        "a": "Silinen veya erişime kapatılan videolar tespit edilir ve liste üzerinde özel olarak işaretlenir."
+      },
+      {
+        "q": "Yalnızca belirli videoları hesaplayabilir miyim?",
+        "a": "Evet, \"Video Aralığı\" sekmesini seçerek hesaplamak istediğiniz başlangıç ve bitiş videolarını belirleyebilirsiniz."
+      },
+      {
+        "q": "Günlük Planlayıcı bitiş tarihini nasıl tahmin eder?",
+        "a": "Seçtiğiniz hızdaki toplam süreyi her gün ayırabileceğiniz dakika miktarına bölerek takvim üzerinden tam bitiş gününü hesaplar."
+      },
+      {
+        "q": "Bu araç ücretsiz mi?",
+        "a": "Tamamen ücretsizdir, kayıt gerektirmez ve kişisel verilerinizi toplamaz."
+      },
+      {
+        "q": "YouTube neden toplam oynatma listesi süresini göstermiyor?",
+        "a": "YouTube yalnızca video sayısını gösterir. Aracımız API üzerinden her videonun süresini çekerek toplamı bulur."
+      },
+      {
+        "q": "Hesaplanan video listesini indirebilir miyim?",
+        "a": "Evet, video listesi özetini panoya kopyalayabilir veya CSV dosyası olarak Excel ve Google E-Tablolar için indirebilirsiniz."
+      }
+    ]
+  },
+  "footer": {
+    "desc": "Free YouTube playlist length and watch time calculator. Calculate total duration, playback-speed estimates, and watch planning schedules.",
+    "notAffiliated": "Not affiliated with YouTube or Google.",
+    "colTools": "Tools",
+    "colResources": "Resources",
+    "colCompany": "Company",
+    "colLegal": "Legal",
+    "allRightsReserved": "All rights reserved.",
+    "trademarkNotice": "YouTube™ is a trademark of Google LLC. This tool is independent and not affiliated with YouTube or Google.",
+    "links": {
+      "playlistCalculator": "Playlist Length Calculator",
+      "durationCalculator": "Duration Calculator",
+      "watchTimeCalculator": "Watch Time Calculator",
+      "remainingTime": "Remaining Time",
+      "watchTime15x": "Watch Time at 1.5x",
+      "watchTime2x": "Watch Time at 2x",
+      "howItWorks": "How It Works",
+      "faq": "FAQ",
+      "allTools": "All Tools",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "disclaimer": "Disclaimer"
+    },
+    "brandDesc": "YouTube oynatma listesi sürelerini hesaplamanın ve çalışma planları oluşturmanın en hızlı ve güvenilir yolu.",
+    "toolsTitle": "Araçlar",
+    "resourcesTitle": "Kaynaklar",
+    "legalTitle": "Yasal",
+    "copyright": "© {year} YT Playlist Cal (Chrono Play). Tüm hakları saklıdır."
+  },
+  "pages": {
+    "about": {
+      "breadcrumb": "About",
+      "title": "YT Playlist Cal Hakkında",
+      "subtitle": "Öğrenciler, yazılımcılar ve zamanına değer veren herkes için geliştirildi.",
+      "whatWeDoTitle": "What We Do",
+      "whatWeDoP1": "YouTube doesn't show you the total length of a playlist. If you're a student planning to finish a programming course, someone binge-watching a series, or a teacher reviewing content — you often need to know the total time commitment upfront.",
+      "whatWeDoP2": "YT Playlist Cal solves that problem: paste any YouTube playlist URL and instantly get the total duration, along with watch-time estimates at different playback speeds (1×, 1.5×, 2×, or custom), a per-video breakdown, and a daily watch planner.",
+      "principlesTitle": "Our Principles",
+      "p1": "YT Playlist Cal basit bir ihtiyacı karşılamak üzere tasarlandı: YouTube oynatma listelerindeki video sayısını gösterirken, toplam saati ve bir kursu bitirmenin kaç gün süreceğini belirtmez.",
+      "p2": "Amacımız, gereksiz reklamlar olmadan, hızlı, güvenilir ve gizliliğe saygılı hesaplama araçları sunmaktır.",
+      "p3": "Fast and accurate. Server-side API fetching with edge acceleration.",
+      "trademarkTitle": "Independence & Trademarks",
+      "trademarkP": "YT Playlist Cal is an independent utility. YouTube™ is a trademark of Google LLC. We are not endorsed by, sponsored by, or affiliated with YouTube or Google LLC."
+    },
+    "contact": {
+      "breadcrumb": "Contact",
+      "title": "Bize Ulaşın",
+      "subtitle": "Görüş, öneri veya hata bildirimleriniz için bizimle iletişime geçin.",
+      "formType": "Type",
+      "formTypeBug": "Bug Report",
+      "formTypeFeature": "Feature Request",
+      "formTypeQuestion": "Question",
+      "formTypeOther": "Other",
+      "formEmail": "Email (optional)",
+      "formEmailPlaceholder": "you@example.com",
+      "formMessage": "Message",
+      "formMessagePlaceholder": "Describe your issue or suggestion in detail…",
+      "formSubmit": "Send Message",
+      "formSuccess": "Thank you! Your message has been sent.",
+      "faqNoteTitle": "Before reaching out",
+      "faqNoteP": "Many common questions about playlist limits, unavailable videos, and API keys are answered in our FAQ.",
+      "faqLink": "View FAQ →",
+      "emailLabel": "Destek E-postası",
+      "emailValue": "support@ytplaylistcal.com"
+    },
+    "tools": {
+      "breadcrumb": "Tools",
+      "title": "Tüm YouTube Oynatma Listesi Araçları",
+      "subtitle": "YouTube izleme sürenizi en iyi şekilde yönetmeniz için hazırlanmış ücretsiz araçlar."
+    },
+    "duration": {
+      "breadcrumb": "Duration Calculator",
+      "title": "YouTube Oynatma Listesi Süre Hesaplayıcı",
+      "subtitle": "Herkese açık herhangi bir YouTube oynatma listesinin tam uzunluğunu öğrenin.",
+      "whyTitle": "Why Doesn't YouTube Show Playlist Duration?",
+      "whyP": "YouTube does not display the total length of a playlist by default. You can see each video individual duration in the playlist view, but there is no native sum. YT Playlist Cal calculates this instantly via the YouTube Data API.",
+      "supportedTitle": "Supported URL Types",
+      "beyondTitle": "Beyond Just Duration",
+      "ctaBtn": "Calculate Playlist Duration Now",
+      "badge": "Süre Hesaplayıcı"
+    },
+    "watchTime": {
+      "breadcrumb": "Watch Time Calculator",
+      "title": "YouTube İzleme Süresi Hesaplayıcı",
+      "subtitle": "Bir oynatma listesini izlemenin gerçekte ne kadar süreceğini hesaplayın.",
+      "ctaBtn": "Calculate Watch Time Now",
+      "badge": "İzleme Süresi"
+    },
+    "remainingTime": {
+      "breadcrumb": "Remaining Time Calculator",
+      "title": "Oynatma Listesi Kalan Süre Hesaplayıcı",
+      "subtitle": "Kaldığınız videodan itibaren geriye kaç saat kaldığını görün.",
+      "ctaBtn": "Calculate Remaining Time",
+      "badge": "Kalan Süre"
+    },
+    "speed15x": {
+      "breadcrumb": "1.5x Speed Calculator",
+      "title": "1.5× Hızında Oynatma Listesi Hesaplayıcı",
+      "subtitle": "1.5× hızında izlerken ne kadar zaman tasarrufu yapacağınızı hesaplayın.",
+      "ctaBtn": "Calculate at 1.5x Speed",
+      "badge": "1.5× Hızlandırma"
+    },
+    "speed2x": {
+      "breadcrumb": "2x Speed Calculator",
+      "title": "2× Hızında Oynatma Listesi Hesaplayıcı",
+      "subtitle": "2× hızında izleyerek ders çalışma sürenizi yarı yarıya indirin.",
+      "ctaBtn": "Calculate at 2x Speed",
+      "badge": "2× Hızlandırma"
+    },
+    "terms": {
+      "breadcrumb": "Terms of Service",
+      "title": "Kullanım Koşulları",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "By using YT Playlist Cal, you agree to these terms, our Privacy Policy, and our Disclaimer. This is a free, independent utility for estimating YouTube playlist durations.",
+      "subtitle": "YT Playlist Cal hizmet kullanım şartları.",
+      "intro": "YT Playlist Cal web sitesini kullanarak aşağıdaki kullanım şartlarını kabul etmiş sayılırsınız."
+    },
+    "privacy": {
+      "breadcrumb": "Privacy Policy",
+      "title": "Gizlilik Politikası",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "We value your privacy. We do not store your playlist URLs, track personal identities, or sell data. All calculations occur transiently.",
+      "subtitle": "Verilerinizin korunması ve gizlilik standartlarımız.",
+      "intro": "Gizliliğinize önem veriyoruz. Kişisel verilerinizi toplamıyor ve arama geçmişinizi saklamıyoruz."
+    },
+    "disclaimer": {
+      "breadcrumb": "Disclaimer",
+      "title": "Sorumluluk Reddi Beyanı",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "YT Playlist Cal is an independent utility tool. We are not affiliated with, authorized by, or endorsed by YouTube or Google LLC.",
+      "subtitle": "Yasal bildirimler ve ticari marka açıklaması.",
+      "intro": "YT Playlist Cal bağımsız bir araç olup YouTube veya Google LLC ile doğrudan ilişkisi yoktur."
+    },
+    "error404": {
+      "code": "404",
+      "title": "Sayfa Bulunamadı",
+      "desc": "The page you're looking for doesn't exist. It may have been moved, renamed, or never existed.",
+      "btn": "Go to the Calculator",
+      "allTools": "Browse all tools →",
+      "subtitle": "Aradığınız sayfa mevcut değil veya taşınmış olabilir.",
+      "backHome": "Ana Sayfaya Dön"
+    },
+    "error500": {
+      "code": "500",
+      "title": "Sunucu Hatası",
+      "desc": "Something went wrong on our servers while processing this request. Please try refreshing or check back shortly.",
+      "btn": "Go to the Calculator",
+      "reportBtn": "Report an issue",
+      "allTools": "Browse all tools →",
+      "subtitle": "Sunucularımızda geçici bir sorun meydana geldi. Lütfen biraz sonra tekrar deneyin.",
+      "backHome": "Ana Sayfaya Dön"
+    }
+  },
+  "meta": {
+    "home": {
+      "title": "YouTube Oynatma Listesi Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "YouTube oynatma listesi süresini anında hesaplayın. 1.25×-3× oynatma hızları, video aralığı, kalan süre ve günlük çalışma planı desteği."
+    },
+    "tools": {
+      "title": "YouTube Oynatma Listesi Araçları | YT Playlist Cal",
+      "desc": "Oynatma listesi süresi, izleme hızı tasarrufu ve bitiş tarihi hesaplaması için ücretsiz YouTube araçları."
+    },
+    "duration": {
+      "title": "YouTube Oynatma Listesi Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "Herhangi bir YouTube oynatma listesinin saat, dakika ve saniye olarak tam süresini hemen öğrenin."
+    },
+    "watchTime": {
+      "title": "YouTube İzleme Süresi Hesaplayıcı | YT Playlist Cal",
+      "desc": "YouTube oynatma listelerini normal ve artırılmış hızlarda izlemenin ne kadar süreceğini hesaplayın."
+    },
+    "remainingTime": {
+      "title": "Oynatma Listesi Kalan Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "Kaldığınız videoyu belirterek YouTube oynatma listesinde geriye ne kadar süre kaldığını öğrenin."
+    },
+    "speed15x": {
+      "title": "1.5× Hızında Oynatma Listesi Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "YouTube oynatma listelerini 1.5× hızında izlerken toplam süreyi ve kazanılan zamanı görün."
+    },
+    "speed2x": {
+      "title": "2× Hızında Oynatma Listesi Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "İzleme sürenizi yarı yarıya düşürün. YouTube listelerini 2× hızında anında hesaplayın."
+    },
+    "howItWorks": {
+      "title": "Oynatma Listesi Hesaplayıcı Nasıl Çalışır | YT Playlist Cal",
+      "desc": "Resmi YouTube API ile oynatma listesi sürelerinin nasıl hesaplandığına dair adım adım rehber."
+    },
+    "faq": {
+      "title": "YouTube Oynatma Listesi Sıkça Sorulan Sorular | YT Playlist Cal",
+      "desc": "Süre hesaplamaları, hızlar ve YouTube API sınırları hakkındaki tüm soruların yanıtları."
+    },
+    "about": {
+      "title": "Hakkımızda — YT Playlist Cal",
+      "desc": "YT Playlist Cal hakkında bilgi edinin: YouTube kullanıcıları için hızlı ve gizlilik odaklı süre hesaplayıcı."
+    },
+    "contact": {
+      "title": "İletişim — YT Playlist Cal",
+      "desc": "Görüş, öneri veya iş birlikleri için YT Playlist Cal ekibine ulaşın."
+    },
+    "privacy": {
+      "title": "Gizlilik Politikası | YT Playlist Cal",
+      "desc": "YT Playlist Cal üzerinde kullanıcı verilerinin nasıl korunduğunu öğrenin."
+    },
+    "terms": {
+      "title": "Kullanım Koşulları | YT Playlist Cal",
+      "desc": "YT Playlist Cal web sitesinin kullanım kuralları ve hizmet şartları."
+    },
+    "disclaimer": {
+      "title": "Sorumluluk Reddi Beyanı | YT Playlist Cal",
+      "desc": "YT Playlist Cal yasal bildirimi ve tescilli marka açıklamaları."
+    },
+    "error404": {
+      "title": "Sayfa Bulunamadı — YT Playlist Cal",
+      "desc": "Aradığınız sayfa YT Playlist Cal üzerinde bulunamadı."
+    },
+    "error500": {
+      "title": "Sunucu Hatası — YT Playlist Cal",
+      "desc": "Sunucuda bir hata oluştu. Lütfen biraz sonra tekrar deneyin."
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "YouTube Oynatma Listesi Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "YouTube oynatma listesi süresini anında hesaplayın. 1.25×-3× oynatma hızları, video aralığı, kalan süre ve günlük çalışma planı desteği."
+    },
+    "tools": {
+      "title": "YouTube Oynatma Listesi Araçları | YT Playlist Cal",
+      "desc": "Oynatma listesi süresi, izleme hızı tasarrufu ve bitiş tarihi hesaplaması için ücretsiz YouTube araçları."
+    },
+    "duration": {
+      "title": "YouTube Oynatma Listesi Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "Herhangi bir YouTube oynatma listesinin saat, dakika ve saniye olarak tam süresini hemen öğrenin."
+    },
+    "watchTime": {
+      "title": "YouTube İzleme Süresi Hesaplayıcı | YT Playlist Cal",
+      "desc": "YouTube oynatma listelerini normal ve artırılmış hızlarda izlemenin ne kadar süreceğini hesaplayın."
+    },
+    "remainingTime": {
+      "title": "Oynatma Listesi Kalan Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "Kaldığınız videoyu belirterek YouTube oynatma listesinde geriye ne kadar süre kaldığını öğrenin."
+    },
+    "speed15x": {
+      "title": "1.5× Hızında Oynatma Listesi Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "YouTube oynatma listelerini 1.5× hızında izlerken toplam süreyi ve kazanılan zamanı görün."
+    },
+    "speed2x": {
+      "title": "2× Hızında Oynatma Listesi Süre Hesaplayıcı | YT Playlist Cal",
+      "desc": "İzleme sürenizi yarı yarıya düşürün. YouTube listelerini 2× hızında anında hesaplayın."
+    },
+    "howItWorks": {
+      "title": "Oynatma Listesi Hesaplayıcı Nasıl Çalışır | YT Playlist Cal",
+      "desc": "Resmi YouTube API ile oynatma listesi sürelerinin nasıl hesaplandığına dair adım adım rehber."
+    },
+    "faq": {
+      "title": "YouTube Oynatma Listesi Sıkça Sorulan Sorular | YT Playlist Cal",
+      "desc": "Süre hesaplamaları, hızlar ve YouTube API sınırları hakkındaki tüm soruların yanıtları."
+    },
+    "about": {
+      "title": "Hakkımızda — YT Playlist Cal",
+      "desc": "YT Playlist Cal hakkında bilgi edinin: YouTube kullanıcıları için hızlı ve gizlilik odaklı süre hesaplayıcı."
+    },
+    "contact": {
+      "title": "İletişim — YT Playlist Cal",
+      "desc": "Görüş, öneri veya iş birlikleri için YT Playlist Cal ekibine ulaşın."
+    },
+    "privacy": {
+      "title": "Gizlilik Politikası | YT Playlist Cal",
+      "desc": "YT Playlist Cal üzerinde kullanıcı verilerinin nasıl korunduğunu öğrenin."
+    },
+    "terms": {
+      "title": "Kullanım Koşulları | YT Playlist Cal",
+      "desc": "YT Playlist Cal web sitesinin kullanım kuralları ve hizmet şartları."
+    },
+    "disclaimer": {
+      "title": "Sorumluluk Reddi Beyanı | YT Playlist Cal",
+      "desc": "YT Playlist Cal yasal bildirimi ve tescilli marka açıklamaları."
+    },
+    "error404": {
+      "title": "Sayfa Bulunamadı — YT Playlist Cal",
+      "desc": "Aradığınız sayfa YT Playlist Cal üzerinde bulunamadı."
+    },
+    "error500": {
+      "title": "Sunucu Hatası — YT Playlist Cal",
+      "desc": "Sunucuda bir hata oluştu. Lütfen biraz sonra tekrar deneyin."
+    }
+  }
+}

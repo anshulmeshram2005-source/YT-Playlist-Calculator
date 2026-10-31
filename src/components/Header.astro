@@ -1,16 +1,30 @@
 ---
-// Header.astro — Sticky top navigation with logo, links, and theme toggle
+// Header.astro — Sticky top navigation with logo, localized links, theme toggle, and multilingual language picker
 import Icon from './Icon.astro';
 import BrandLogo from './BrandLogo.astro';
+import { LOCALES, LOCALE_METADATA, DEFAULT_LOCALE, type Locale, isValidLocale } from '../i18n/config';
+import { getLocalizedUrl } from '../i18n/routing';
+import { getTranslations } from '../i18n/utils';
 
-const navLinks = [
-  { href: '/tools/', label: 'Tools' },
-  { href: '/how-it-works/', label: 'How It Works' },
-  { href: '/faq/', label: 'FAQ' },
-  { href: '/about/', label: 'About' },
-];
+export interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const currentLocale: Locale = isValidLocale(locale) ? locale : DEFAULT_LOCALE;
+const currentMeta = LOCALE_METADATA[currentLocale] ?? LOCALE_METADATA.en;
+const t = getTranslations(currentLocale);
 
 const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: getLocalizedUrl('/tools/', currentLocale), label: t.nav.tools, path: '/tools/' },
+  { href: getLocalizedUrl('/how-it-works/', currentLocale), label: t.nav.howItWorks, path: '/how-it-works/' },
+  { href: getLocalizedUrl('/faq/', currentLocale), label: t.nav.faq, path: '/faq/' },
+  { href: getLocalizedUrl('/about/', currentLocale), label: t.nav.about, path: '/about/' },
+];
+
+const homeUrl = getLocalizedUrl('/', currentLocale);
 ---
 
 <header
@@ -23,12 +37,12 @@ const currentPath = Astro.url.pathname;
     -webkit-backdrop-filter: blur(12px);
   "
 >
-  <div class="container">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
     <div class="flex h-14 items-center justify-between gap-2 sm:gap-4">
 
       <!-- Brand Logo & Website Name (Always visible together on all screen sizes) -->
       <a
-        href="/"
+        href={homeUrl}
         class="flex items-center gap-2 shrink-0 group focus-visible:outline-none"
         aria-label="YT Playlist Cal — Home"
       >
@@ -49,8 +63,8 @@ const currentPath = Astro.url.pathname;
         aria-label="Main navigation"
         class="hidden md:flex items-center gap-1"
       >
-        {navLinks.map(({ href, label }) => {
-          const isActive = currentPath === href || (href !== '/' && currentPath.startsWith(href));
+        {navLinks.map(({ href, label, path }) => {
+          const isActive = currentPath === href || (path !== '/' && currentPath.includes(path));
           return (
             <a
               href={href}
@@ -68,23 +82,114 @@ const currentPath = Astro.url.pathname;
         })}
       </nav>
 
-      <!-- Right side: Theme toggle + mobile menu -->
-      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      <!-- Right side: Language picker + Theme toggle + Mobile menu -->
+      <div class="flex items-center gap-1 sm:gap-2 shrink-0">
 
-        <!-- Theme Toggle -->
+        <!-- Language Selector Dropdown Button -->
+        <div class="relative" id="lang-picker-container">
+          <button
+            id="lang-picker-btn"
+            type="button"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            aria-label={t.nav.selectLanguage}
+            class="h-8 px-2 sm:px-2.5 rounded-md flex items-center gap-1.5 text-xs font-medium transition-colors duration-150 border focus-visible:outline-none"
+            style="color: var(--color-text-2); background-color: var(--color-surface); border-color: var(--color-border);"
+          >
+            <!-- Globe Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+              <path d="M2 12h20"/>
+            </svg>
+            <span class="text-sm select-none" aria-hidden="true">{currentMeta.flag}</span>
+            <span class="hidden sm:inline-block max-w-[70px] truncate select-none">{currentMeta.nativeName}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform duration-150" id="lang-picker-chevron">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+
+          <!-- Language Dropdown Modal/Panel -->
+          <div
+            id="lang-picker-dropdown"
+            role="dialog"
+            aria-label={t.nav.selectLanguage}
+            class="hidden absolute right-0 ltr:right-0 rtl:left-0 rtl:right-auto mt-2 w-72 sm:w-80 rounded-xl shadow-2xl border p-2 z-50 transition-all duration-150"
+            style="background-color: var(--color-surface); border-color: var(--color-border); max-height: calc(100vh - 80px);"
+          >
+            <!-- Search Filter Header -->
+            <div class="px-2 pb-2 mb-1 border-b" style="border-color: var(--color-border);">
+              <div class="relative flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-2.5 rtl:right-2.5 rtl:left-auto" style="color: var(--color-text-muted);" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <input
+                  id="lang-search-input"
+                  type="text"
+                  placeholder={t.nav.searchLanguage}
+                  autocomplete="off"
+                  class="w-full text-xs rounded-lg py-1.5 pl-8 pr-3 rtl:pr-8 rtl:pl-3 border focus:outline-none"
+                  style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text);"
+                />
+              </div>
+            </div>
+
+            <!-- List of 22 Languages -->
+            <div id="lang-list" class="overflow-y-auto max-h-72 divide-y divide-transparent space-y-0.5">
+              {LOCALES.map((code) => {
+                const meta = LOCALE_METADATA[code];
+                const isSelected = code === currentLocale;
+                const targetUrl = getLocalizedUrl(currentPath, code);
+
+                return (
+                  <a
+                    href={targetUrl}
+                    data-lang-code={code}
+                    data-lang-search={`${meta.name.toLowerCase()} ${meta.nativeName.toLowerCase()} ${meta.bcp47.toLowerCase()}`}
+                    class="lang-option w-full px-2.5 py-2 rounded-lg flex items-center justify-between text-xs transition-colors duration-100 group focus:outline-none"
+                    style={isSelected
+                      ? 'background-color: var(--color-surface-2); color: var(--color-text); font-weight: 600;'
+                      : 'color: var(--color-text-2);'
+                    }
+                  >
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <span class="text-base leading-none shrink-0" aria-hidden="true">{meta.flag}</span>
+                      <div class="truncate text-left rtl:text-right">
+                        <span class="block truncate font-medium text-xs" style="color: var(--color-text);">
+                          {meta.nativeName}
+                        </span>
+                        <span class="block text-[11px] truncate opacity-75" style="color: var(--color-text-muted);">
+                          {meta.name}
+                        </span>
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" style="color: var(--color-accent);" aria-hidden="true">
+                        <path d="M20 6 9 17l-5-5"/>
+                      </svg>
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <!-- Theme Toggle Button -->
         <button
           id="theme-toggle"
           type="button"
-          aria-label="Toggle dark mode"
-          class="w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-150"
-          style="color: var(--color-text-muted);"
+          aria-label={t.nav.toggleTheme}
+          class="w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-150 border focus-visible:outline-none"
+          style="color: var(--color-text-muted); background-color: var(--color-surface); border-color: var(--color-border);"
         >
           <!-- Sun icon (shown in dark mode) -->
           <svg
             id="theme-icon-sun"
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="15"
+            height="15"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -101,8 +206,8 @@ const currentPath = Astro.url.pathname;
           <svg
             id="theme-icon-moon"
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="15"
+            height="15"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -115,21 +220,21 @@ const currentPath = Astro.url.pathname;
           </svg>
         </button>
 
-        <!-- Mobile Menu Button -->
+        <!-- Mobile Navigation Menu Toggle -->
         <button
           id="mobile-menu-btn"
           type="button"
-          aria-label="Open navigation menu"
+          aria-label={t.nav.openMenu}
           aria-expanded="false"
           aria-controls="mobile-menu"
-          class="md:hidden w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-150"
-          style="color: var(--color-text-muted);"
+          class="md:hidden w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-150 border"
+          style="color: var(--color-text-muted); background-color: var(--color-surface); border-color: var(--color-border);"
         >
           <svg
             id="hamburger-icon"
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
+            width="17"
+            height="17"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -145,8 +250,8 @@ const currentPath = Astro.url.pathname;
           <svg
             id="close-icon"
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
+            width="17"
+            height="17"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -165,7 +270,7 @@ const currentPath = Astro.url.pathname;
     </div>
   </div>
 
-  <!-- Mobile Menu -->
+  <!-- Mobile Menu Dropdown -->
   <div
     id="mobile-menu"
     role="dialog"
@@ -173,9 +278,9 @@ const currentPath = Astro.url.pathname;
     class="hidden md:hidden border-t"
     style="border-color: var(--color-border); background-color: var(--color-bg);"
   >
-    <nav aria-label="Mobile navigation" class="container py-3 flex flex-col gap-1">
-      {navLinks.map(({ href, label }) => {
-        const isActive = currentPath === href || (href !== '/' && currentPath.startsWith(href));
+    <nav aria-label="Mobile navigation" class="container mx-auto px-4 py-3 flex flex-col gap-1">
+      {navLinks.map(({ href, label, path }) => {
+        const isActive = currentPath === href || (path !== '/' && currentPath.includes(path));
         return (
           <a
             href={href}
@@ -192,14 +297,14 @@ const currentPath = Astro.url.pathname;
       })}
       <div class="mt-2 pt-2" style="border-top: 1px solid var(--color-border);">
         <a
-          href="/"
+          href={homeUrl}
           class="px-3 py-2.5 text-sm font-medium rounded-md transition-colors duration-150 flex items-center gap-2"
           style="color: var(--color-accent);"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polygon points="5 3 19 12 5 21 5 3"/>
           </svg>
-          Try the Calculator
+          {t.nav.tryCalculator}
         </a>
       </div>
     </nav>
@@ -231,7 +336,73 @@ const currentPath = Astro.url.pathname;
     });
   }
 
-  // Mobile menu
+  // Language Picker Logic with Query Param Preservation & Search Filter
+  function initLanguagePicker() {
+    const btn = document.getElementById('lang-picker-btn');
+    const dropdown = document.getElementById('lang-picker-dropdown');
+    const chevron = document.getElementById('lang-picker-chevron');
+    const searchInput = document.getElementById('lang-search-input') as HTMLInputElement | null;
+    const langOptions = document.querySelectorAll<HTMLAnchorElement>('.lang-option');
+
+    function toggleDropdown(show?: boolean) {
+      const isOpen = show !== undefined ? !show : !dropdown?.classList.contains('hidden');
+      if (isOpen) {
+        dropdown?.classList.add('hidden');
+        chevron?.classList.remove('rotate-180');
+        btn?.setAttribute('aria-expanded', 'false');
+      } else {
+        dropdown?.classList.remove('hidden');
+        chevron?.classList.add('rotate-180');
+        btn?.setAttribute('aria-expanded', 'true');
+        setTimeout(() => searchInput?.focus(), 50);
+      }
+    }
+
+    btn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleDropdown();
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (!dropdown?.contains(e.target as Node) && !btn?.contains(e.target as Node)) {
+        toggleDropdown(false);
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !dropdown?.classList.contains('hidden')) {
+        toggleDropdown(false);
+        btn?.focus();
+      }
+    });
+
+    // Search filter
+    searchInput?.addEventListener('input', (e) => {
+      const term = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      langOptions.forEach((opt) => {
+        const text = opt.getAttribute('data-lang-search') || '';
+        opt.style.display = text.includes(term) ? 'flex' : 'none';
+      });
+    });
+
+    // Preserve query params when clicking any language option
+    langOptions.forEach((opt) => {
+      opt.addEventListener('click', (e) => {
+        const search = window.location.search;
+        if (search) {
+          e.preventDefault();
+          const baseHref = opt.getAttribute('href') || '/';
+          window.location.href = baseHref.includes('?')
+            ? `${baseHref}&${search.slice(1)}`
+            : `${baseHref}${search}`;
+        }
+      });
+    });
+  }
+
+  // Mobile navigation menu
   function initMobileMenu() {
     const btn = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
@@ -276,5 +447,6 @@ const currentPath = Astro.url.pathname;
   }
 
   initTheme();
+  initLanguagePicker();
   initMobileMenu();
 </script>

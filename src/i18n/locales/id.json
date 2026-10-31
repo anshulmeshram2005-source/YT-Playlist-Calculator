@@ -1,0 +1,517 @@
+{
+  "brand": {
+    "name": "YT Playlist Cal",
+    "tagline": "Kalkulator gratis durasi dan waktu tonton playlist YouTube.",
+    "notAffiliated": "Tidak berafiliasi dengan YouTube atau Google."
+  },
+  "nav": {
+    "home": "Beranda",
+    "tools": "Alat",
+    "howItWorks": "Cara Kerja",
+    "faq": "FAQ",
+    "about": "Tentang Kami",
+    "contact": "Kontak",
+    "tryCalculator": "Coba Kalkulator",
+    "selectLanguage": "Pilih Bahasa",
+    "searchLanguage": "Cari bahasa…",
+    "openMenu": "Buka menu navigasi",
+    "closeMenu": "Tutup menu navigasi",
+    "toggleTheme": "Ganti tema gelap/terang"
+  },
+  "hero": {
+    "badge": "Kalkulator YouTube Cepat & Gratis",
+    "title": "Kalkulator Durasi Playlist YouTube",
+    "subtitle": "Hitung total durasi, waktu tonton pada kecepatan 1.25× hingga 3×, dan rencanakan jadwal belajar atau menonton Anda secara instan."
+  },
+  "calculator": {
+    "modeFull": "Seluruh Playlist",
+    "modeRange": "Rentang Video",
+    "modeRemaining": "Sisa Waktu",
+    "urlLabel": "URL atau ID Playlist / Video YouTube",
+    "urlPlaceholder": "Tempel URL playlist YouTube, link video, atau ID playlist…",
+    "pasteBtn": "Tempel",
+    "demoBtn": "Coba Contoh",
+    "rangeStart": "Video Mulai",
+    "rangeEnd": "Video Akhir",
+    "watchedThrough": "Sudah menonton sampai video no.",
+    "speedLabel": "Kecepatan Pemutaran",
+    "customSpeedPlaceholder": "Kustom",
+    "advancedOptions": "Opsi Lanjutan",
+    "userApiKey": "Kunci API YouTube Kustom (Opsional)",
+    "userApiKeyHint": "Masukkan kunci API YouTube Anda sendiri untuk menghindari batas kuota publik.",
+    "calculateBtn": "Hitung Durasi Playlist",
+    "calculatingBtn": "Menghitung…",
+    "loadingTitle": "Menganalisis Playlist…",
+    "loadingStep1": "Menghubungkan ke YouTube API…",
+    "loadingStep2": "Mengambil metadata playlist…",
+    "loadingStep3": "Memproses durasi video…",
+    "loadingStep4": "Hampir selesai…",
+    "statTotal": "Total Durasi",
+    "statCount": "Jumlah Video",
+    "statAvg": "Rata-rata per Video",
+    "statSpeed": "Pada Kecepatan Terpilih",
+    "statShortest": "Video Terpendek",
+    "statLongest": "Video Terpanjang",
+    "speedTitle": "Perbandingan Kecepatan",
+    "speedColSpeed": "Kecepatan",
+    "speedColDuration": "Waktu Tonton",
+    "speedColSaved": "Waktu Dihemat",
+    "speedSelected": "terpilih",
+    "watchPlannerTitle": "Perencana Tontonan Harian",
+    "watchPlannerDesc": "Masukkan berapa menit waktu luang Anda setiap hari untuk mengetahui tanggal selesai yang akurat.",
+    "plannerMinutes": "Menit per hari",
+    "plannerStartDate": "Tanggal Mulai",
+    "plannerSpeed": "Kecepatan",
+    "plannerBtn": "Hitung Jadwal",
+    "plannerResultText": "Pada kecepatan {speed}× dan {minutes} menit/hari, Anda akan selesai dalam {days} hari.",
+    "plannerFinishDate": "Estimasi Tanggal Selesai:",
+    "finishByTitle": "Kalkulator Target Tenggat Waktu",
+    "finishByDesc": "Punya target tanggal tertentu? Pilih tenggat waktu untuk mengetahui durasi yang harus ditonton setiap hari.",
+    "finishByDate": "Selesai sebelum",
+    "finishBySpeed": "Kecepatan",
+    "finishByBtn": "Hitung Waktu Harian",
+    "finishByResultText": "Untuk selesai sebelum {date} pada kecepatan {speed}×, Anda perlu menonton {daily} setiap hari selama {days} hari ke depan.",
+    "finishByUnfeasible": "Target tersebut membutuhkan lebih dari 23 jam per hari, yang tidak realistis. Silakan pilih tanggal lebih jauh atau naikkan kecepatan.",
+    "videoListTitle": "Daftar Video",
+    "showVideos": "Tampilkan Video",
+    "hideVideos": "Sembunyikan Video",
+    "searchVideosPlaceholder": "Cari judul video…",
+    "pageIndicator": "Halaman {current} dari {total}",
+    "prevPage": "Sebelumnya",
+    "nextPage": "Berikutnya",
+    "privateVideo": "Pribadi",
+    "liveVideo": "Live",
+    "unavailableVideo": "Tidak tersedia",
+    "exportTitle": "Bagikan & Ekspor",
+    "copyLink": "Salin Tautan",
+    "copySummary": "Salin Ringkasan",
+    "exportCsv": "Ekspor CSV",
+    "exportTxt": "Ekspor TXT",
+    "copied": "Tersalin!",
+    "errors": {
+      "missingUrl": "Harap masukkan URL YouTube.",
+      "invalidUrl": "Tidak dapat menemukan playlist atau video YouTube yang valid.",
+      "urlTooLong": "URL yang dimasukkan terlalu panjang.",
+      "invalidRange": "Nomor video awal harus lebih kecil atau sama dengan video akhir.",
+      "quotaExceeded": "Kuota harian YouTube API telah habis. Silakan coba lagi besok atau gunakan kunci API Anda sendiri di Opsi Lanjutan.",
+      "rateLimited": "Terlalu banyak permintaan dalam waktu singkat. Harap tunggu beberapa saat lalu coba lagi.",
+      "notFound": "Playlist atau video tidak ditemukan. Pastikan URL benar dan playlist bersifat publik.",
+      "forbidden": "Akses ditolak oleh YouTube API.",
+      "internalError": "Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.",
+      "networkError": "Gangguan jaringan: tidak dapat terhubung ke server kalkulator."
+    }
+  },
+  "features": {
+    "title": "Semua yang Anda butuhkan untuk merencanakan playlist YouTube",
+    "subtitle": "Mulai dari kalkulasi durasi presisi hingga perbandingan kecepatan dan jadwal belajar harian.",
+    "items": [
+      {
+        "icon": "clock",
+        "title": "Total Durasi Akurat",
+        "desc": "Dapatkan durasi penuh playlist publik YouTube dalam format jam, menit, dan detik."
+      },
+      {
+        "icon": "zap",
+        "title": "Tabel Kecepatan",
+        "desc": "Lihat penghematan waktu nyata dari kecepatan 0.5× hingga 3×."
+      },
+      {
+        "icon": "crosshair",
+        "title": "Rentang Video Tertentu",
+        "desc": "Hitung durasi bagian tertentu dari rangkaian video di playlist."
+      },
+      {
+        "icon": "play",
+        "title": "Sisa Waktu Menonton",
+        "desc": "Tentukan posisi video terakhir Anda dan ketahui sisa durasi yang tersisa."
+      },
+      {
+        "icon": "calendar-days",
+        "title": "Perencana Harian",
+        "desc": "Masukkan waktu luang per hari untuk menghitung tanggal pasti penyelesaian."
+      },
+      {
+        "icon": "flag",
+        "title": "Target Deadline",
+        "desc": "Tentukan batas tanggal selesai dan dapatkan target tontonan harian."
+      }
+    ]
+  },
+  "howItWorks": {
+    "badge": "Cara Kerja",
+    "title": "Cara menghitung durasi playlist YouTube dalam 3 langkah mudah",
+    "subtitle": "Perhitungan instan tanpa perlu mendaftar atau mengunduh aplikasi apa pun.",
+    "steps": [
+      {
+        "number": "1",
+        "title": "Salin URL Playlist",
+        "desc": "Di YouTube, salin link playlist dari bilah browser atau tombol bagikan."
+      },
+      {
+        "number": "2",
+        "title": "Tempel ke Kalkulator",
+        "desc": "Masukkan link ke kolom input dan tentukan rentang atau kecepatan yang Anda inginkan."
+      },
+      {
+        "number": "3",
+        "title": "Lihat Durasi & Jadwal",
+        "desc": "Dapatkan rincian total durasi, tabel kecepatan, dan tanggal selesai secara otomatis."
+      }
+    ],
+    "supportedBadge": "Format Didukung",
+    "supportedTitle": "Jenis link YouTube apa saja yang didukung?",
+    "supportedDesc": "Alat kami mendukung URL playlist standar, URL video yang menyertakan playlist, link pendek youtu.be, serta kode ID playlist langsung.",
+    "links": [
+      {
+        "label": "URL playlist standar",
+        "example": "youtube.com/playlist?list=PL..."
+      },
+      {
+        "label": "URL video dengan playlist",
+        "example": "youtube.com/watch?v=...&list=PL..."
+      },
+      {
+        "label": "Link pendek youtu.be",
+        "example": "youtu.be/...&list=PL..."
+      },
+      {
+        "label": "ID playlist langsung",
+        "example": "PLrAXtmErZgOdP_OalsLiL..."
+      }
+    ]
+  },
+  "faq": {
+    "badge": "Pertanyaan Umum",
+    "title": "Pertanyaan yang sering diajukan seputar kalkulator playlist",
+    "subtitle": "Jawaban lengkap mengenai durasi, kecepatan video, dan batas kuota YouTube.",
+    "items": [
+      {
+        "q": "Bagaimana cara menghitung durasi total playlist YouTube?",
+        "a": "Cukup salin link playlist dari YouTube, tempel ke kolom di situs ini, lalu klik \"Hitung Durasi Playlist\". Hasilnya akan muncul dalam hitungan detik."
+      },
+      {
+        "q": "Apakah bisa menghitung waktu tonton pada kecepatan dipercepat (1.25×, 1.5×, 2×)?",
+        "a": "Tentu saja! Tabel perbandingan kecepatan kami menghitung otomatis dari 0.5× hingga 3× dan menunjukkan total jam yang bisa dihemat."
+      },
+      {
+        "q": "Apakah alat ini bisa digunakan untuk playlist unlisted atau privat?",
+        "a": "Bisa digunakan untuk playlist yang bersifat Tidak Terdaftar (Unlisted) selama Anda memiliki tautannya. Namun, playlist Privat tidak dapat diakses oleh API YouTube."
+      },
+      {
+        "q": "Berapa jumlah maksimal video yang bisa dihitung?",
+        "a": "Alat ini dapat menghitung playlist dengan ratusan video secara otomatis melalui paginasi resmi YouTube Data API v3."
+      },
+      {
+        "q": "Bagaimana dengan video yang dihapus atau disetel privat?",
+        "a": "Video yang dihapus atau diprivat akan dideteksi dan diberi tanda di daftar video agar perhitungan tetap akurat."
+      },
+      {
+        "q": "Bisakah saya hanya menghitung beberapa video tertentu?",
+        "a": "Bisa! Pilih opsi \"Rentang Video\" lalu masukkan nomor video awal dan video akhir yang ingin dihitung."
+      },
+      {
+        "q": "Bagaimana cara Perencana Harian menentukan tanggal selesai?",
+        "a": "Kalkulator membagi total durasi (sesuai kecepatan) dengan alokasi waktu menit harian Anda, lalu menghitung kalender hari kerja ke depan."
+      },
+      {
+        "q": "Apakah layanan ini gratis?",
+        "a": "100% gratis, tanpa pendaftaran, dan menjaga privasi pengguna."
+      },
+      {
+        "q": "Mengapa YouTube tidak menampilkan total durasi playlist?",
+        "a": "YouTube hanya menampilkan jumlah video. Alat kami menjumlahkan seluruh durasi video individual melalui API."
+      },
+      {
+        "q": "Bisakah hasil kalkulasi diekspor?",
+        "a": "Ya, Anda dapat menyalin rangkuman teks secara langsung atau mengunduh data daftar video dalam format file CSV."
+      }
+    ]
+  },
+  "footer": {
+    "desc": "Free YouTube playlist length and watch time calculator. Calculate total duration, playback-speed estimates, and watch planning schedules.",
+    "notAffiliated": "Not affiliated with YouTube or Google.",
+    "colTools": "Tools",
+    "colResources": "Resources",
+    "colCompany": "Company",
+    "colLegal": "Legal",
+    "allRightsReserved": "All rights reserved.",
+    "trademarkNotice": "YouTube™ is a trademark of Google LLC. This tool is independent and not affiliated with YouTube or Google.",
+    "links": {
+      "playlistCalculator": "Playlist Length Calculator",
+      "durationCalculator": "Duration Calculator",
+      "watchTimeCalculator": "Watch Time Calculator",
+      "remainingTime": "Remaining Time",
+      "watchTime15x": "Watch Time at 1.5x",
+      "watchTime2x": "Watch Time at 2x",
+      "howItWorks": "How It Works",
+      "faq": "FAQ",
+      "allTools": "All Tools",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "disclaimer": "Disclaimer"
+    },
+    "brandDesc": "Cara tercepat dan paling akurat untuk menghitung durasi playlist YouTube dan merencanakan waktu belajar Anda.",
+    "toolsTitle": "Alat",
+    "resourcesTitle": "Sumber Daya",
+    "legalTitle": "Legalitas",
+    "copyright": "© {year} YT Playlist Cal (Chrono Play). Hak cipta dilindungi undang-undang."
+  },
+  "pages": {
+    "about": {
+      "breadcrumb": "About",
+      "title": "Tentang YT Playlist Cal",
+      "subtitle": "Dibuat untuk pelajar, mahasiswa, dan siapa pun yang menghargai waktu mereka.",
+      "whatWeDoTitle": "What We Do",
+      "whatWeDoP1": "YouTube doesn't show you the total length of a playlist. If you're a student planning to finish a programming course, someone binge-watching a series, or a teacher reviewing content — you often need to know the total time commitment upfront.",
+      "whatWeDoP2": "YT Playlist Cal solves that problem: paste any YouTube playlist URL and instantly get the total duration, along with watch-time estimates at different playback speeds (1×, 1.5×, 2×, or custom), a per-video breakdown, and a daily watch planner.",
+      "principlesTitle": "Our Principles",
+      "p1": "YT Playlist Cal hadir untuk mengatasi masalah sederhana: YouTube hanya memperlihatkan jumlah video, bukan total durasi atau berapa hari yang dibutuhkan untuk menyelesaikannya.",
+      "p2": "Tujuan kami adalah menghadirkan alat kalkulasi yang cepat, bersih tanpa iklan yang mengganggu, serta menjaga privasi pengguna.",
+      "p3": "Fast and accurate. Server-side API fetching with edge acceleration.",
+      "trademarkTitle": "Independence & Trademarks",
+      "trademarkP": "YT Playlist Cal is an independent utility. YouTube™ is a trademark of Google LLC. We are not endorsed by, sponsored by, or affiliated with YouTube or Google LLC."
+    },
+    "contact": {
+      "breadcrumb": "Contact",
+      "title": "Hubungi Kami",
+      "subtitle": "Punya saran, masukan, atau menemukan bug? Silakan hubungi kami.",
+      "formType": "Type",
+      "formTypeBug": "Bug Report",
+      "formTypeFeature": "Feature Request",
+      "formTypeQuestion": "Question",
+      "formTypeOther": "Other",
+      "formEmail": "Email (optional)",
+      "formEmailPlaceholder": "you@example.com",
+      "formMessage": "Message",
+      "formMessagePlaceholder": "Describe your issue or suggestion in detail…",
+      "formSubmit": "Send Message",
+      "formSuccess": "Thank you! Your message has been sent.",
+      "faqNoteTitle": "Before reaching out",
+      "faqNoteP": "Many common questions about playlist limits, unavailable videos, and API keys are answered in our FAQ.",
+      "faqLink": "View FAQ →",
+      "emailLabel": "Email Bantuan",
+      "emailValue": "support@ytplaylistcal.com"
+    },
+    "tools": {
+      "breadcrumb": "Tools",
+      "title": "Semua Alat Playlist YouTube",
+      "subtitle": "Kumpulan alat praktis dan gratis untuk mengoptimalkan tontonan YouTube Anda."
+    },
+    "duration": {
+      "breadcrumb": "Duration Calculator",
+      "title": "Kalkulator Durasi Playlist YouTube",
+      "subtitle": "Ketahui total waktu akurat dari playlist publik YouTube.",
+      "whyTitle": "Why Doesn't YouTube Show Playlist Duration?",
+      "whyP": "YouTube does not display the total length of a playlist by default. You can see each video individual duration in the playlist view, but there is no native sum. YT Playlist Cal calculates this instantly via the YouTube Data API.",
+      "supportedTitle": "Supported URL Types",
+      "beyondTitle": "Beyond Just Duration",
+      "ctaBtn": "Calculate Playlist Duration Now",
+      "badge": "Kalkulator Durasi"
+    },
+    "watchTime": {
+      "breadcrumb": "Watch Time Calculator",
+      "title": "Kalkulator Waktu Tonton YouTube",
+      "subtitle": "Hitung waktu tonton sebenarnya pada kecepatan normal maupun dipercepat.",
+      "ctaBtn": "Calculate Watch Time Now",
+      "badge": "Waktu Tonton"
+    },
+    "remainingTime": {
+      "breadcrumb": "Remaining Time Calculator",
+      "title": "Kalkulator Sisa Waktu Playlist",
+      "subtitle": "Ketahui berapa lama waktu yang tersisa dari video terakhir Anda.",
+      "ctaBtn": "Calculate Remaining Time",
+      "badge": "Sisa Waktu"
+    },
+    "speed15x": {
+      "breadcrumb": "1.5x Speed Calculator",
+      "title": "Kalkulator Playlist pada Kecepatan 1.5×",
+      "subtitle": "Hitung durasi tontonan Anda dan berapa waktu yang berhasil dihemat pada kecepatan 1.5×.",
+      "ctaBtn": "Calculate at 1.5x Speed",
+      "badge": "Kecepatan 1.5×"
+    },
+    "speed2x": {
+      "breadcrumb": "2x Speed Calculator",
+      "title": "Kalkulator Playlist pada Kecepatan 2×",
+      "subtitle": "Pangkas separuh waktu belajar Anda dengan perhitungan pada kecepatan 2×.",
+      "ctaBtn": "Calculate at 2x Speed",
+      "badge": "Kecepatan 2×"
+    },
+    "terms": {
+      "breadcrumb": "Terms of Service",
+      "title": "Ketentuan Layanan",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "By using YT Playlist Cal, you agree to these terms, our Privacy Policy, and our Disclaimer. This is a free, independent utility for estimating YouTube playlist durations.",
+      "subtitle": "Syarat dan ketentuan penggunaan YT Playlist Cal.",
+      "intro": "Dengan mengakses atau menggunakan situs YT Playlist Cal, Anda menyetujui ketentuan berikut."
+    },
+    "privacy": {
+      "breadcrumb": "Privacy Policy",
+      "title": "Kebijakan Privasi",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "We value your privacy. We do not store your playlist URLs, track personal identities, or sell data. All calculations occur transiently.",
+      "subtitle": "Perlindungan data dan privasi Anda di YT Playlist Cal.",
+      "intro": "Kami sangat menghormati privasi Anda. Kami tidak mengumpulkan data pribadi atau menyimpan riwayat penelusuran playlist Anda."
+    },
+    "disclaimer": {
+      "breadcrumb": "Disclaimer",
+      "title": "Pernyataan Penyangkalan",
+      "lastUpdated": "Last updated: October 31, 2026",
+      "summary": "YT Playlist Cal is an independent utility tool. We are not affiliated with, authorized by, or endorsed by YouTube or Google LLC.",
+      "subtitle": "Pemberitahuan hukum dan hak merek dagang.",
+      "intro": "YT Playlist Cal adalah utilitas independen dan tidak berafiliasi dengan YouTube atau Google LLC."
+    },
+    "error404": {
+      "code": "404",
+      "title": "Halaman Tidak Ditemukan",
+      "desc": "The page you're looking for doesn't exist. It may have been moved, renamed, or never existed.",
+      "btn": "Go to the Calculator",
+      "allTools": "Browse all tools →",
+      "subtitle": "Halaman yang Anda tuju tidak tersedia atau telah dipindahkan.",
+      "backHome": "Kembali ke Beranda"
+    },
+    "error500": {
+      "code": "500",
+      "title": "Terjadi Kesalahan Server",
+      "desc": "Something went wrong on our servers while processing this request. Please try refreshing or check back shortly.",
+      "btn": "Go to the Calculator",
+      "reportBtn": "Report an issue",
+      "allTools": "Browse all tools →",
+      "subtitle": "Server mengalami kendala sementara. Silakan coba kembali dalam beberapa saat.",
+      "backHome": "Kembali ke Beranda"
+    }
+  },
+  "meta": {
+    "home": {
+      "title": "Kalkulator Durasi Playlist YouTube | YT Playlist Cal",
+      "desc": "Hitung durasi total playlist YouTube dengan cepat dan akurat. Mendukung kecepatan 1.25×-3×, rentang video, sisa waktu, dan jadwal belajar."
+    },
+    "tools": {
+      "title": "Daftar Alat Playlist YouTube | YT Playlist Cal",
+      "desc": "Kumpulan alat gratis untuk menghitung durasi, penghematan waktu kecepatan, dan perencana playlist YouTube."
+    },
+    "duration": {
+      "title": "Kalkulator Durasi Playlist YouTube | YT Playlist Cal",
+      "desc": "Ketahui total durasi playlist YouTube dalam jam, menit, dan detik secara instan."
+    },
+    "watchTime": {
+      "title": "Kalkulator Waktu Tonton YouTube | YT Playlist Cal",
+      "desc": "Hitung waktu yang dibutuhkan untuk menyelesaikan playlist YouTube pada berbagai kecepatan pemutaran."
+    },
+    "remainingTime": {
+      "title": "Kalkulator Sisa Waktu Playlist YouTube | YT Playlist Cal",
+      "desc": "Cari tahu berapa sisa waktu yang dibutuhkan untuk menuntaskan playlist YouTube dari video tertentu."
+    },
+    "speed15x": {
+      "title": "Kalkulator Playlist Kecepatan 1.5× | YT Playlist Cal",
+      "desc": "Hitung waktu tonton playlist YouTube pada kecepatan 1.5× dan ketahui berapa banyak waktu yang dihemat."
+    },
+    "speed2x": {
+      "title": "Kalkulator Playlist Kecepatan 2× | YT Playlist Cal",
+      "desc": "Hemat separuh waktu tontonan Anda. Hitung durasi playlist YouTube pada kecepatan 2×."
+    },
+    "howItWorks": {
+      "title": "Cara Kerja Kalkulator Playlist | YT Playlist Cal",
+      "desc": "Panduan cara menghitung waktu playlist YouTube menggunakan YouTube Data API resmi."
+    },
+    "faq": {
+      "title": "Tanya Jawab Seputar Playlist YouTube | YT Playlist Cal",
+      "desc": "Jawaban atas pertanyaan umum tentang penghitungan durasi, kuota API, dan percepatan video."
+    },
+    "about": {
+      "title": "Tentang Kami — YT Playlist Cal",
+      "desc": "Pelajari lebih lanjut tentang YT Playlist Cal: alat praktis, cepat, dan aman untuk playlist YouTube."
+    },
+    "contact": {
+      "title": "Kontak Kami — YT Playlist Cal",
+      "desc": "Kirimkan pertanyaan, saran, atau masukan untuk layanan kalkulator playlist kami."
+    },
+    "privacy": {
+      "title": "Kebijakan Privasi | YT Playlist Cal",
+      "desc": "Kebijakan privasi dan perlindungan data pengguna di platform YT Playlist Cal."
+    },
+    "terms": {
+      "title": "Ketentuan Layanan | YT Playlist Cal",
+      "desc": "Syarat dan pedoman penggunaan layanan gratis kalkulator playlist YT Playlist Cal."
+    },
+    "disclaimer": {
+      "title": "Pernyataan Penyangkalan | YT Playlist Cal",
+      "desc": "Pemberitahuan resmi mengenai merek dagang dan batasan tanggung jawab YT Playlist Cal."
+    },
+    "error404": {
+      "title": "Halaman Tidak Ditemukan — YT Playlist Cal",
+      "desc": "Halaman yang Anda minta tidak dapat ditemukan pada server YT Playlist Cal."
+    },
+    "error500": {
+      "title": "Kesalahan Server — YT Playlist Cal",
+      "desc": "Terjadi gangguan internal pada server. Harap coba beberapa saat lagi."
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Kalkulator Durasi Playlist YouTube | YT Playlist Cal",
+      "desc": "Hitung durasi total playlist YouTube dengan cepat dan akurat. Mendukung kecepatan 1.25×-3×, rentang video, sisa waktu, dan jadwal belajar."
+    },
+    "tools": {
+      "title": "Daftar Alat Playlist YouTube | YT Playlist Cal",
+      "desc": "Kumpulan alat gratis untuk menghitung durasi, penghematan waktu kecepatan, dan perencana playlist YouTube."
+    },
+    "duration": {
+      "title": "Kalkulator Durasi Playlist YouTube | YT Playlist Cal",
+      "desc": "Ketahui total durasi playlist YouTube dalam jam, menit, dan detik secara instan."
+    },
+    "watchTime": {
+      "title": "Kalkulator Waktu Tonton YouTube | YT Playlist Cal",
+      "desc": "Hitung waktu yang dibutuhkan untuk menyelesaikan playlist YouTube pada berbagai kecepatan pemutaran."
+    },
+    "remainingTime": {
+      "title": "Kalkulator Sisa Waktu Playlist YouTube | YT Playlist Cal",
+      "desc": "Cari tahu berapa sisa waktu yang dibutuhkan untuk menuntaskan playlist YouTube dari video tertentu."
+    },
+    "speed15x": {
+      "title": "Kalkulator Playlist Kecepatan 1.5× | YT Playlist Cal",
+      "desc": "Hitung waktu tonton playlist YouTube pada kecepatan 1.5× dan ketahui berapa banyak waktu yang dihemat."
+    },
+    "speed2x": {
+      "title": "Kalkulator Playlist Kecepatan 2× | YT Playlist Cal",
+      "desc": "Hemat separuh waktu tontonan Anda. Hitung durasi playlist YouTube pada kecepatan 2×."
+    },
+    "howItWorks": {
+      "title": "Cara Kerja Kalkulator Playlist | YT Playlist Cal",
+      "desc": "Panduan cara menghitung waktu playlist YouTube menggunakan YouTube Data API resmi."
+    },
+    "faq": {
+      "title": "Tanya Jawab Seputar Playlist YouTube | YT Playlist Cal",
+      "desc": "Jawaban atas pertanyaan umum tentang penghitungan durasi, kuota API, dan percepatan video."
+    },
+    "about": {
+      "title": "Tentang Kami — YT Playlist Cal",
+      "desc": "Pelajari lebih lanjut tentang YT Playlist Cal: alat praktis, cepat, dan aman untuk playlist YouTube."
+    },
+    "contact": {
+      "title": "Kontak Kami — YT Playlist Cal",
+      "desc": "Kirimkan pertanyaan, saran, atau masukan untuk layanan kalkulator playlist kami."
+    },
+    "privacy": {
+      "title": "Kebijakan Privasi | YT Playlist Cal",
+      "desc": "Kebijakan privasi dan perlindungan data pengguna di platform YT Playlist Cal."
+    },
+    "terms": {
+      "title": "Ketentuan Layanan | YT Playlist Cal",
+      "desc": "Syarat dan pedoman penggunaan layanan gratis kalkulator playlist YT Playlist Cal."
+    },
+    "disclaimer": {
+      "title": "Pernyataan Penyangkalan | YT Playlist Cal",
+      "desc": "Pemberitahuan resmi mengenai merek dagang dan batasan tanggung jawab YT Playlist Cal."
+    },
+    "error404": {
+      "title": "Halaman Tidak Ditemukan — YT Playlist Cal",
+      "desc": "Halaman yang Anda minta tidak dapat ditemukan pada server YT Playlist Cal."
+    },
+    "error500": {
+      "title": "Kesalahan Server — YT Playlist Cal",
+      "desc": "Terjadi gangguan internal pada server. Harap coba beberapa saat lagi."
+    }
+  }
+}

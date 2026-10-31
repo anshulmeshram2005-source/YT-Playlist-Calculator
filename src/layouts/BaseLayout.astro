@@ -1,10 +1,14 @@
 ---
-// BaseLayout.astro — HTML shell with SEO, fonts, theme, and design system
+// BaseLayout.astro — HTML shell with multilingual SEO, hreflang, RTL, fonts, theme, and design system
 import '../styles/global.css';
+import { DEFAULT_LOCALE, LOCALE_METADATA, type Locale, isValidLocale } from '../i18n/config';
+import { getHreflangLinks, getAbsoluteLocalizedUrl, SITE_URL } from '../i18n/routing';
 
 export interface Props {
   title: string;
   description: string;
+  locale?: Locale;
+  dir?: 'ltr' | 'rtl';
   canonical?: string;
   ogImage?: string;
   ogType?: 'website' | 'article';
@@ -12,18 +16,27 @@ export interface Props {
   jsonLd?: object | object[];
 }
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'https://ytplaylistcal.com';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? SITE_URL;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-08CV9EBBPD';
 
 const {
   title,
   description,
-  canonical = Astro.url.href,
+  locale = DEFAULT_LOCALE,
+  dir,
+  canonical,
   ogImage = `${siteUrl}/og-image.png`,
   ogType = 'website',
   noindex = false,
   jsonLd,
 } = Astro.props;
+
+const currentLocale: Locale = isValidLocale(locale) ? locale : DEFAULT_LOCALE;
+const meta = LOCALE_METADATA[currentLocale] ?? LOCALE_METADATA.en;
+const textDir = dir ?? meta.dir ?? 'ltr';
+
+const canonicalUrl = canonical ?? getAbsoluteLocalizedUrl(Astro.url.pathname, currentLocale, siteUrl);
+const hreflangLinks = getHreflangLinks(Astro.url.pathname, siteUrl);
 
 const fullTitle = title.includes('YT Playlist Cal')
   ? title
@@ -31,7 +44,7 @@ const fullTitle = title.includes('YT Playlist Cal')
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang={meta.bcp47} dir={textDir} class="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -55,7 +68,7 @@ const fullTitle = title.includes('YT Playlist Cal')
       </>
     )}
 
-    <!-- Inter font via Bunny Fonts (privacy-friendly, GDPR-compliant) -->
+    <!-- Fonts via Bunny Fonts (privacy-friendly, GDPR-compliant) -->
     <link
       href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap"
       rel="stylesheet"
@@ -78,19 +91,24 @@ const fullTitle = title.includes('YT Playlist Cal')
     ) : (
       <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     )}
-    <link rel="canonical" href={canonical} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Multilingual Hreflang Alternates (All 22 Locales + x-default) -->
+    {hreflangLinks.map((link) => (
+      <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+    ))}
 
     <!-- Open Graph -->
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content={ogType} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={title} />
     <meta property="og:site_name" content="YT Playlist Cal" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={meta.ogLocale} />
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -123,7 +141,7 @@ const fullTitle = title.includes('YT Playlist Cal')
       "url": siteUrl,
       "potentialAction": {
         "@type": "SearchAction",
-        "target": `${siteUrl}/?url={search_term_string}`,
+        "target": `${siteUrl}/${currentLocale}/?url={search_term_string}`,
         "query-input": "required name=search_term_string"
       }
     })} />
