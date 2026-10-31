@@ -1,0 +1,68 @@
+---
+// 500.astro — Custom 500 Server Error page
+interface Props {
+  error: unknown;
+}
+
+const { error } = Astro.props;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout
+  title="Server Error — YT Playlist Cal"
+  description="Something went wrong on our servers. Please try again in a few moments."
+  noindex={true}
+>
+  <Header />
+  <main class="flex-1 py-24 text-center">
+    <div class="container" style="max-width: 480px;">
+      <div
+        class="text-6xl font-bold mb-4"
+        style="color: var(--color-border-strong); letter-spacing: -0.05em;"
+        aria-hidden="true"
+      >
+        500
+      </div>
+      <h1
+        class="text-xl font-semibold mb-2"
+        style="color: var(--color-text);"
+      >
+        Server Error
+      </h1>
+      <p class="text-sm mb-8" style="color: var(--color-text-muted);">
+        Something went wrong on our servers while processing this request. Please try refreshing the page or check back in a moment.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg text-sm font-semibold transition-all duration-150"
+          style="background-color: var(--color-text); color: var(--color-bg);"
+        >
+          <Icon name="play" size={14} fill="currentColor" strokeWidth={0} />
+          Go to the Calculator
+        </a>
+        <a
+          href="/contact/"
+          class="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg text-sm font-medium transition-all duration-150"
+          style="background-color: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border);"
+        >
+          Report an issue
+        </a>
+      </div>
+      <div class="mt-6">
+        <a
+          href="/tools/"
+          class="text-sm transition-colors duration-150"
+          style="color: var(--color-text-muted);"
+        >
+          Browse all tools →
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
