@@ -1322,6 +1322,62 @@ const personas: { icon: IconName; label: string }[] = [
   });
 
   // ==========================================
+  // Keyboard Shortcuts
+  // ==========================================
+  const urlTextarea = $('playlist-url') as HTMLTextAreaElement | null;
+  urlTextarea?.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      const calcBtn = $('calculate-btn') as HTMLButtonElement | null;
+      if (!calcBtn?.disabled) {
+        calcBtn.click();
+      }
+    } else if (e.key === 'Escape') {
+      if (urlTextarea.value) {
+        urlTextarea.value = '';
+        hideAll();
+      }
+    }
+  });
+
+  ['range-start', 'range-end', 'watched-through', 'custom-speed', 'user-api-key'].forEach((id) => {
+    const el = $(id) as HTMLInputElement | null;
+    el?.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const calcBtn = $('calculate-btn') as HTMLButtonElement | null;
+        if (!calcBtn?.disabled) {
+          calcBtn.click();
+        }
+      } else if (e.key === 'Escape') {
+        if (el.value) {
+          el.value = '';
+        }
+      }
+    });
+  });
+
+  ['daily-minutes', 'planner-start-date', 'planner-speed'].forEach((id) => {
+    const el = $(id) as HTMLElement | null;
+    el?.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        $('calc-planner-btn')?.click();
+      }
+    });
+  });
+
+  ['finish-by-date', 'finish-by-speed'].forEach((id) => {
+    const el = $(id) as HTMLElement | null;
+    el?.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        $('calc-finish-by-btn')?.click();
+      }
+    });
+  });
+
+  // ==========================================
   // UI State Helpers
   // ==========================================
   function showLoading(msg: string = 'Analyzing playlist…') {
@@ -1749,6 +1805,9 @@ const personas: { icon: IconName; label: string }[] = [
   // Main Calculate Function
   // ==========================================
   $('calculate-btn')?.addEventListener('click', async () => {
+    const btn = $('calculate-btn') as HTMLButtonElement | null;
+    if (btn && btn.disabled) return;
+
     const textarea = $('playlist-url') as HTMLTextAreaElement | null;
     const url = textarea?.value?.trim();
 
@@ -1757,7 +1816,6 @@ const personas: { icon: IconName; label: string }[] = [
       return;
     }
 
-    const btn = $('calculate-btn') as HTMLButtonElement | null;
     if (btn) {
       btn.disabled = true;
       btn.innerHTML = `<span class="inline-block w-4 h-4 border-2 rounded-full animate-spin mr-2" style="border-color: var(--color-bg); border-top-color: transparent;"></span> Calculating…`;
