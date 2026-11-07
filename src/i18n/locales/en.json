@@ -184,47 +184,90 @@
     "badge": "FAQ",
     "title": "Frequently Asked Questions",
     "subtitle": "Got questions? Here is everything you need to know about calculating YouTube playlist lengths.",
-    "items": [
+    "categories": [
       {
-        "q": "How do I calculate YouTube playlist length?",
-        "a": "Paste your YouTube playlist URL into the calculator above and click Calculate. The tool uses the YouTube Data API to fetch every video in the playlist and sum their durations to give you the exact total length in hours, minutes, and seconds."
+        "category": "Calculator Basics",
+        "questions": [
+          { "q": "How do I calculate YouTube playlist length?", "a": "Paste your YouTube playlist URL into the calculator on the homepage and click Calculate. The tool uses the YouTube Data API to retrieve every video in the playlist and sums their durations. You'll get the total length in hours, minutes, and seconds instantly." },
+          { "q": "What URL formats are supported?", "a": "All standard YouTube formats are supported: full playlist URLs (youtube.com/playlist?list=...), video URLs with a playlist parameter, youtu.be short links, plain playlist IDs (PLxxxxxx), and individual video URLs (for single-video duration)." },
+          { "q": "Can I calculate duration for a single YouTube video?", "a": "Yes. Paste any YouTube video URL and the tool will return its exact duration along with a speed comparison table showing how long it would take at 0.5x through 3x speed." },
+          { "q": "How accurate is the calculation?", "a": "The calculation is precise. It uses the exact duration metadata provided by the YouTube Data API for every individual video. The only exception is unavailable videos (private, deleted, region-restricted) which report 0 seconds and are excluded from the total." },
+          { "q": "Does the tool support private playlists?", "a": "No. The YouTube Data API only provides access to public and unlisted playlists. Private playlists require account authentication and cannot be calculated using this tool." }
+        ]
       },
       {
-        "q": "Can I calculate watch time at 1.5x or 2x speed?",
-        "a": "Yes. After calculating your playlist, the Speed Comparison table shows the adjusted watch time at 0.5x, 0.75x, 1x, 1.25x, 1.5x, 1.75x, 2x, 2.25x, 2.5x, and 3x. You can also enter a completely custom speed like 1.3x or 2.7x."
+        "category": "Playback Speed",
+        "questions": [
+          { "q": "Can I calculate watch time at 1.5x or 2x speed?", "a": "Yes. After calculating your playlist, the Speed Comparison table shows watch time at 0.5×, 0.75×, 1×, 1.25×, 1.5×, 1.75×, 2×, 2.25×, 2.5×, and 3×. You can also type any custom speed in the Custom Speed field." },
+          { "q": "How much time does 2x speed save?", "a": "At 2x speed, you save exactly 50% of the original watch time. A 10-hour playlist becomes 5 hours. A 20-hour course becomes 10 hours. The speed table after calculation shows the exact time saved for every preset speed." },
+          { "q": "What is the fastest supported speed?", "a": "The preset buttons go up to 3×. You can enter any custom value in the Custom Speed field, up to 5×. Note that YouTube's player itself only goes up to 2× natively — higher speeds require browser extensions or workarounds." }
+        ]
       },
       {
-        "q": "Can I calculate only part of a playlist?",
-        "a": "Yes. Use the \"Range\" mode to specify a start and end video number. For example, set Start: 10, End: 50 to calculate only videos 10 through 50. Use \"Remaining\" mode to calculate how much is left after a specific video."
+        "category": "Calculation Modes",
+        "questions": [
+          { "q": "Can I calculate only part of a playlist?", "a": "Yes. Select the \"Range\" mode and enter a start and end video number. For example, Start: 10, End: 50 will calculate only videos 10 through 50. This is useful for studying specific modules of a course." },
+          { "q": "How does Remaining mode work?", "a": "Select \"Remaining\" mode and enter the number of the last video you watched. The tool will calculate the duration of all videos after that point. For example, if you enter 12, it calculates videos 13 onwards." },
+          { "q": "Can I calculate multiple playlists at once?", "a": "Currently, the tool calculates one playlist at a time. A Playlist Comparison feature is planned for a future update." }
+        ]
       },
       {
-        "q": "Why are some videos missing from my results?",
-        "a": "Some videos may be unavailable due to being private, deleted, region-restricted, or removed by the uploader. These are counted and labeled in the results, but their duration cannot be fetched via the YouTube API."
+        "category": "Missing or Unavailable Videos",
+        "questions": [
+          { "q": "Why are some videos missing from my total?", "a": "Some videos may be excluded because they are private (made private by the uploader), deleted from YouTube, region-restricted (unavailable in your country), or removed due to a copyright claim. These are counted and displayed in the results as \"unavailable\" but their duration cannot be fetched." },
+          { "q": "Why does my playlist show fewer videos than YouTube?", "a": "YouTube counts all videos in the playlist including private and deleted ones. The YouTube API only returns videos it can access. If there is a discrepancy, it typically means some videos in the playlist are private, deleted, or otherwise inaccessible to the API." },
+          { "q": "What happens with live streams in a playlist?", "a": "Live streams that are currently live have no fixed duration, so they report 0 seconds and are counted as unavailable. Once a live stream ends and YouTube processes the recording, its duration will be available on the next calculation." }
+        ]
       },
       {
-        "q": "How accurate is the calculation?",
-        "a": "The calculation is precise — it uses the exact duration metadata from the YouTube Data API for each individual video. However, private, deleted, or unavailable videos are excluded. Live streams report 0 seconds until they end."
+        "category": "Watch Planner & Scheduling",
+        "questions": [
+          { "q": "How does the Watch Planner work?", "a": "After calculating your playlist, scroll down to the Daily Watch Planner section. Enter your daily watch budget (in minutes), your starting date, and your preferred speed. The planner will calculate how many days you need and your estimated finish date." },
+          { "q": "How does the Finish-By Calculator work?", "a": "The Finish-By Calculator works in reverse. Enter a target deadline date and your preferred speed. The tool will tell you exactly how many minutes per day you need to watch to finish by that date." },
+          { "q": "Can I plan around specific days of the week?", "a": "The current planner assumes daily viewing. Week-specific scheduling (e.g., only weekdays) is a planned feature for a future update." }
+        ]
       },
       {
-        "q": "Does this tool store my playlist URL?",
-        "a": "No. Your URL is used only to make a temporary request to the YouTube API. It is not stored, logged, or used for any other purpose. See our Privacy Policy for full details."
+        "category": "Privacy & Security",
+        "questions": [
+          { "q": "Does YT Playlist Cal store my playlist URLs?", "a": "No. Your URL is used only to make a temporary request to the YouTube API. It is not saved to a database, logged, or used for any purpose beyond the immediate calculation. See our Privacy Policy for full details." },
+          { "q": "Do I need a YouTube or Google account?", "a": "No. The tool works entirely without any account, login, or signup." },
+          { "q": "Do you require a YouTube API key?", "a": "No. The tool provides its own server-side YouTube API key. Power users who have exhausted the shared quota can optionally enter their own key in Advanced Options — it is only used for that request and is never stored." },
+          { "q": "Is my YouTube API key safe if I enter it?", "a": "Your key is sent to our server only for the duration of the API request. It is not logged, stored, or used for any other purpose. It is transmitted over HTTPS. We strongly recommend using a YouTube API key with appropriate quota limits." }
+        ]
       },
       {
-        "q": "Do I need a YouTube API key?",
-        "a": "No — the tool works without you needing to provide one. We handle API access on our server. Power users who have their own YouTube API key can optionally use it to bypass shared quota limits."
-      },
-      {
-        "q": "Can I calculate a single YouTube video?",
-        "a": "Yes. Paste any YouTube video URL (youtube.com/watch?v=... or youtu.be/...) and it will return the video duration along with speed-adjusted watch times."
-      },
-      {
-        "q": "Is this tool free?",
-        "a": "Yes. YT Playlist Cal is completely free, with no paid plans, no signup, and no usage limits for normal use."
-      },
-      {
-        "q": "Is this tool affiliated with YouTube or Google?",
-        "a": "No. YT Playlist Cal is an independent utility and is not affiliated with, endorsed by, or associated with YouTube or Google LLC."
+        "category": "About the Tool",
+        "questions": [
+          { "q": "Is YT Playlist Cal free?", "a": "Yes. YT Playlist Cal is completely free. There are no paid plans, no usage limits for normal use, and no signup required." },
+          { "q": "Is this tool affiliated with YouTube or Google?", "a": "No. YT Playlist Cal is an independent utility. YouTube™ is a trademark of Google LLC. This tool is not affiliated with, endorsed by, or associated with YouTube or Google in any way." },
+          { "q": "How can I report a bug or suggest a feature?", "a": "Please use the Contact page to reach us. We read every message and use feedback to prioritize improvements." }
+        ]
       }
+    ],
+    "items": [
+      { "q": "How do I calculate YouTube playlist length?", "a": "Paste your YouTube playlist URL into the calculator above and click Calculate. The tool uses the YouTube Data API to fetch every video in the playlist and sum their durations to give you the exact total length in hours, minutes, and seconds." },
+      { "q": "What URL formats are supported?", "a": "All standard YouTube formats are supported: full playlist URLs (youtube.com/playlist?list=...), video URLs with a playlist parameter, youtu.be short links, plain playlist IDs (PLxxxxxx), and individual video URLs (for single-video duration)." },
+      { "q": "Can I calculate duration for a single YouTube video?", "a": "Yes. Paste any YouTube video URL and the tool will return its exact duration along with a speed comparison table showing how long it would take at 0.5x through 3x speed." },
+      { "q": "How accurate is the calculation?", "a": "The calculation is precise. It uses the exact duration metadata from the YouTube Data API for each individual video. However, private, deleted, or unavailable videos are excluded. Live streams report 0 seconds until they end." },
+      { "q": "Does the tool support private playlists?", "a": "No. The YouTube Data API only provides access to public and unlisted playlists. Private playlists require account authentication and cannot be calculated using this tool." },
+      { "q": "Can I calculate watch time at 1.5x or 2x speed?", "a": "Yes. After calculating your playlist, the Speed Comparison table shows the adjusted watch time at 0.5×, 0.75×, 1×, 1.25×, 1.5×, 1.75×, 2×, 2.25×, 2.5×, and 3×. You can also enter a completely custom speed like 1.3× or 2.7×." },
+      { "q": "How much time does 2x speed save?", "a": "At 2x speed, you save exactly 50% of the original watch time. A 10-hour playlist becomes 5 hours. A 20-hour course becomes 10 hours. The speed table after calculation shows the exact time saved for every preset speed." },
+      { "q": "What is the fastest supported speed?", "a": "The preset buttons go up to 3×. You can enter any custom value in the Custom Speed field, up to 5×. Note that YouTube's player itself only goes up to 2× natively — higher speeds require browser extensions or workarounds." },
+      { "q": "Can I calculate only part of a playlist?", "a": "Yes. Use the \"Range\" mode to specify a start and end video number. For example, set Start: 10, End: 50 to calculate only videos 10 through 50. Use \"Remaining\" mode to calculate how much is left after a specific video." },
+      { "q": "How does Remaining mode work?", "a": "Select \"Remaining\" mode and enter the number of the last video you watched. The tool will calculate the duration of all videos after that point. For example, if you enter 12, it calculates videos 13 onwards." },
+      { "q": "Why are some videos missing from my results?", "a": "Some videos may be excluded because they are private, deleted, region-restricted, or removed due to a copyright claim. These are counted and displayed in the results as \"unavailable\" but their duration cannot be fetched via the YouTube API." },
+      { "q": "Why does my playlist show fewer videos than YouTube?", "a": "YouTube counts all videos in the playlist including private and deleted ones. The YouTube API only returns videos it can access. If there is a discrepancy, it typically means some videos in the playlist are private, deleted, or otherwise inaccessible to the API." },
+      { "q": "What happens with live streams in a playlist?", "a": "Live streams that are currently live have no fixed duration, so they report 0 seconds and are counted as unavailable. Once a live stream ends and YouTube processes the recording, its duration will be available on the next calculation." },
+      { "q": "How does the Watch Planner work?", "a": "After calculating your playlist, scroll down to the Daily Watch Planner section. Enter your daily watch budget (in minutes), your starting date, and your preferred speed. The planner will calculate how many days you need and your estimated finish date." },
+      { "q": "How does the Finish-By Calculator work?", "a": "The Finish-By Calculator works in reverse. Enter a target deadline date and your preferred speed. The tool will tell you exactly how many minutes per day you need to watch to finish by that date." },
+      { "q": "Does YT Playlist Cal store my playlist URLs?", "a": "No. Your URL is used only to make a temporary request to the YouTube API. It is not saved to a database, logged, or used for any purpose beyond the immediate calculation. See our Privacy Policy for full details." },
+      { "q": "Do I need a YouTube or Google account?", "a": "No. The tool works entirely without any account, login, or signup." },
+      { "q": "Do you require a YouTube API key?", "a": "No. The tool provides its own server-side YouTube API key. Power users who have exhausted the shared quota can optionally enter their own key in Advanced Options — it is only used for that request and is never stored." },
+      { "q": "Is my YouTube API key safe if I enter it?", "a": "Your key is sent to our server only for the duration of the API request. It is not logged, stored, or used for any other purpose. It is transmitted over HTTPS. We strongly recommend using a YouTube API key with appropriate quota limits." },
+      { "q": "Is YT Playlist Cal free?", "a": "Yes. YT Playlist Cal is completely free, with no paid plans, no signup, and no usage limits for normal use." },
+      { "q": "Is this tool affiliated with YouTube or Google?", "a": "No. YT Playlist Cal is an independent utility and is not affiliated with, endorsed by, or associated with YouTube or Google LLC." },
+      { "q": "How can I report a bug or suggest a feature?", "a": "Please use the Contact page to reach us. We read every message and use feedback to prioritize improvements." }
     ]
   },
   "footer": {

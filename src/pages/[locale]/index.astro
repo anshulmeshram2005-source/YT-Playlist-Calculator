@@ -68,9 +68,46 @@ const jsonLd = [
           <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 sm:mb-4" style="color: var(--color-text); letter-spacing: -0.03em;">
             {t.hero.title}
           </h1>
-          <p class="text-sm sm:text-base leading-relaxed" style="color: var(--color-text-muted);">
+          <p class="text-sm sm:text-base leading-relaxed mb-6" style="color: var(--color-text-muted);">
             {t.hero.subtitle}
           </p>
+
+          <!-- Trust Badges -->
+          <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 trust-badges" aria-label="Key features">
+            <!-- FREE TO USE -->
+            <div class="trust-badge inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 select-none cursor-default"
+              style="background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text);"
+              role="img" aria-label="Free to use — no subscription required">
+              <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #22c55e;">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+              <span>Free to Use</span>
+            </div>
+
+            <!-- NO SIGN-UP -->
+            <div class="trust-badge inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 select-none cursor-default"
+              style="background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text);"
+              role="img" aria-label="No sign-up required — use without creating an account">
+              <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #3b82f6;">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+                <line x1="18" y1="8" x2="23" y2="13"/>
+                <line x1="23" y1="8" x2="18" y2="13"/>
+              </svg>
+              <span>No Sign-Up Required</span>
+            </div>
+
+            <!-- PRIVACY PROTECTED -->
+            <div class="trust-badge inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 select-none cursor-default"
+              style="background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text);"
+              role="img" aria-label="Privacy protected — no unnecessary data collection">
+              <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #a855f7;">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span>Privacy Protected</span>
+            </div>
+          </div>
         </div>
 
         <!-- Calculator Card -->
@@ -279,6 +316,51 @@ const jsonLd = [
               <span id="calculate-btn-text">{t.calculator.calculateBtn}</span>
             </button>
 
+          </div>
+
+          <!-- Supported URL Examples -->
+          <div class="mt-5 rounded-xl border p-4" style="background-color: var(--color-surface); border-color: var(--color-border);">
+            <div class="flex items-center gap-2 mb-3">
+              <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--color-accent);">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+              <h3 class="text-xs font-semibold uppercase tracking-wider" style="color: var(--color-text-muted);">Supported YouTube Playlist URLs</h3>
+            </div>
+            <p class="text-xs mb-3" style="color: var(--color-text-subtle);">Copy any of these URL formats from YouTube and paste them above.</p>
+            <div class="space-y-2" id="url-examples">
+              {[
+                { label: 'Standard playlist URL', url: 'https://www.youtube.com/playlist?list=PLrAXtmErZgOei7Ta6i2FLBMKhwkqUFVfT' },
+                { label: 'Video URL with playlist', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PLrAXtmErZgOei7Ta6i2FLBMKhwkqUFVfT' },
+                { label: 'Short youtu.be link', url: 'https://youtu.be/dQw4w9WgXcQ?list=PLrAXtmErZgOei7Ta6i2FLBMKhwkqUFVfT' },
+                { label: 'Direct playlist ID only', url: 'PLrAXtmErZgOei7Ta6i2FLBMKhwkqUFVfT' },
+                { label: 'URL with index parameter', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PLrAXtmErZgOei7Ta6i2FLBMKhwkqUFVfT&index=3' },
+                { label: 'YouTube Music playlist', url: 'https://music.youtube.com/playlist?list=PLrAXtmErZgOei7Ta6i2FLBMKhwkqUFVfT' },
+              ].map(({ label, url }) => (
+                <div class="flex items-center gap-2 group">
+                  <div class="flex-1 min-w-0 px-2.5 py-1.5 rounded-lg border font-mono text-[11px] overflow-hidden" style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text-subtle);" dir="ltr">
+                    <span class="font-sans font-medium block text-[11px] mb-0.5" style="color: var(--color-text);">{label}</span>
+                    <span class="truncate block" title={url}>{url}</span>
+                  </div>
+                  <button
+                    type="button"
+                    class="url-copy-btn shrink-0 p-1.5 rounded-lg border transition-all duration-150 cursor-pointer opacity-60 group-hover:opacity-100"
+                    style="background-color: var(--color-surface-2); border-color: var(--color-border); color: var(--color-text-muted);"
+                    data-url={url}
+                    aria-label={`Copy ${label}`}
+                    title="Copy URL"
+                  >
+                    <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                    <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #22c55e;">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
 
           <!-- Loading State -->
@@ -508,6 +590,100 @@ const jsonLd = [
             ))}
           </div>
         </div>
+
+        <!-- Animated Calculator Demonstration -->
+        <div class="rounded-xl border overflow-hidden" style="background-color: var(--color-surface); border-color: var(--color-border);" aria-label="Interactive calculator demonstration">
+          <div class="px-5 py-4 border-b" style="border-color: var(--color-border);">
+            <h3 class="text-sm font-semibold" style="color: var(--color-text);">See It in Action</h3>
+            <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">A live walkthrough of exactly how the calculator works.</p>
+          </div>
+          <div class="p-5">
+            <!-- Step indicators -->
+            <div class="flex items-center gap-1.5 mb-5 overflow-x-auto pb-1" aria-hidden="true">
+              {[
+                { n: '1', label: 'Paste URL' },
+                { n: '2', label: 'Calculate' },
+                { n: '3', label: 'View Results' },
+              ].map(({ n, label }, i) => (
+                <div class="flex items-center gap-1 shrink-0">
+                  <div class="demo-step flex items-center gap-1.5 transition-all duration-300" data-step={n}>
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border transition-all duration-300 step-circle"
+                      style={i === 0 ? "background-color: var(--color-accent); color: white; border-color: var(--color-accent);" : "background-color: var(--color-surface-2); color: var(--color-text-muted); border-color: var(--color-border);"}>
+                      {n}
+                    </div>
+                    <span class="text-xs font-medium whitespace-nowrap step-label" style={i === 0 ? "color: var(--color-text);" : "color: var(--color-text-muted);"}>
+                      {label}
+                    </span>
+                  </div>
+                  {i < 2 && <div class="w-6 h-px mx-1 shrink-0" style="background-color: var(--color-border);"></div>}
+                </div>
+              ))}
+            </div>
+
+            <!-- Demo Screen Area -->
+            <div class="rounded-xl border relative overflow-hidden" style="background-color: var(--color-surface-2); border-color: var(--color-border); min-height: 148px;">
+              <!-- Screen 1: Paste URL -->
+              <div id="demo-screen-1" class="demo-screen p-4 transition-all duration-400">
+                <p class="text-[11px] font-semibold mb-2 uppercase tracking-wider" style="color: var(--color-text-muted);">YouTube Playlist or Video URL</p>
+                <div class="px-3 py-2 rounded-lg border text-xs font-mono" style="background-color: var(--color-surface); border-color: var(--color-accent); min-height: 42px;">
+                  <span id="demo-typing-url" class="block" style="color: var(--color-text); word-break: break-all;" dir="ltr"></span>
+                  <span id="demo-cursor" class="inline-block w-0.5 h-3 ml-px align-middle" style="background-color: var(--color-accent); animation: blink 1s step-end infinite;"></span>
+                </div>
+                <p class="text-[11px] mt-2" style="color: var(--color-text-subtle);">↑ Paste your YouTube playlist link here, then press Enter or click Calculate.</p>
+              </div>
+
+              <!-- Screen 2: Calculating -->
+              <div id="demo-screen-2" class="demo-screen hidden p-4">
+                <div class="flex items-center gap-3 py-3">
+                  <div class="w-5 h-5 border-2 rounded-full border-t-transparent animate-spin shrink-0" style="border-color: var(--color-accent); border-top-color: transparent;"></div>
+                  <div>
+                    <p class="text-sm font-semibold" style="color: var(--color-text);">Analyzing playlist…</p>
+                    <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">Fetching video durations via YouTube Data API v3</p>
+                  </div>
+                </div>
+                <div class="space-y-1.5 mt-1">
+                  {['Connecting to YouTube API…', 'Fetching playlist metadata…', 'Processing 126 video durations…'].map((step, i) => (
+                    <div class="flex items-center gap-2 text-xs" style="color: var(--color-text-subtle);">
+                      <div class="w-1.5 h-1.5 rounded-full" style={`background-color: var(--color-accent); opacity: ${0.4 + i * 0.3};`}></div>
+                      <span>{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Screen 3: Results -->
+              <div id="demo-screen-3" class="demo-screen hidden p-4">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+                  {[
+                    { label: 'Total Duration', value: '12h 34m' },
+                    { label: 'Videos', value: '126' },
+                    { label: 'Avg Video', value: '5m 59s' },
+                    { label: 'At 1.5× Speed', value: '8h 23m' },
+                  ].map(({ label, value }) => (
+                    <div class="rounded-lg border p-2.5" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                      <p class="text-[10px] uppercase tracking-wide mb-0.5 font-semibold" style="color: var(--color-text-subtle);">{label}</p>
+                      <p class="text-xs font-bold font-mono" style="color: var(--color-text);">{value}</p>
+                    </div>
+                  ))}
+                </div>
+                <p class="text-[11px]" style="color: var(--color-text-subtle);">✓ Speed comparison table, Watch Planner, and per-video list ready below.</p>
+              </div>
+            </div>
+
+            <!-- Demo dots nav -->
+            <div class="flex items-center justify-between mt-3" aria-hidden="true">
+              <div class="flex gap-1.5">
+                {[1, 2, 3].map((i) => (
+                  <button type="button" class="demo-dot w-2 h-2 rounded-full transition-all duration-200 cursor-pointer border-0 p-0"
+                    data-screen={i}
+                    style={i === 1 ? "background-color: var(--color-accent); width: 16px;" : "background-color: var(--color-border);"}>
+                  </button>
+                ))}
+              </div>
+              <span class="text-[11px]" id="demo-status-label" style="color: var(--color-text-subtle);">Auto-advancing…</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -521,21 +697,54 @@ const jsonLd = [
           </h2>
           <p class="text-sm" style="color: var(--color-text-muted);">{t.faq.subtitle}</p>
         </div>
-        <div class="space-y-3">
-          {(t.faq.items || []).map((item) => (
-            <details class="rounded-xl border p-4 group transition-colors duration-150" style="background-color: var(--color-surface); border-color: var(--color-border);">
-              <summary class="flex items-center justify-between gap-4 font-semibold text-sm cursor-pointer select-none list-none" style="color: var(--color-text);">
-                <span>{item.q}</span>
-                <svg class="w-4 h-4 shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/>
-                </svg>
-              </summary>
-              <p class="mt-3 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
-                {item.a}
-              </p>
-            </details>
-          ))}
-        </div>
+
+        {/* Show categorized FAQs if available, otherwise fall back to flat list */}
+        {(t.faq.categories && t.faq.categories.length > 0) ? (
+          <div class="space-y-8">
+            {(t.faq.categories || []).map((cat: any) => (
+              <section aria-labelledby={`faq-cat-${(cat.category || '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/gi, '').toLowerCase()}`}>
+                <h3
+                  id={`faq-cat-${(cat.category || '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/gi, '').toLowerCase()}`}
+                  class="text-sm font-semibold mb-3 pb-2"
+                  style="color: var(--color-text); border-bottom: 1px solid var(--color-border);"
+                >
+                  {cat.category}
+                </h3>
+                <div class="space-y-2">
+                  {(cat.questions || []).map((item: any) => (
+                    <details class="rounded-xl border p-4 group transition-colors duration-150" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                      <summary class="flex items-center justify-between gap-4 font-semibold text-sm cursor-pointer select-none list-none" style="color: var(--color-text);">
+                        <span>{item.q}</span>
+                        <svg class="w-4 h-4 shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/>
+                        </svg>
+                      </summary>
+                      <p class="mt-3 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                        {item.a}
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        ) : (
+          <div class="space-y-3">
+            {(t.faq.items || []).map((item: any) => (
+              <details class="rounded-xl border p-4 group transition-colors duration-150" style="background-color: var(--color-surface); border-color: var(--color-border);">
+                <summary class="flex items-center justify-between gap-4 font-semibold text-sm cursor-pointer select-none list-none" style="color: var(--color-text);">
+                  <span>{item.q}</span>
+                  <svg class="w-4 h-4 shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="mt-3 text-xs sm:text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                  {item.a}
+                </p>
+              </details>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   </main>
@@ -549,6 +758,35 @@ const jsonLd = [
     class="hidden"
     aria-hidden="true"
   ></div>
+
+  <!-- Trust Badge & Demo Animations -->
+  <style>
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    @keyframes badgeFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .trust-badge {
+      animation: badgeFadeIn 0.4s ease-out both;
+    }
+    .trust-badges .trust-badge:nth-child(1) { animation-delay: 0.05s; }
+    .trust-badges .trust-badge:nth-child(2) { animation-delay: 0.12s; }
+    .trust-badges .trust-badge:nth-child(3) { animation-delay: 0.19s; }
+    .trust-badge:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .trust-badge { animation: none; }
+      .trust-badge:hover { transform: none; box-shadow: none; }
+      #demo-cursor { animation: none; }
+    }
+    .demo-screen { transition: opacity 0.3s ease, transform 0.3s ease; }
+    .demo-screen.hidden { display: none; }
+  </style>
 
   <script>
     // State
@@ -1254,5 +1492,130 @@ const jsonLd = [
         this.style.boxShadow = '';
       });
     });
+
+    // ── URL Copy Buttons ──────────────────────────────────────────────────────
+    document.querySelectorAll('.url-copy-btn').forEach((btn) => {
+      btn.addEventListener('click', async function (this: HTMLElement) {
+        const url = this.dataset.url || '';
+        const copyIcon = this.querySelector('.copy-icon') as HTMLElement | null;
+        const checkIcon = this.querySelector('.check-icon') as HTMLElement | null;
+        try {
+          await navigator.clipboard.writeText(url);
+          if (copyIcon) copyIcon.classList.add('hidden');
+          if (checkIcon) checkIcon.classList.remove('hidden');
+          setTimeout(() => {
+            if (copyIcon) copyIcon.classList.remove('hidden');
+            if (checkIcon) checkIcon.classList.add('hidden');
+          }, 1800);
+        } catch {
+          // Fallback: paste into URL textarea
+          const textarea = $('playlist-url') as HTMLTextAreaElement | null;
+          if (textarea) {
+            textarea.value = url;
+            textarea.focus();
+          }
+        }
+      });
+    });
+
+    // ── Calculator Demo Animation ──────────────────────────────────────────────
+    (function initDemo() {
+      const screens = [
+        document.getElementById('demo-screen-1'),
+        document.getElementById('demo-screen-2'),
+        document.getElementById('demo-screen-3'),
+      ];
+      const dots = document.querySelectorAll('.demo-dot') as NodeListOf<HTMLElement>;
+      const steps = document.querySelectorAll('.demo-step') as NodeListOf<HTMLElement>;
+      const statusLabel = document.getElementById('demo-status-label');
+      const typingEl = document.getElementById('demo-typing-url');
+
+      if (!screens[0]) return; // demo not on page
+
+      const DEMO_URL_TEXT = 'youtube.com/playlist?list=PLrAXtmErZgO...';
+      let currentScreen = 1;
+      let typingTimer: ReturnType<typeof setTimeout> | null = null;
+      let advanceTimer: ReturnType<typeof setTimeout> | null = null;
+      let charIndex = 0;
+      let isPaused = false;
+
+      function showScreen(n: number) {
+        screens.forEach((s, i) => {
+          if (!s) return;
+          if (i + 1 === n) {
+            s.classList.remove('hidden');
+          } else {
+            s.classList.add('hidden');
+          }
+        });
+        dots.forEach((d, i) => {
+          if (i + 1 === n) {
+            d.style.backgroundColor = 'var(--color-accent)';
+            d.style.width = '16px';
+          } else {
+            d.style.backgroundColor = 'var(--color-border)';
+            d.style.width = '8px';
+          }
+        });
+        steps.forEach((step, i) => {
+          const circle = step.querySelector('.step-circle') as HTMLElement | null;
+          const label = step.querySelector('.step-label') as HTMLElement | null;
+          if (i + 1 <= n) {
+            if (circle) { circle.style.backgroundColor = 'var(--color-accent)'; circle.style.color = 'white'; circle.style.borderColor = 'var(--color-accent)'; }
+            if (label) label.style.color = 'var(--color-text)';
+          } else {
+            if (circle) { circle.style.backgroundColor = 'var(--color-surface-2)'; circle.style.color = 'var(--color-text-muted)'; circle.style.borderColor = 'var(--color-border)'; }
+            if (label) label.style.color = 'var(--color-text-muted)';
+          }
+        });
+      }
+
+      function typeUrl() {
+        if (!typingEl) return;
+        charIndex = 0;
+        typingEl.textContent = '';
+        function typeNext() {
+          if (charIndex <= DEMO_URL_TEXT.length) {
+            typingEl.textContent = DEMO_URL_TEXT.slice(0, charIndex);
+            charIndex++;
+            typingTimer = setTimeout(typeNext, 38);
+          }
+        }
+        typeNext();
+      }
+
+      function advance() {
+        if (isPaused) return;
+        currentScreen = currentScreen >= 3 ? 1 : currentScreen + 1;
+        showScreen(currentScreen);
+        if (currentScreen === 1) {
+          typeUrl();
+          advanceTimer = setTimeout(advance, 4500);
+        } else if (currentScreen === 2) {
+          advanceTimer = setTimeout(advance, 2800);
+        } else {
+          advanceTimer = setTimeout(advance, 4000);
+          if (statusLabel) statusLabel.textContent = 'Auto-advancing…';
+        }
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          isPaused = true;
+          if (advanceTimer) clearTimeout(advanceTimer);
+          if (typingTimer) clearTimeout(typingTimer);
+          currentScreen = i + 1;
+          showScreen(currentScreen);
+          if (currentScreen === 1) typeUrl();
+          if (statusLabel) statusLabel.textContent = 'Paused';
+          advanceTimer = setTimeout(() => { isPaused = false; advance(); }, 5000);
+        });
+      });
+
+      // Start
+      showScreen(1);
+      typeUrl();
+      advanceTimer = setTimeout(advance, 4500);
+    })();
   </script>
 </BaseLayout>
